@@ -1,0 +1,45 @@
+﻿@model List<FifthGroup_front.ViewModels.ActiveApplyViewModel>
+
+<table class="table table-striped">
+    <thead style="text-align: center; vertical-align: middle;" class="table-dark">
+        <tr>
+            <th scope="col">活動名稱</th>
+            <th scope="col">活動類型</th>
+             <th scope="col">活動舉辦日期</th>
+            <th scope="col">活動時間</th>
+            <th scope="col">活動場地</th>
+            <th scope="col">報名人數</th>
+            <th scope="col">繳費情況</th>
+            <th scope="col">操作</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center; vertical-align: middle;">
+        @foreach (var active in Model)
+        {
+            <tr>
+                <td>@active.Application.ActivityName</td>
+                <td>@active.Application.Activities</td>
+                <td>@active.Application.DateStart.ToString("yyyy/MM/dd") ~ @active.Application.DateEnd.ToString("yyyy/MM/dd")</td>
+                <td>@active.Periodoftime1</td>
+                <td>@active.PlaceName</td>
+                <td>@active.Registration.NumberOfApplicants 人</td>
+                <td>@active.isPaid</td>
+                <td>
+                    @if (DateTime.Now > active.Application.DateEnd)
+                    {
+                        @Html.ActionLink("查看", "ActiveApply", new {  id=active.ApplyCode  }, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("查看或修改", "ActiveApply", new {  id=active.ApplyCode  }, new { @class = "btn btn-primary" })
+                    }
+                    @if (DateTime.Now < active.Application.DateStart)
+                    {
+                    @Html.ActionLink("取消報名", "DeleteApply", new {  id=active.ApplyCode  }, new {@class= "btn btn-danger",style="margin-left:3px" ,onclick="return confirm('確定要刪除嗎?')"})
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- body -->

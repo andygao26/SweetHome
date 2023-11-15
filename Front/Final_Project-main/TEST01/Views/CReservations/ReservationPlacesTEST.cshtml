@@ -1,0 +1,287 @@
+﻿@model FifthGroup_front.ViewModels.CReservations_four
+
+@{
+    ViewData["Title"] = "ReservationPlacesTEST";
+}
+<style>
+    .containers {
+        display: flex;
+
+
+    }
+
+    .left {
+        flex: 3; /* 3等分 */
+        
+    }
+
+    .middle {
+        flex: 3; /* 6等分 */
+
+    }
+
+    .right {
+        flex: 3; /* 3等分 */
+        
+    }
+
+
+    .windmill {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        position: relative;
+    }
+
+        .windmill img {
+            
+            
+            position: absolute;
+        }
+
+            .windmill img:nth-child(1) {
+                top: 95px;
+                left: 0px;
+                height: 120px; /* 設置圖片的高度 */
+            }
+
+            .windmill img:nth-child(2) {
+                top: 95px;
+                right: 0px;
+                height: 180px; /* 設置圖片的高度 */
+            }
+
+            .windmill img:nth-child(3) {
+                bottom: 50px;
+                left: 0px;
+                height: 180px; /* 設置圖片的高度 */
+            }
+
+            .windmill img:nth-child(4) {
+                bottom: 50px;
+                right: 0px;
+                height: 120px; /* 射箭場 */
+            }
+</style>
+<!-- Page Header Start -->
+<div class="containers-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="containers text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown offset-md-5">預約第二步</h1>
+    </div>
+</div>
+
+<!-- Products Start -->
+
+<div class="containers-fluid product py-5">
+    <div class="containers py-5">
+
+    
+    <div class="left">
+        <div class="windmill">
+            <img src="https://images.pexels.com/photos/261041/pexels-photo-261041.jpeg" alt="Image 1" >
+            <img src="https://images.pexels.com/photos/3846048/pexels-photo-3846048.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 2" >
+            <img src="https://images.pexels.com/photos/8436691/pexels-photo-8436691.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 3" >
+            <img src="https://images.pexels.com/photos/6540736/pexels-photo-6540736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 4"><!-- 射箭場 -->
+        </div>
+    </div>
+    <div class="middle py-3">
+        <div class="section-title text-center mx-auto wow fadeInUp"
+             data-wow-delay="0.1s"
+             style="max-width: 500px">
+            <h1 class="display-6">請輸入預約資料</h1>
+        </div>
+        <form asp-action="ReservationPlacesTEST" class="col-6">
+
+            <div class="containers-sm mt-3 align-content-center col-6 offset-md-8">
+                <div class="mb-3">
+@*                     <label for="Code" class="control-label">隨機亂碼</label> *@
+                    <input hidden type="text" id="Code" name="Code" class="form-control" />
+                    <span for="Code" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+@*                     <label for="ReserveCode" class="control-label">住戶資料</label>
+                        *@<input hidden type="text" id="ReserveCode" name="ReserveCode" class="form-control" value="@TempData["ReserveCode"]" />
+                    <span for="ReserveCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="PlaceCode" class="control-label">場地選擇：</label>
+                    <select id="PlaceCode" name="PlaceCode" style="width: 200px;">
+                        @foreach (var item in Model.PublicSpaceDetail.OrderBy(p=>p.PlaceName))
+                        {
+                            <option value="@item.PlaceCode">@item.PlaceName</option>
+                        }
+                    </select>
+                    <span for="PlaceCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="FDate" class="control-label">日期選擇：</label>
+                    <input required style="width: 200px;" type="date" id="FDate" name="FDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" />
+                    <span for="FDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="PeriodoftimeCode" class="control-label">時段選擇：</label>
+                    <select id="PeriodoftimeCode" name="PeriodoftimeCode" style="width: 200px;">
+                            @{
+                                var periodoftimeList = Model.Periodoftime.ToList();
+                                for (var i = 0; i < 6 && i < periodoftimeList.Count; i++)
+                                {
+                                    var item = periodoftimeList[i];
+                                    <option value="@item.PeriodoftimeCode">@item.Periodoftime1</option>
+                                }
+                            }
+@*                         @foreach (var item in Model.Periodoftime) *@
+             
+@*                         {
+                            <option value="@item.PeriodoftimeCode">@item.Periodoftime1</option>
+                        } *@
+                    </select>
+                    <span for="PlaceCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label hidden for="FState" class="control-label">狀態</label>
+                    <input hidden type="text" id="FState" name="FState" value="0" />
+                    <span for="FState" class="text-danger"></span>
+                </div>
+
+@*                     @if (ViewData.ModelState.ContainsKey(string.Empty))
+                    {
+                        <div class="alert alert-danger">
+                            @Html.ValidationSummary()
+                        </div>
+                    } *@
+                <div class="col-auto">
+                    <input type="submit" value="新增預約" class="btn btn-primary" />
+                    <div class="d-grid gap-2 d-flex  me-md-5 p-md-2 me-sm-4 me-lg-5">
+                    </div>
+                    <a href="javascript:history.back()" class="btn btn-primary">返回前頁</a>
+                </div>
+                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ContainsKey(string.Empty))
+                    {
+                        <div class="alert alert-danger">
+                            @Html.ValidationSummary(excludePropertyErrors: true)
+                        </div>
+                    }
+            </div>
+            
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script>
+                // 當頁面載入完成後執行以下 JavaScript 代碼
+                window.onload = function () {
+                    // 獲取當前的日期和時間（本地時間）
+                    var currentDate = new Date();
+
+                    // 取得本地時區的時間偏移
+                    var timezoneOffset = currentDate.getTimezoneOffset();
+
+                    // 調整時間偏移，台灣位於 UTC+8，所以要加上 8*60 分鐘
+                    currentDate.setMinutes(currentDate.getMinutes() - timezoneOffset - 1 * 60);
+
+                    // 格式化日期和時間為 "YYYY-MM-DDTHH:mm" 格式（datetime 元素的要求格式）
+                    var formattedDate = currentDate.toISOString().slice(0, 16).replace('T', ' ');
+
+                    // 將格式化後的日期和時間設置為 input 元素的值
+                    document.getElementById("ordertime").value = formattedDate;
+                };
+
+            </script>
+        </form>
+
+
+    </div>
+        <div class="right">
+            <div class="windmill">
+                <img src="https://images.pexels.com/photos/416320/pexels-photo-416320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 1">
+                <img src="https://images.pexels.com/photos/3321796/pexels-photo-3321796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 2">
+                <img src="https://images.pexels.com/photos/7438102/pexels-photo-7438102.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 3">
+                <img src="https://images.pexels.com/photos/159213/hall-congress-architecture-building-159213.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image 4">
+
+            </div>
+        </div>
+    </div>
+@*     <div class="container-fluid product py-2">
+        <div class="container mb-5">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">社區預約概況</h1>
+            <!-- Bootstrap Table with Header - Dark -->
+            <div class="card custom-wide-card">
+                <div class="table-responsive text-nowrap align-content-center">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>場地</th>
+                                <th>日期</th>
+                                <th>時段</th>
+                                <th>審核狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ReservationPlace)
+                            {
+                                var placeCode = item.PlaceCode;
+                                var placeName = Model.PublicSpaceDetail.FirstOrDefault(p => p.PlaceCode == placeCode)?.PlaceName;
+
+                                var PeriodoftimeCode = item.PeriodoftimeCode;
+                                var Periodoftime = Model.Periodoftime.FirstOrDefault(p => p.PeriodoftimeCode == PeriodoftimeCode)?.Periodoftime1;
+
+                                var r = item.ReserveCode;
+                                var hstate = Model.Reservations.FirstOrDefault(p => p.ReserveCode == r)?.HState;
+
+                                <tr data-item-id="@item.ReserveCode">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => placeName)
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.FDate).ToString("yyyy/MM/dd")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Periodoftime)
+                                    </td>
+                                    <td>
+                                        <div hidden>
+                                            @Html.DisplayFor(modelItem => item.FState)
+                                        </div>
+                                        @{
+                                            string stateText = "";
+                                            switch (item.FState)
+                                            {
+                                                case 0:
+                                                    stateText = "未審核";
+                                                    break;
+                                                case 1:
+                                                    stateText = "審核中";
+                                                    break;
+                                                case 2:
+                                                    stateText = "已通過";
+                                                    break;
+                                                case 3:
+                                                    stateText = "未通過";
+                                                    break;
+                                            }
+                                        }
+                                        @stateText
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!--/ Bootstrap Table with Header Dark -->
+        </div>
+    </div> *@
+</div>
+
+
+<!-- Products End -->
+
+<!-- Page Header End -->
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

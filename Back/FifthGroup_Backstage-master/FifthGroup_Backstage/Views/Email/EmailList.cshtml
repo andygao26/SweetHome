@@ -1,0 +1,220 @@
+﻿@model IEnumerable<FifthGroup_Backstage.ViewModel.CEmails>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@{
+    ViewData["Title"] = "EmailList";
+}
+<div id="emailListContainer">
+<style>
+
+.email-row {
+transition: all 0.3s ease;
+}
+
+.email-row-read {
+ background-color: #f0f0ff /* 灰紫色 */
+}
+
+.email-row-unread {
+ 
+}
+
+.email-row-unread:hover,
+.email-row-read:hover,
+.email-row:hover
+ {
+    background-color:  ; /* 滑鼠移上去時的背景顏色 #f5f5f5*/
+    border: 1px solid #007BFF; /* 滑鼠移上去時的邊框 */
+    cursor: pointer; /* 滑鼠移上去時的指標形狀 */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3); /* 添加阴影效果，可根据需要调整阴影属性 */
+}
+
+</style>
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">信箱服務</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Email" asp-action="EmailList">收件匣</a>
+                </li>
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                    <a asp-area="" asp-controller="Email" asp-action="Create" class="menu-link">撰寫信件</a>                  
+                </li>
+                <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Products Start -->   
+<div class="section-title text-center mx-auto py-2">
+    <h1 class="display-6">收件匣</h1>
+</div>
+
+
+@using (Html.BeginForm("EmailList", "Email", FormMethod.Get))
+{ 
+    <div class="d-flex align-items-center search-box">
+        <!-- 使用 Flex 布局来将内容水平居中对齐 -->
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        @Html.TextBox("txtKeyword", null, new { @class = "form-control custom-size", placeholder = "關鍵字搜尋", @id = "searchInput" })
+        @*一起提交*@
+        <input type="submit" value="搜尋" class="btn btn-primary">
+    </div>  
+}
+@* 部分更新搜尋資料 *@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('blur', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/Email/EmailList', // 控制器的路徑
+                    type: 'GET',
+                    data: { txtKeyword: $('#searchInput').val() }, // 將輸入的值傳遞給控制器
+                success: function (response) {
+                    $('#emailListContainer').html(response); // 更新電子郵件列表
+                }
+                });
+            });
+        });
+    </script>
+
+
+<div class="card m-3 ">
+    <div class="table-responsive text-nowrap">
+        <div>
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>
+              @*   @Html.DisplayNameFor(model => model.EmailCode) *@
+                序號
+            </th>
+            <th>
+               @*  @Html.DisplayNameFor(model => model.HouseholdCode) *@
+                戶號
+            </th>
+            <th>
+                姓名
+            </th>
+             <th>
+                @* @Html.DisplayNameFor(model => model.ToEmail) *@
+                收件者
+            </th>
+            <th>
+               @*  @Html.DisplayNameFor(model => model.Subject) *@
+                主題 &nbsp - &nbsp
+           
+               @*  @Html.DisplayNameFor(model => model.Body *@
+                內文
+            </th>
+            <th>
+               @*  @Html.DisplayNameFor(model => model.Time) *@
+                寄出時間
+            </th>
+           @* <th>
+                 @Html.DisplayNameFor(model => model.FromEmail) 
+                寄信者<br>&lt;社區&gt;
+            </th>*@          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+@foreach (var item in Model) {
+            // 根據 IsRead 欄位的值設置行的顏色
+            string rowClass = item.Email.IsRead ? "email-row-read" : "email-row-unread";
+
+            <tr class="@rowClass email-row " onclick="window.location.href='@Url.Action("CheckEmailContent", new { id = item.Email.EmailCode })'">
+            <td>
+                @Html.DisplayFor(modelItem => item.Email.EmailCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email.HouseholdCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResidentName)
+            </td>
+             <td style="max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                @Html.DisplayFor(modelItem => item.Email.ToEmail)
+            </td>
+             <td style="max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <strong> @Html.DisplayFor(modelItem => item.Email.Subject) &nbsp - &nbsp</strong>                     
+                @Html.DisplayFor(modelItem => item.Email.Body)
+            </td>
+            <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                @Html.DisplayFor(modelItem => item.Email.Time)
+            </td>
+          @*  <td>
+                @Html.DisplayFor(modelItem => item.FromEmail)
+            </td>*@         
+            <td>            
+                    <div class="link-container">
+                        @Html.ActionLink("查看信件內容", "CheckEmailContent", new {  id=item.Email.EmailCode  })  |
+                        @Html.ActionLink("刪除", "Delete","Email", new {  id=item.Email.EmailCode  },
+                    new {onclick="return confirm('確定要刪除嗎?')"}) 
+                    </div>
+            </td>
+        </tr>
+}
+    </tbody>
+
+</table>
+
+ @*每10筆資料一頁頁碼資料*@
+ <div class="d-flex justify-content-center mt-md-3">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                @{
+                    // 计算前一页的页码，确保不小于 1
+                    int prevPageNumber = ViewBag.EmailPage.PageNumber - 1;
+                    if (prevPageNumber < 1)
+                    {
+                        prevPageNumber = 1;
+                    }
+                }
+                <a class="page-link" href="@Url.Action("EmailList", new { Page = prevPageNumber })" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.EmailPage.PageCount; i++)
+            {
+                <li class="page-item @(i == ViewBag.EmailPage.PageNumber ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("EmailList", new { Page = i })">@i</a>
+                </li>
+            }
+            <li class="page-item">
+                @{
+                    // 计算下一页的页码，确保不超过最大页数
+                    int nextPageNumber = ViewBag.EmailPage.PageNumber + 1;
+                    if (nextPageNumber > ViewBag.EmailPage.PageCount)
+                    {
+                        nextPageNumber = ViewBag.EmailPage.PageCount;
+                    }
+                }
+                <a class="page-link" href="@Url.Action("EmailList", new { Page = nextPageNumber })" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+@*\\每10筆資料一頁頁碼資料*@
+
+
+
+        </div>
+    </div>
+
+</div>
+</div>

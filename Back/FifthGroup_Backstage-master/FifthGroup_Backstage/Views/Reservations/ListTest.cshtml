@@ -1,0 +1,58 @@
+﻿@model FifthGroup_Backstage.ViewModel.CReservations_four
+@{
+    ViewData["Title"] = "ListTest";
+}
+
+<h1>ListTest</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Code
+            </th>
+            <th>
+                ReserveCode
+            </th>
+            <th>
+                PlaceCode
+            </th>
+            <th>
+                FDate
+            </th>
+            <th>
+                PeriodoftimeCode
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ReservationPlace) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReserveCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodoftimeCode)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,369 @@
+﻿@using System.Globalization;
+@using X.PagedList.Mvc.Core;
+@model FifthGroup_Backstage.ViewModel.PaymentListViewModel
+
+
+
+@{
+    ViewData["Title"] = "List";
+}
+
+
+<style>
+
+
+ 
+    .form-label {
+        font-size: 16px; /* 設定字大小為16像素 */
+    }
+
+    .fa {
+        font-size: inherit; /* 使用父元素的字體大小 */
+    }
+
+</style>
+
+
+<body>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">繳費管理 /</span> 繳費列表</h4>
+            <!-- Basic Bootstrap Table -->
+            <div class="card m-3 pagination ">
+                <div class="form-group pt-2 m-3 mb-5">
+
+               
+
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <i class="fa fa-filter" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <form method="post" action="@Url.Action("List", "Payment")" class="row g-5">
+                                <div class="col-md-3">
+                                    <label for="building" class="form-label">分棟</label>
+                                    <select id="building" name="buildingId" class="form-select">
+                                        <option value="">請選擇</option>
+                                        @foreach (var building in Model.Buildings)
+                                        {
+                                            <option value="@building.Value">@building.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="startDate" class="form-label">開始日期:</label>
+                                    @Html.TextBox("startDate", null, new { @class = "form-control form-date-control", type = "date", id = "startDate" })
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="endDate" class="form-label">結束日期:</label>
+                                    @Html.TextBox("endDate", null, new { @class = "form-control form-date-control", type = "date", id = "endDate" })
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="status" class="form-label">推送狀態</label>
+                                    <select id="status" name="status" class="form-select">
+                                        @if (ViewBag.Status == null)
+                                        {
+                                            <option value="" disabled selected>請選擇</option>
+                                            <option value="true">已推送</option>
+                                            <option value="false">未推送</option>
+                                        }
+                                        else
+                                        {
+                                            @if (ViewBag.Status == "true")
+                                            {
+                                                <option value="" disabled selected>請選擇</option>
+                                                <option value="true" selected>已推送</option>
+                                                <option value="false">未推送</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="" disabled selected>請選擇</option>
+                                                <option value="true">已推送</option>
+                                                <option value="false" selected>未發送</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button id="filterButton" class="btn btn-dark">篩選</button>
+                                </div>
+                            </form>
+                        </div>
+                        @*<div class="col-md-4 mb-3">
+                            <a asp-action="Create" class="btn btn-dark ml-auto">新增繳費</a>
+                        </div>*@
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+                <div class="table-responsive text-nowrap">
+                    <table class="table" id="table-container">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                    繳費項目流水號
+                                </th>
+                                <th>
+                                    分棟
+                                </th>
+                                <th>
+                                    繳費項目
+                                </th>
+                                <th>
+                                    繳費期限
+                                </th>
+                                <th>
+                                    繳費金額
+                                </th>
+                                <th>
+                                    推送狀態
+                                </th>
+                                <th>
+                                    說明
+                                </th>
+                                <th>
+                                    功能
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0" id="tablerow">
+                            @try
+                            {
+                                @foreach (var item in Model.PagedPaymentItems)
+                                {
+                                    var Build_id = item.CommunityBuildingId;
+                                    var Build_name = Model.CommunityBuilding.FirstOrDefault(s => s.CommunityBuildingId == Build_id)?.BuildingName;
+                                    var Amount = item.Amount.ToString("C0", new CultureInfo("zh-TW"));
+                                    var ExpiredDay = item.Date.ToString("yyyy-MM-dd");
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PaymentItemCode)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Build_name)
+                                        </td>
+                                        <td>
+                                            <strong>@Html.DisplayFor(modelItem => item.PaymentName)</strong>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => ExpiredDay)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Amount)
+                                        </td>
+                                        <td>
+
+                                            @if ((bool)item.Ispushed)
+                                            {
+                                                <i class="bx bx-check me-1 text-success"></i>
+                                            }
+                                           
+                                       
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Remark)
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    @if (!item.Ispushed)
+                                                    {
+                                                        <a class="dropdown-item" asp-controller="Payment" asp-action="Push" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-paper-plane me-1"></i>推送</a>
+                                                        <a class="dropdown-item" asp-controller="Payment" asp-action="Edit" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-edit-alt me-1"></i>編輯</a>
+                                                        <a class="dropdown-item" asp-controller="Payment" asp-action="Delete" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-trash-alt me-1"></i>刪除</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="dropdown-item" asp-controller="Payment" asp-action="Detail" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bxs-copy-alt me-1"></i>詳細資料</a>
+                                                    }
+
+                                                </div>
+                                               @*  <div>
+                                                    <a  asp-controller="Payment" asp-action="Push" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-paper-plane me-1"></i>推送</a>
+                                                    <a  asp-controller="Payment" asp-action="Edit" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-edit-alt me-1"></i>編輯</a>
+                                                    <a  asp-controller="Payment" asp-action="Delete" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bx-trash-alt me-1"></i>刪除</a>
+                                                    <a  asp-controller="Payment" asp-action="Detail" asp-area="" asp-route-id="@item.PaymentItemCode"><i class="bx bxs-copy-alt me-1"></i>詳細資料</a>
+                                                </div> *@
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            }
+                            catch
+                            {
+
+                            }
+
+
+                            @* @foreach (var item in Model.CommunityBuilding)
+                            {
+                            <tr>
+                            <td>
+                            @Html.DisplayFor(modelItem => item.CommunityBuildingId)
+                            </td>
+                            <td>
+                            @Html.DisplayFor(modelItem => item.BuildingName)
+                            </td>
+                            </tr>
+                            }   *@
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mt-5 justify-content-center">
+                        <li class="page-item first @(Model.PagedPaymentItems.IsFirstPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPaymentItems.IsFirstPage ? "#" : Url.Action("List", new { page = 1, buildingId = ViewBag.BuildingId, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate, status = ViewBag.Status }))">
+                                <i class="tf-icon bx bx-chevrons-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item prev @(Model.PagedPaymentItems.IsFirstPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPaymentItems.IsFirstPage ? "#" : Url.Action("List", new { page = Model.PagedPaymentItems.PageNumber - 1, buildingId = ViewBag.BuildingId, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate, status = ViewBag.Status }))">
+                                <i class="tf-icon bx bx-chevron-left"></i>
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Model.PagedPaymentItems.PageCount; i++)
+                        {
+                            <li class="page-item @(i == Model.PagedPaymentItems.PageNumber ? "active" : "")">
+                                <a class="page-link" href="@(i == Model.PagedPaymentItems.PageNumber ? "#" : Url.Action("List", new { page = i, buildingId = ViewBag.BuildingId, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate, status = ViewBag.Status }))">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item next @(Model.PagedPaymentItems.IsLastPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPaymentItems.IsLastPage ? "#" : Url.Action("List", new { page = Model.PagedPaymentItems.PageNumber + 1, buildingId = ViewBag.BuildingId, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate, status = ViewBag.Status }))">
+                                <i class="tf-icon bx bx-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item last @(Model.PagedPaymentItems.IsLastPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPaymentItems.IsLastPage ? "#" : Url.Action("List", new { page = Model.PagedPaymentItems.PageCount, buildingId = ViewBag.BuildingId, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate, status = ViewBag.Status }))">
+                                <i class="tf-icon bx bx-chevrons-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    }
+
+</body>
+
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#filterButton").click(function () {
+               //獲取選項內容
+                var selectedBuildingId = $("#building").val();
+                var startDate = $("#startDate").val();
+                var endDate = $("#endDate").val();
+                var status = $("#status").val();
+
+                // 創建表單對象
+                var form = $("<form>")
+                    .attr("method", "POST")
+                    .attr("action", "/Payment/List"); // (替換成POST的Controller及Action)
+
+                // 添加樓棟ID、開始/結束日期(區間)、推送狀態作為表單字段
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "buildingId")
+                    .attr("value", selectedBuildingId)
+                    .appendTo(form);
+
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "startDate")
+                    .attr("value", startDate)
+                    .appendTo(form);
+
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "endDate")
+                    .attr("value", endDate)
+                    .appendTo(form);
+
+
+             
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "status")
+                    .attr("value", status)
+                    .appendTo(form);
+
+                // 添加防跨站請求偽造令牌(CSRF令牌)作為表單字串
+                var csrfToken = $('input[name="__RequestVerificationToken"]').val();
+                if (csrfToken) {
+                    $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "__RequestVerificationToken")
+                        .attr("value", csrfToken)
+                        .appendTo(form);
+                }
+
+                // 將表單附加到頁面並提交
+                form.appendTo("body").submit();
+            });
+        });
+    </script>
+    <script>
+        // 在頁面加載時,設置下拉列表(點篩選後)
+        $(document).ready(function () {
+            // 獲取ViewBag值
+            var buildingId = "@ViewBag.BuildingId";
+            var startDate = "@ViewBag.StartDate"
+            var endDate = "@ViewBag.EndDate"
+            var statusValue = "@ViewBag.status"
+
+            //賦值給選項
+            $("#building").val(buildingId);
+            $('#startDate').datepicker({
+                defaultDate: startDate
+            });
+
+            $('#endDate').datepicker({
+                defaultDate: endDate
+            });
+            // 根據ViewBag.Status的值設定選項文本
+            var selectElement = document.getElementById("status");
+
+
+            // 根据status的值选中相应的选项
+            if (statusValue == "true") {
+                selectElement.value = "true";
+            }
+            else if (statusValue == "false") {
+                selectElement.value = "false";
+            }
+
+        });
+
+           
+    </script>
+}

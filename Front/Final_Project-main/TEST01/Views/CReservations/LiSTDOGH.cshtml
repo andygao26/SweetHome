@@ -1,0 +1,65 @@
+﻿@model IEnumerable<FifthGroup_front.Models.ReservationPlace>
+
+@{
+    ViewData["Title"] = "LiSTDOGH";
+}
+
+<h1>LiSTDOGH</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReserveCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodoftimeCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FState)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReserveCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodoftimeCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FState)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

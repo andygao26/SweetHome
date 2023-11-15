@@ -1,0 +1,76 @@
+﻿@model FifthGroup_Backstage.ViewModel.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="m-3 d-flex ">
+    <h1>修改資料</h1>
+
+
+    <h2>繳費項目流水號:@Model.PaymentItem.PaymentItemCode</h2> 
+
+</div>
+
+<hr />
+<div class="row m-3">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden class="form-group">
+                <label asp-for="PaymentItem.PaymentItemCode" class="control-label"></label>
+                <input asp-for="PaymentItem.PaymentItemCode" class="form-control" />
+                <span asp-validation-for="PaymentItem.PaymentItemCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentItem.CommunityBuildingId" class="control-label">分棟代碼</label>
+                <select asp-for="PaymentItem.CommunityBuildingId" class="form-control">
+                    <option value="">請選擇棟別</option>
+                    @foreach (var item in Model.CommunityBuilding)
+                    {
+                        <option value="@item.CommunityBuildingId">@item.BuildingName</option>
+                    }
+                </select>
+                <span asp-validation-for="PaymentItem.CommunityBuildingId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="PaymentItem.ItemClassificationCode" class="control-label"></label>
+                <input asp-for="PaymentItem.ItemClassificationCode" class="form-control" />
+                <span asp-validation-for="PaymentItem.ItemClassificationCode" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="PaymentItem.PaymentName" class="control-label">繳費項目</label>
+                <select asp-for="PaymentItem.PaymentName" class="form-control">
+                    <option value="">請選擇項目</option>
+                    @foreach (var item in Model.PaymentItemsName)
+                    {
+                        <option value="@item.Name">@item.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="PaymentItem.PaymentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentItem.Date" class="control-label">繳費期限</label>
+                <input asp-for="PaymentItem.Date" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="PaymentItem.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentItem.Amount" class="control-label">金額(NTD)</label>
+                <input asp-for="PaymentItem.Amount" class="form-control" />
+                <span asp-validation-for="PaymentItem.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentItem.Remark" class="control-label">說明(非必填)</label>
+                <input asp-for="PaymentItem.Remark" class="form-control" />
+                <span asp-validation-for="PaymentItem.Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+

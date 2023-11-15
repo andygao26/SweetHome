@@ -1,0 +1,256 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model FifthGroup_front.Models.Resident
+@{
+    ViewData["Title"] = "UserLogin";
+}
+<head>
+    <style>
+            .icon-size:hover,
+            .icon-size.active {
+                font-size: 20px;
+                color: var(--primary);
+            }
+
+            .icon-size:hover,
+            .icon-size.active {
+                font-size: 20px;
+                color: var(--primary);
+            }
+
+            html,
+            body {
+                height: 100%;
+                font-family: "Mulish", sans-serif;
+                -webkit-font-smoothing: antialiased;
+                background: #999b96;
+            }
+            label{
+                font-size: 18px;
+            }
+            a {
+                color: #007bff;
+                text-decoration: none;
+                background-color: transparent;
+            }
+
+            a:hover,
+            a:focus {
+                text-decoration: none;
+                outline: none;
+                color: #ffffff;
+            }
+
+            .row {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+
+            .col-lg-6 {
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+
+
+            .login__form {
+                position: relative;
+                padding-left: 600px;
+                padding-top: 100px;
+            }
+
+            .login__form h3 {
+                color: #1F2328;
+                font-weight: 700;
+                font-family: "Oswald", sans-serif;
+                margin-bottom: 60px;
+            }
+
+            .login__form form .input__item {
+                position: relative;
+                width: 500px;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+                .login__form form .input__item:before {
+                    position: absolute;
+                    left: 50px;
+                    top: 10px;
+                    height: 50px;
+                    width: 1px;
+                    background: #ffffff;
+                }
+
+                .login__form form .input__item input {
+                    height: 50px;
+                    width: 65%;
+                    font-size: 22px;
+                    color: #000000;
+                    background: #ffffff;
+                    border: none;
+                  
+                }
+
+            .button,
+            .input,
+            .optgroup,
+            .select,
+            .textarea {
+                margin: 0;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+            }
+
+            .primary-btn {
+                display: inline-block;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: #ffffff;
+                letter-spacing: 2px;
+            }
+
+        /*     .primary-btn span {
+                        font-size: 18px;
+                        margin-left: 5px;
+                        position: relative;
+                        top: 3px;
+                    }
+         */
+            .site-btn {
+                font-size: 13px;
+                color: #ffffff;
+                background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+                font-weight: 700;
+                border: none;
+                border-radius: 2px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                display: inline-block;
+                padding: 12px 30px;
+                margin-left: 45px;
+            }
+
+        /*  .login__social {
+                    padding-top: 52px;
+                }
+
+                .login__social__links {
+                    text-align: center;
+                }
+
+                    .login__social__links span {
+                        color: #ffffff;
+                        display: block;
+                        font-size: 13px;
+                        font-weight: 700;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        margin-bottom: 30px;
+                    }
+
+                    .login__social__links ul li {
+                        list-style: none;
+                        margin-bottom: 15px;
+                    }
+
+                        .login__social__links ul li a {
+                            color: #ffffff;
+                            display: block;
+                            font-size: 13px;
+                            font-weight: 700;
+                            letter-spacing: 2px;
+                            text-transform: uppercase;
+                            width: 350px;
+                            padding: 14px 0;
+                            position: relative;
+                            margin: 0 auto;
+                        }
+
+
+
+                            .login__social__links ul li a.google {
+                                background: #ff4343;
+                            }
+
+                            .login__social__links ul li a.line {
+                                background: #43ff59;
+                            }
+
+                            .login__social__links ul li a i {
+                                font-size: 20px;
+                                position: absolute;
+                                left: 32px;
+                                top: 14px;
+                            } */
+    </style>
+</head>
+
+<!-- Carousel Start -->
+
+<div class="container-fluid page-header py-5 wow fadeIn" @* 這是登入介面，不要用錯 *@
+     data-wow-delay="0.1s">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="login__form">
+                @* <h3 class="">住戶登入</h3>
+                <form asp-action="UserLogin">
+                
+                    <div class="input__item">
+                        <label for="HouseholdCode">帳號</label>
+                        <input asp-for="HouseholdCode" type="text" title="必填" required />
+                        <label>*使用住戶代碼登入</label>
+                        @* <input type="text" placeholder="(A00F00)" /> *@
+                @*<span class="icon_mail"></span>
+
+                    </div>
+                    <div class="input__item">
+                        <label for="Password">密碼</label>
+                        <input asp-for="Password" type="text" title="必填" required />
+                        <label>*使用自行設定的密碼</label>
+                        @* <input type="text" placeholder="密碼" /> *@
+                @*<span class="icon_lock"></span>
+                    </div>
+                    <div class="input__item">
+                        <input type="text" placeholder="再次輸入密碼" />
+                        <span class="icon_lock"></span>
+                    </div>
+                    <a href="contact.html" class="forget_pass">忘記密碼?</a>
+                    <a href="contact.html" class="forget_acc">忘記帳號?</a>
+                    <button type="submit" class="site-btn" asp-controller="Home" asp-action="Index">登入</button>
+                </form> *@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+<div class="login__social">
+    <!------------------------------------------------------->
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-6">
+            @*   <div class="login__social__links">
+            <ul>
+            <li>
+            <a href="login.html" class="facebook"></a>
+            </li>
+            <li>
+            <a href="login.html" class="google"><!--<i class="fa fa-google"></i>-->使用Google帳號登入</a>
+            </li>
+            <li>
+            <a href="login.html" class="line"><!--<i class="fa fa-google"></i>-->使用Line帳號登入</a>
+            </li>
+            </ul>
+            </div> *@
+        </div>
+    </div>
+</div>

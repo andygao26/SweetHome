@@ -1,0 +1,331 @@
+﻿@{
+    Layout = null;
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+    <style>
+
+    </style>
+
+    <title>管委會系統後台首頁</title>
+
+    <meta name="description" content="" />
+
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="~/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="~/assets/js/config.js"></script>
+
+
+
+    <!-- froala -->
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+
+<body style="background-color: #f0f0f0;">
+    <div id="VuePage">
+        <!--使用 Bootstrap 設計註冊表單-->
+        <div class="vh-100">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-11">
+                        <div class="card text-black" style="border-radius: 25px;">
+                            <div class="card-body p-md-5">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">管理人員註冊</p>
+
+                                        <form class="mx-1 mx-md-4">
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label class="form-label fs-5">帳號 Account(*帳號註冊後不能更改)</label>
+                                                    <input type="text" class="form-control" v-model="form.UserID" v-on:input="validateUserID" id="UserID" />
+                                                    <div id="userIDError" class="form-label" style="color: #EA0000"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label class="form-label fs-5">姓名 Name</label>
+                                                    <input type="text" class="form-control" v-model="form.UserName" v-on:input="validateUserName" id="UserName" />
+                                                    <div id="userNameError" class="form-label" style="color: #EA0000"></div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label class="form-label fs-5">電子信箱 Email</label>
+                                                    <input type="email" class="form-control" v-model="form.UserEmail" v-on:input="validateEmail" id="UserEmail"  />
+                                                    <div id="emailError" class="form-label" style="color: #EA0000"></div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label class="form-label fs-5">密碼 Password</label>
+                                                    <input type="password" class="form-control" v-model="form.UserPwd" v-on:input="validatePassword" id="UserPwd" />
+                                                    <div id="passwordError" class="form-label" style="color: #EA0000"></div>
+                                                    <div id="passwordStrength" class="form-label text-primary"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <i class="fas fa-building fa-lg me-3 fa-fw"></i>
+                                                <div class="form-outline flex-fill mb-0">
+                                                    <label class="form-label fs-5">社區驗證碼 Community Code</label>
+                                                    <input type="text" class="form-control" v-model="form.CommunityCode" v-on:input="validateCommunityCode" id="CommunityCode" />
+                                                    <div id="communityCodeError" class="form-label" style="color: #EA0000"></div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                                <button type="button" class="btn btn-primary btn-lg" v-on:click="DoRegister()">註冊</button>
+                                                <div class="mx-1"></div>
+                                                <button type="button" class="btn btn-dark btn-lg" id="fillFormButton">Demo</button>
+                                            </div>
+   
+
+                                            <a asp-controller="Admin" asp-action="Login">返回登入頁面</a>
+
+                                        </form>
+
+                                    </div>
+                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                        <img src="https://res.cloudinary.com/dwdov2ta3/image/upload/v1694006424/logo_dnusep.png"
+                                             class="img-fluid" alt="Sample image">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--使用 Bootstrap Modal 樣式，當執行有錯誤時，顯示錯誤訊息-->
+        <div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">錯誤訊息</h4>
+                    </div>
+                    <div class="modal-body" id="ErrorMsg" style="overflow-x:auto;width:100%;">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+    <script>
+        var VuePage = new Vue({
+            el: '#VuePage'
+            , data: function () {
+                var data = {
+                    form:  {
+                        UserID:'',
+                        UserName:'',
+                        UserEmail:'',
+                        UserPwd:'',
+                        CommunityCode:''
+                    }
+                };
+                return data;
+            }
+            , methods: {
+                validateUserID() {
+                    const userID = this.form.UserID;
+
+                    // 使用正則表達式檢查帳號是否只包含英文字母和數字且在10位以內
+                    const regex = /^[a-zA-Z0-9]{1,10}$/;
+
+                    if (!regex.test(userID)) {
+                        // 如果驗證不通過，顯示錯誤消息
+                        document.getElementById('userIDError').textContent = "帳號必須為英數字組合、並在10位元內";
+                    } else {
+                        // 如果驗證通過，清除錯誤消息
+                        document.getElementById('userIDError').textContent = "";
+                    }
+                },
+                validateUserName() {
+                    const userName = this.form.UserName;
+
+                    // 使用正則表達式檢查名稱是否只包含中文字符，註釋特殊符號，且長度不超過20個字符
+                    const regex = /^[\u4e00-\u9fa5]{1,20}$/;
+
+                    if (!regex.test(userName)) {
+                        // 如果驗證不通過，顯示錯誤消息
+                        document.getElementById('userNameError').textContent = "姓名必須為中文字符、且長度不超過20個字符";
+                    } else {
+                        // 如果驗證通過，清除錯誤消息
+                        document.getElementById('userNameError').textContent = "";
+                    }
+                },
+                validatePassword() {
+                    const password = this.form.UserPwd;
+
+                    //使用正則表達式檢查密碼強度和限制長度不超過18個字符
+                    const lowStrength = /^[a-zA-Z0-9_]{6,18}$/;
+                    const highStrength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}$/;
+
+                    if (lowStrength.test(password)) {
+                        // 中低強度密碼
+                        document.getElementById('passwordError').textContent = "";
+                        document.getElementById('passwordStrength').textContent = "中低強度密碼";
+                    } else if (highStrength.test(password)) {
+                        // 高強度密碼
+                        document.getElementById('passwordError').textContent = "";
+                        document.getElementById('passwordStrength').textContent = "高強度密碼";
+                    } else {
+                        // 密碼不符合格式、任何強度
+                        document.getElementById('passwordError').textContent = "密碼格式不正確";
+                        document.getElementById('passwordStrength').textContent = "";
+                    }
+                },
+                validateEmail() {
+                    const userEmail = this.form.UserEmail;
+
+                    // 使用正規表達式檢查電子信箱格式
+                    const emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                    if (emailPattern.test(userEmail)) {
+                        // 有效格式
+                        document.getElementById('emailError').textContent = "";
+                    } else {
+                        // 無效、錯誤格式
+                        document.getElementById('emailError').textContent = "請輸入有效的電子信箱地址";
+                    }
+                },
+                //檢查使用者輸入的社區驗證碼(10碼以內、為英數字組合)
+                validateCommunityCode() {
+                    const communityCode = this.form.CommunityCode;
+
+                    // 使用正則表達式檢查社區驗證碼的格式
+                    const regex = /^[a-zA-Z0-9]{1,10}$/;
+
+                    if (!regex.test(communityCode)) {
+                        // 如果驗證不通過，顯示錯誤消息
+                        document.getElementById('communityCodeError').textContent = "社區驗證碼格式不正確";
+                    } else {
+                        // 如果驗證通過，清除錯誤消息
+                        document.getElementById('communityCodeError').textContent = "";
+                    }
+                },
+
+                // 執行註冊按鈕
+                DoRegister: function () {
+                    var self = this;
+
+                    // 組合表單資料
+                    var postData = {};
+                    postData['UserID'] = self.form.UserID;
+                    postData['UserPwd'] = self.form.UserPwd;
+                    postData['UserName'] = self.form.UserName;
+                    postData['UserEmail'] = self.form.UserEmail;
+                    postData['CommunityCode'] = self.form.CommunityCode;
+
+                    // 使用 jQuery Ajax 傳送至後端
+                    $.ajax({
+                        url: '@Url.Content("~/Admin/DoRegister")',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: { inModel: postData },
+                        success: function (datas) {
+                            console.log(datas); // 輸出datas於console.log測試
+                            if (datas.errMsg) {
+                                alert(datas.errMsg); // Alert顯示錯誤訊息
+                                return;
+                            }
+                            // 成功情況顯示數據
+                            alert(datas.resultMsg);
+                        },
+                        error: function (err) {
+                            console.log(datas); // 輸出datas於console.log測試
+                            $('#ErrorMsg').html(err.responseText);
+                            $('#ErrorAlert').modal('toggle');
+                        },
+                    });
+
+                }
+            }
+        });
+
+        // Demo按钮点击事件处理程序
+        const fillFormButton = document.getElementById("fillFormButton");
+        fillFormButton.addEventListener("click", function () {
+            // 手动更新Vue数据
+            VuePage.form.UserID = "Min89036";
+            VuePage.form.UserName = "李旻珊";
+            VuePage.form.UserEmail = "leemin890306@gmail.com";
+            VuePage.form.UserPwd = "Mm890306";
+            VuePage.form.CommunityCode = "Fuen2905";
+        });
+
+    </script>
+
+
+  
+ </body>
+

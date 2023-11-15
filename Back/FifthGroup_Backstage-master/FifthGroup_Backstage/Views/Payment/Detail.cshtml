@@ -1,0 +1,162 @@
+﻿@using System.Globalization;
+@model FifthGroup_Backstage.ViewModel.PaymentDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">繳費管理/</span> 詳情</h4>
+        <h1 class="fw-bold py-3 mb-4">@Model.CommunityBuilding.BuildingName/@Model.PaymentItem.PaymentName/@Model.PaymentItem.Remark</h1>
+       
+
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+        
+                    <div class="card-body">
+                     
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                繳費代碼
+                                            </th>
+                                            <th>
+                                                房屋代碼
+                                            </th>
+                                            <th>
+                                                繳費日期
+                                            </th>
+                                            <th>
+                                                項目代碼
+                                            </th>
+                                            <th>
+                                                繳費金額
+                                            </th>
+                                            <th>
+                                                繳費狀態
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Payment)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PaymentCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.HouseholdCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PayDay)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.PaymentItemCode)
+                                                </td>
+                                                <td>
+                                                @item.Amount.ToString("C0", new CultureInfo("zh-TW"))
+                                            </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Paid)
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class=" pt-2">
+                                    <a asp-action="List" asp-controller="Payment" class="btn btn-primary">回到列表</a>
+                                </div>
+                            </div>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- / Content -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="card m-3">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        繳費代碼
+                    </th>
+                    <th>
+                        房屋代碼
+                    </th>
+                    <th>
+                        繳費日期
+                    </th>
+                    <th>
+                        項目代碼
+                    </th>
+                    <th>
+                        繳費金額
+                    </th>
+                    <th>
+                        繳費狀態
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Payment)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HouseholdCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentItemCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Paid)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class=" pt-2">
+            <a asp-action="List" asp-controller="Payment" class="btn btn-primary">回到列表</a>
+        </div>
+    </div>
+
+</div>
+ *@

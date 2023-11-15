@@ -1,0 +1,301 @@
+﻿@model FifthGroup_Backstage.ViewModel.CReservations_four
+@using X.PagedList
+@using X.PagedList.Mvc;
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common;
+@{
+    ViewData["Title"] = "Listreview_personal";
+}
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">尚未審核</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Reservations" asp-action="List">預約一覽表</a>
+                </li>
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                    尚未審核
+
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Reservations" asp-action="Listbefore">歷史紀錄</a>
+                </li>
+
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="text-center">
+    <div class="text-left btn-container">
+        <button id="waitButton" class="btn btn-info btn-small" data-state="1">審核中</button>
+        <button id="approveButton" class="btn btn-success btn-small" data-state="2">已通過</button>
+        <button id="defeatButton" class="btn btn-danger btn-small" data-state="3">未通過</button>
+    </div>
+</div>
+<form class="container-fluid product py-2 col-2" method="get" action="">
+    <div class="form-group">
+        <label for="placeCode">場地：</label>
+        <select class="form-control" id="placeCode" name="placeCode">
+            <option value="">場地全選</option>
+            @foreach (var item in Model.PublicSpaceDetail)
+            {
+                <option value="@item.PlaceCode">@item.PlaceName</option>
+            }
+            <!-- 添加其他场地选项 -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="periodCode">時段：</label>
+        <select class="form-control col-5" id="periods" name="periods">
+            
+            <option value="">時段全選</option>
+            @foreach (var item in Model.Periodoftime)
+            {
+                <option value="@item.PeriodoftimeCode">@item.Periodoftime1</option>
+            }
+        </select>
+        
+    </div>
+      
+    <button type="submit" class="btn btn-primary">搜尋</button>
+    <a asp-area="" asp-controller="Reservations" asp-action="Listreview_personal" class="btn btn-primary">清除搜尋</a>
+</form>
+<!-- Page Header End -->
+<div class="container-fluid product py-2">
+    <div class="container mb-5">
+        <!-- Bootstrap Table with Header - Dark -->
+        <div class="card custom-wide-card">
+            <div class="table-responsive text-nowrap align-content-center">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll" />
+                            </th>
+                            <th>姓名</th>
+                            <th>場地</th>
+                            <th>日期</th>
+                            <th>時段</th>
+                            <th></th>
+                            <th>審核狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReservationPlace)
+                        {
+                            var ReserveCode = item.ReserveCode;
+                            var hName = Model.Reservations.FirstOrDefault(p => p.ReserveCode == ReserveCode)?.HName;
+
+                            var placeCode = item.PlaceCode;
+                            var placeName = Model.PublicSpaceDetail.FirstOrDefault(p => p.PlaceCode == placeCode)?.PlaceName;
+
+                            var PeriodoftimeCode = item.PeriodoftimeCode;
+                            var Periodoftime = Model.Periodoftime.FirstOrDefault(p => p.PeriodoftimeCode == PeriodoftimeCode)?.Periodoftime1;
+
+                            var r = item.ReserveCode;
+                            var hstate = Model.Reservations.FirstOrDefault(p => p.ReserveCode == r)?.HState;
+
+                            <tr data-item-id="@item.Code">
+                                <td>
+                                    <input type="checkbox" class="checkbox" />
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => hName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => placeName)
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(item.FDate).ToString("yyyy/MM/dd")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Periodoftime)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("詳細資料", "Listbefore_Details", new { id=item.ReserveCode })
+                                    @*  @Html.ActionLink("詳細資料", "Details", new { /* id=item.PrimaryKey */ }) *@
+                                </td>
+                                <td>
+                                    <div hidden>
+                                        @Html.DisplayFor(modelItem => item.FState)
+                                    </div>
+                                    @{
+                                        string stateText = "";
+                                        switch (item.FState)
+                                        {
+                                            case 0:
+                                                stateText = "未審核";
+                                                break;
+                                            case 1:
+                                                stateText = "審核中";
+                                                break;
+                                            case 2:
+                                                stateText = "已通過";
+                                                break;
+                                            case 3:
+                                                stateText = "未通過";
+                                                break;
+                                        }
+                                    }
+                                    @stateText
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <style>
+                    .custom-pager {
+                        font-size: 18px; /* 设置字体大小 */
+                        /* 添加边框 */
+                        padding: 10px; /* 添加内边距 */
+                        min-width: 200px; /* 设置最小宽度 */
+                        min-height: 50px; /* 设置最小高度 */
+                    }
+
+                        .custom-pager ul.pagination {
+                            display: inline-block; /* 让分页链接水平排列 */
+                            list-style: none; /* 移除列表样式 */
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                            .custom-pager ul.pagination li {
+                                display: inline;
+                                margin-right: 5px; /* 为分页链接之间添加一些间距 */
+                            }
+
+                                .custom-pager ul.pagination li a {
+                                    text-decoration: none;
+                                    padding: 5px 10px; /* 添加内边距 */
+                                    border: 1px solid #ccc; /* 添加边框 */
+                                    background-color: #f0f0f0; /* 设置背景颜色 */
+                                    color: #333; /* 设置文字颜色 */
+                                }
+
+                                .custom-pager ul.pagination li.active a {
+                                    background-color: #007bff; /* 设置当前页链接的背景颜色 */
+                                    color: #fff; /* 设置当前页链接的文字颜色 */
+                                }
+
+                </style>
+                <div class="text-center custom-pager">
+                    @if (Model.ReservationPlace is IPagedList<ReservationPlace> pagedList)
+                    {
+                        @Html.PagedListPager(pagedList, page => Url.Action("Listreview_personal", new { page }), new PagedListRenderOptions() { DisplayLinkToFirstPage = PagedListDisplayMode.Never, DisplayLinkToLastPage = PagedListDisplayMode.Never })
+                    }
+                </div>
+
+            </div>
+        </div>
+        <!--/ Bootstrap Table with Header Dark -->
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // 获取所有的 checkbox
+        var checkboxes = $(".checkbox");
+
+        // 全选功能
+        $("#selectAll").click(function () {
+            checkboxes.prop("checked", $(this).prop("checked"));
+        });
+
+        // 单个 checkbox 点击事件
+        checkboxes.click(function () {
+            if (!$(this).prop("checked")) {
+                // 如果单个 checkbox 取消选中，取消全选
+                $("#selectAll").prop("checked", false);
+            } else {
+                // 检查是否所有的 checkbox 都被选中，如果是则设置全选为选中
+                if (checkboxes.filter(":checked").length === checkboxes.length) {
+                    $("#selectAll").prop("checked", true);
+                }
+            }
+        });
+
+        // 批准和拒绝按钮点击事件
+        $("#approveButton, #waitButton, #defeatButton").click(function () {
+            // 获取按钮上的 data-state 属性值
+            var newState = $(this).data("state");
+
+            // 获取选中的复选框的值
+            var selectedCheckboxes = checkboxes.filter(":checked");
+            var selectedIds = selectedCheckboxes.map(function () {
+                return $(this).closest("tr").data("item-id"); // 这里假设你的数据行有一个 data-item-id 属性用于存储项目标识
+            }).get();
+
+            // 发送AJAX请求
+            $.ajax({
+                url: "/Reservations/EditAll", //
+                method: "POST",
+                data: {
+                    ids: selectedIds,
+                    state: newState
+                },
+                success: function (response) {
+                    // 在成功时更新界面或执行其他操作
+                    console.log("状态已更新");
+                    location.reload();
+                },
+                error: function (error) {
+                    // 处理错误
+                    console.error("发生错误: " + error);
+                }
+            });
+        });
+
+        // 審核中按钮点击事件
+        $("#waitButton").click(function () {
+            // 获取选中的复选框
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            // 检查是否有选中的复选框
+            if (selectedCheckboxes.length > 0) {
+                // 将选中的项目更改为“審核中”
+                selectedCheckboxes.each(function () {
+                    // 获取所选行的状态单元格
+                    var stateCell = $(this).closest("tr").find("td:last");
+                    stateCell.text("審核中");
+                });
+            }
+        });
+        // 通過按钮点击事件
+        $("#approveButton").click(function () {
+            // 获取选中的复选框
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            // 检查是否有选中的复选框
+            if (selectedCheckboxes.length > 0) {
+                // 将选中的项目更改为“已通過”
+                selectedCheckboxes.each(function () {
+                    // 获取所选行的状态单元格
+                    var stateCell = $(this).closest("tr").find("td:last");
+                    stateCell.text("已通過");
+                });
+            }
+        });
+
+        // 未通過按钮点击事件
+        $("#defeatButton").click(function () {
+            // 获取选中的复选框
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            // 检查是否有选中的复选框
+            if (selectedCheckboxes.length > 0) {
+                // 将选中的项目更改为“未通過”
+                selectedCheckboxes.each(function () {
+                    // 获取所选行的状态单元格
+                    var stateCell = $(this).closest("tr").find("td:last");
+                    stateCell.text("未通過");
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,145 @@
+﻿@model FifthGroup_front.Models.Reservation
+
+@{
+    ViewData["Title"] = "ReservationsInfor";
+}
+@* <style>
+    .btn.btn-primary {
+        margin-left: 200px;
+    }
+
+    .move-right {
+        margin-left: 200px;
+    }
+</style> *@
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">預約第一步</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                                <li class="breadcrumb-item">
+                    <div class=""><a asp-controller="CReservations" asp-action="ListR"><input type="submit" value="返回預約一覽表" class="btn btn-primary" /></a></div>
+
+                </li>
+@*                 <li class="breadcrumb-item text-dark" aria-current="page">
+                維修紀錄查詢
+                </li> *@
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Products Start -->
+<div class="container-fluid product py-5">
+    <div class="container py-5">
+
+        <div class="section-title text-center mx-auto wow fadeInUp"
+             data-wow-delay="0.1s"
+             style="max-width: 500px">
+            <h1 class="display-6">請輸入申請者資料</h1>
+        </div>
+        <form asp-action="ReservationsInfor">
+
+        <div class="container-sm mt-1 align-content-center col-5 offset-md-4">
+                <div class="mb-3">
+@*                     <label asp-for="ReserveCode" class="control-label">住戶代碼</label>
+ *@                    <input hidden asp-for="ReserveCode" class="form-control" />
+                    <span asp-validation-for="ReserveCode" class="text-danger"></span>
+                </div>
+            <div class="mb-3">
+                <label asp-for="HouseholdCode" class="control-label">住戶代碼</label>
+                <input readonly asp-for="HouseholdCode" class="form-control"/>
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HName" class="control-label">姓名</label>
+                    <input required asp-for="HName" class="form-control" />
+                <span asp-validation-for="HName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HPhone" class="control-label">電話</label>
+                    <input required asp-for="HPhone" class="form-control" />
+                <span asp-validation-for="HPhone" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HEmail" class="control-label">信箱</label>
+                    <input required asp-for="HEmail" class="form-control" />
+                <span asp-validation-for="HEmail" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                @* <label asp-for="HState" class="control-label"></label> *@
+                <input asp-for="HState" class="form-control" type="hidden" value="0" />
+                <span asp-validation-for="HState" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                @* <label asp-for="HOrdertime" class="control-label">當下時間</label> *@
+                    <input hidden asp-for="HOrdertime" id="ordertime" class="form-control" readonly type="datetime" />
+                    <span asp-validation-for="HOrdertime" class="text-danger"></span>
+                </div>
+            <div class="col-auto">
+                <div class="d-grid gap-2 d-flex  me-md-5 p-md-2 me-sm-4 me-lg-5">
+                        <input type="submit" value="送出並下一步" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script>
+                // 當頁面載入完成後執行以下 JavaScript 代碼
+                window.onload = function () {
+                    // 獲取當前的日期和時間（本地時間）
+                    var currentDate = new Date();
+
+                    // 取得本地時區的時間偏移
+                    var timezoneOffset = currentDate.getTimezoneOffset();
+
+                    // 調整時間偏移，台灣位於 UTC+8，所以要加上 8*60 分鐘
+                    currentDate.setMinutes(currentDate.getMinutes() - timezoneOffset - 0 * 60);
+
+                    // 格式化日期和時間為 "YYYY-MM-DDTHH:mm" 格式（datetime 元素的要求格式）
+                    var formattedDate = currentDate.toISOString().slice(0, 16).replace('T', ' ');
+
+                    // 將格式化後的日期和時間設置為 input 元素的值
+                    document.getElementById("ordertime").value = formattedDate;
+                };
+
+            </script>
+        </form>
+        
+
+    </div>
+</div>
+<!-- Products End -->
+
+@* <div class="row">
+    <div class="col-md-4">
+        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+            </div>
+
+    </div>
+</div> *@
+
+<div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

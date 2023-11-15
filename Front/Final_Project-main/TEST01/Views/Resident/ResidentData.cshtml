@@ -1,0 +1,57 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model FifthGroup_front.Models.ResidentRegister
+@{
+    ViewData["Title"] = "ResidentData";
+}
+<style>
+    html,
+    body {
+        height: 100%;
+        font-family: "Mulish", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        /* background: #999b96; */
+    }
+    h2{
+        align-content:center;
+    }
+
+   
+</style>
+<div class="container-fluid product py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">                      
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <h2 class="text-success">住戶個人資料</h2>                        
+                        <div class="col-md-12">                      
+                            <div class="input-group-icon col-md-8">
+                                <label class="form-label" for="inputNumber">戶號</label>
+                                <input class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHouseholdCode")" readonly />
+                                <label class="form-label" for="inputName">姓名</label>
+                                <input class="form-control" id="inputName" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" readonly />
+                                
+                                <label class="form-label" for="inputPhone">電話號碼</label>
+                                <input class="form-control" id="inputPhone" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserPhone")" readonly />
+                                <label class="form-label" for="inputEmail">電子信箱</label>
+                                <input class="form-control" id="inputEmail" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserEmail")" readonly />
+                                <label class="form-label" for="inputPassword">密碼</label> @* 改 *@
+                                <input class="form-control" id="inputPassword" type="text" value="**********" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       @*  <div class="col-md-3">
+            <div class="btn-group btn-group-vertical h-100 " role="group">
+                
+            </div>
+        </div> *@
+    </div>
+</div>

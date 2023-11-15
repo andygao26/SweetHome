@@ -1,0 +1,184 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model FifthGroup_front.Models.Resident
+@{
+    ViewData["Title"] = "Login";
+}
+<head>
+    <style>
+        .icon-size:hover,
+        .icon-size.active {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .icon-size:hover,
+        .icon-size.active {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+       /*  html,
+        body {
+            height: 100%;
+            font-family: "Mulish", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background: #ffffff;
+        }
+ */
+        label {
+            font-size: 18px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: none;
+            outline: none;
+            color: #ffffff;
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col-lg-6 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+            .button,
+            .input,
+            .optgroup,
+            .select,
+            .textarea {
+                margin: 0;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+            }
+
+            .primary-btn {
+                display: inline-block;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: #ffffff;
+                letter-spacing: 2px;
+            }
+            .site-btn {
+                font-size: 13px;
+                color: #ffffff;
+                background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+                font-weight: 700;
+                border: none;
+                border-radius: 2px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                display: inline-block;
+                padding: 12px 30px;
+                margin-left: 45px;
+            }
+          
+        #container1, #container2 {
+            padding: 50px;
+            width: 600px;
+            height: 400px;
+            background-color: white;
+            border-radius: 5px;
+            border-top: 10px solid #88b44e;
+            box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            align-content:center
+        }
+
+        .wrapper {
+            background: #50a3a2;
+            background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 88%);
+            background-image: url('https://images.pexels.com/photos/305833/pexels-photo-305833.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+          /*   display: flex; */
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .wrapper.form-success .container h1 {
+                transform: translateY(85px);
+        }
+
+        .h-800 {
+            height: 800px;
+        }     
+
+    </style>
+</head>
+<!-- Carousel Start -->
+<div class="page-header py-5 wow fadeIn wrapper h-800"
+     data-wow-delay="0.1s">
+    <div class="justify-content-sm-center">
+        <div class="container-sm mt-3 align-content-center col-8 offset-md-4">          
+                @if (HttpContextAccessor.HttpContext.Session.GetString("LogIn") == "true")
+            {
+                <div class="mb-3">
+                <h2 class="">系統已登入</h2>
+                <p>Welcome，@HttpContextAccessor.HttpContext.Session.GetString("UserName")！</p>
+                <form method="post" action="/Admin/Logout">
+                    <button type="submit" class="btn btn-primary">登出</button>
+                </form>
+                </div>
+            }
+            else{
+                <div class="mb-3">               
+                <div id="container1">                
+                <h3 class="text-center">住戶登入</h3>
+                <form method="post" action="/Admin/Login">
+                    <div class="mb-3">
+                        <label asp-for="Email">帳號</label>
+                                <input asp-for="Email" id="Email" name="Email" class="form-control" value="yellow95060@gmail.com" required />
+                            </div>
+                    <div class="mb-3">
+                        <label asp-for="Password">密碼</label>
+                                <input type="Password" id="Password" name="Password" class="form-control" value="qq21321da542" required />                                        
+                    </div>                              
+                    <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                            <a asp-area="" asp-controller="Admin" asp-action="ForgetPwd" class="nav-link ">忘記密碼?</a>
+                            <a asp-area="" asp-controller="Admin" asp-action="Register" class="nav-link ">尚未註冊?</a>
+                            <button type="submit" class="btn btn-primary me-md-5" onclick="login()">登入</button>
+                    </div>
+                    <label class="text-danger"><p>@ViewBag.ErrorMessage</p></label>                                   
+                </form>
+               </div>
+            </div>
+            }
+        </div>      
+    </div>
+</div>
+<script>
+    function login() {
+        let x = document.getElementById('Email').value;
+        let y = document.getElementById('Password').value;
+        // let z = document.getElementById('Password2').value;
+        let text;
+        if (x = 0) {
+            text = '請輸入信箱';
+        }
+        if (y.length = 0) {
+            text = '請輸入密碼';
+        } 
+    }  
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

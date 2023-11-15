@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "ForgetPwd";
+}
+<style>
+    .h-600 {
+        height: 600px;
+    }
+
+</style>
+<form asp-controller="Admin" asp-action="ForgetPwd" method="post" id="forgetPwdForm">
+    <main>
+        <div class="container-fluid product py-5 h-600">
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                    <h2 class="text-center">忘記密碼</h2>
+                    <h6 class="mb-3 text-primary text-center">請輸入你的電子信箱，我們將為你發送新密碼</h6>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="Email" placeholder="你的電子信箱" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary me-md-5" type="button" id="sendButton">確認</button>
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <label class="text-danger"><p>@ViewBag.ErrorMessage</p></label>
+                        <label class="text-info"><p>@ViewBag.SuccessMessage</p></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sendButton = document.getElementById("sendButton");
+        const form = document.getElementById("forgetPwdForm");
+        const emailInput = document.querySelector("input[name='Email']");
+
+        sendButton.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const email = emailInput.value;
+            if (confirm(`按確定後將您的新密碼寄到您的信箱: ${email}`)) {
+
+                form.submit();
+
+            } else {
+
+            }
+        });
+    });
+</script>

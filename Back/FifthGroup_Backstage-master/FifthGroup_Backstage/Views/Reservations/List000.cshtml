@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FifthGroup_Backstage.Models.Reservation>
+
+@{
+    ViewData["Title"] = "List000";
+}
+
+<h1>預約一覽表</h1>
+@using (Html.BeginForm())
+{
+    @:關鍵字
+    @Html.TextBox("txtKeyword")
+    <input type="submit" value="查詢" />
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReserveCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HouseholdCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HEmail)
+            </th>         
+            <th>
+                @Html.DisplayNameFor(model => model.HState)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReserveCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HouseholdCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HState)
+            </td>
+            <td>
+                @Html.ActionLink("修改", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("細項", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

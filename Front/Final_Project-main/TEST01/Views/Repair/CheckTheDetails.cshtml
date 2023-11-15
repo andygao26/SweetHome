@@ -1,0 +1,214 @@
+﻿@model FifthGroup_front.Models.Repair
+
+@{
+    ViewData["Title"] = "CheckTheDetails";
+}
+
+
+        <form asp-action="CheckTheDetails">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+           @* <div class="form-group">
+                <label asp-for="RepairCode" class="control-label"></label>
+                <input asp-for="RepairCode" class="form-control" />
+                <span asp-validation-for="RepairCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseholdCode" class="control-label">戶號</label>
+                <input asp-for="HouseholdCode" class="form-control readonly" />
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProcessingStatus" class="control-label"></label>
+                <input asp-for="ProcessingStatus" class="form-control" />
+                <span asp-validation-for="ProcessingStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturerCode" class="control-label"></label>
+                <input asp-for="ManufacturerCode" class="form-control" />
+                <span asp-validation-for="ManufacturerCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Detail" class="control-label"></label>
+                <input asp-for="Detail" class="form-control" />
+                <span asp-validation-for="Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pic" class="control-label"></label>
+                <input asp-for="Pic" class="form-control" />
+                <span asp-validation-for="Pic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>*@
+
+
+
+    <input type="hidden" name="RepairCode" value="@Model.RepairCode" />
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 wow fadeIn"
+         data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">維修服務</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0 custom-breadcrumb">
+                    <li class="breadcrumb-item active">
+                        <a asp-area="" asp-controller="Repair" asp-action="Create">個人維修申請</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a asp-area="" asp-controller="Repair" asp-action="RepairInquire">維修資料管理</a>
+                    </li>
+                    <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <!-- Products Start -->
+    <div class="container-fluid product py-5">
+        <div class="container py-5">
+            <div class="section-title text-center mx-auto wow fadeInUp"
+                 data-wow-delay="0.1s"
+                 style="max-width: 500px">
+                <h1 class="display-6">維修資料詳情</h1>
+            </div>
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div class="mb-3">
+                    <label asp-for="RepairCode" class="control-label">維修序號</label>
+                    <input asp-for="RepairCode" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HouseholdCode" class="control-label">戶號</label>
+                    <input asp-for="HouseholdCode" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Name" class="control-label">報修人姓名</label>
+                    <input asp-for="Name" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Phone" class="control-label">連絡電話</label>
+                    <input asp-for="Phone" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Time" class="control-label">報修日期</label>
+                    <input asp-for="Time" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Type" class="control-label">報修項目</label>
+                    <select asp-for="Type" class="form-select short-select" disabled>
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="電梯">電梯</option>
+                        <option value="衛浴">衛浴</option>
+                        <option value="廚房">廚房</option>
+                        <option value="水電">水電</option>
+                        <option value="裝修">裝修</option>
+                        <option value="其它">其它</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Detail" class="control-label">問題描述</label>
+                    <textarea asp-for="Detail" class="form-control" id="editTextarea"
+                              style="height: 150px" readonly></textarea>
+                </div>
+
+                <div class="mb-3">                   
+                        <div class="col-auto">
+                            <label asp-for="Pic" class="control-label">維修項目圖片</label>
+                        </div>
+                        <div class="col">
+                            @*直接讀取img資料夾裡儲存的圖片*@
+                        <img src="~/img/@Model.Pic" style="max-width: 300px; max-height: 190px;" alt="圖片" />
+                        </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProcessingStatus" class="control-label">處理狀態</label>
+                    <input asp-for="ProcessingStatus" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ManufacturerCode" class="control-label">維修廠商</label>
+                    <input asp-for="ManufacturerCode" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProcessingStatusDetail" class="control-label">處理狀態描述</label>
+                    <textarea asp-for="ProcessingStatusDetail" class="form-control" id="CheckTextarea"
+                              style="height: 150px" placeholder="目前尚未處理" readonly></textarea>
+                </div>
+
+                <div class="d-grid gap-2 d-flex justify-content-md-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                    <button class="btn btn-primary me-md-5" type="button">
+                        <a asp-area="" asp-controller="Repair" asp-action="RepairInquire" class="repairbreadcrumb">返回維修紀錄查詢</a>
+                    </button>
+                </div>
+            </div>
+
+            <script>
+                // 获取 label 元素
+                const picLabel = document.getElementById('picLabel');
+
+                // 阻止 label 元素的点击事件
+                picLabel.addEventListener('click', function (event) {
+                    event.preventDefault();
+                });
+            </script>
+
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script>
+                const myFileInfo = document.querySelector("#myFileInfo");
+                const myFile = document.querySelector("#myFile");
+                myFile.addEventListener("change", function () {
+                    let file = this.files[0].name;
+                    myFileInfo.value = file;
+                });
+            </script>
+        </div>
+    </div>
+    <!-- Products End -->
+    <!-- 照片預覽 -->
+    <script>
+        const fileInput = document.getElementById("myFile");
+        const fileInfoInput = document.getElementById("myFileInfo");
+        const fileThumbnail = document.getElementById("fileThumbnail");
+
+        fileInput.addEventListener("change", (event) => {
+            const selectedFile = event.target.files[0];
+            if (selectedFile) {
+                fileInfoInput.value = selectedFile.name;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    fileThumbnail.innerHTML = `<img src="${e.target.result}" alt="Selected Image" style="max-width: 300px; max-height: 200px">`;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+    </script>
+    <!-- \照片預覽 -->
+
+        </form>
+
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

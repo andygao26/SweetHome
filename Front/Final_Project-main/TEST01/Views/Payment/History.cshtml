@@ -1,0 +1,268 @@
+﻿@using System.Globalization;
+@using X.PagedList.Mvc.Core;
+
+@model FifthGroup_front.ViewModels.PaymentHistory
+
+@{
+    ViewData["Title"] = "History";
+}
+
+
+
+<style>
+.form-select {
+    width: 100%; /* 调整宽度 */
+    height: 30px; /* 调整高度 */
+
+}
+
+.form-date-control{
+  width: 120px; /* 调整宽度 */
+  height: 30px; /* 调整高度 */
+  font-size: 14px; /* 调整字体大小 */
+}
+/* \日期表格調整 */
+
+</style>
+
+<body>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">過往繳費紀錄</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+           
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+   
+
+
+
+
+    <div class="container-fluid product py-2">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-1 mb-3">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-6 mb-3">
+                <form method="post" action="@Url.Action("History", "Payment")" class="row g-5">
+                    <div class="col-md-3">
+                        <label for="items" class="form-label">繳費項目</label>
+                        <select id="items" name="itemID" class="form-select">
+                            <option value="">請選擇</option>
+                            @foreach (var item in Model.PaymentItemsName)
+                            {
+                                <option value="@item.ItemClassificationCode">@item.Name</option>
+                            }
+                        </select>
+
+                    </div>
+
+                        <div class="col-md-3">
+                        <label for="startDate" class="form-label">從:</label>
+                        @Html.TextBox("startDate", null, new { @class = "form-control form-date-control", type = "date", id = "startDate" })
+                    </div>
+                    <div class="col-md-3">
+                        <label for="endDate" class="form-label">到:</label>
+                        @Html.TextBox("endDate", null, new { @class = "form-control form-date-control", type = "date", id = "endDate" })
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <button id="filterButton" class="btn btn-dark">篩選</button>
+                    </div>
+                </form>
+            </div>
+            @*<div class="col-md-4 mb-3">
+            <a asp-action="Create" class="btn btn-dark ml-auto">新增繳費</a>
+            </div>*@
+        </div>
+
+
+        <div class="container mb-5">
+            <div class="card custom-wide-card">
+                <div class="table-responsive text-nowrap align-content-center">
+                        <table class="table">
+                        <thead class="table-dark" id="table-container">
+                                <tr>
+                                    <th>
+                                        繳費代碼
+                                    </th>
+                                    <th>
+                                        繳費日期
+                                    </th>
+                                    <th>
+                                        繳費項目
+                                    </th>
+                                    <th>
+                                        說明
+                                    </th>
+                                    <th>
+                                        金額
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0" id="tablerow">
+                            @foreach (var item in Model.PagedPayments)
+                            {
+                            
+                                    var PItem = Model.PaymentItems.FirstOrDefault(s=>s.PaymentItemCode==item.PaymentItemCode);
+
+                            
+
+
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PayDay)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => PItem.PaymentName )
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => PItem.Remark)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Amount)
+                                    </td>
+
+
+                                </tr>
+                        }
+                            </tbody>
+
+                        </table>
+
+
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination mt-5 justify-content-center">
+                        <li class="page-item first @(Model.PagedPayments.IsFirstPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPayments.IsFirstPage ? "#" : Url.Action("History", new { page = 1, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate  }))">
+                                <i class="fa-solid fa-angles-left fa-xl " style="color: #488d2a;"></i>
+                            </a>
+                        </li>
+                        <li class="page-item prev @(Model.PagedPayments.IsFirstPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPayments.IsFirstPage ? "#" : Url.Action("History", new { page = Model.PagedPayments.PageNumber - 1, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate}))">
+                                <i class="fa-solid fa-angle-left fa-xl" style="color: #488d2a;"></i>
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Model.PagedPayments.PageCount; i++)
+                        {
+                            <li class="page-item @(i == Model.PagedPayments.PageNumber ? "active" : "")">
+                                <a class="page-link" href="@(i == Model.PagedPayments.PageNumber ? "#" : Url.Action("History", new { page = i, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate}))">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item next @(Model.PagedPayments.IsLastPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPayments.IsLastPage ? "#" : Url.Action("History", new { page = Model.PagedPayments.PageNumber + 1, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate}))">
+                                <i class="fa-solid fa-angle-right fa-xl" style="color: #488d2a;"></i>
+                            </a>
+                        </li>
+                        <li class="page-item last @(Model.PagedPayments.IsLastPage ? "disabled" : "")">
+                            <a class="page-link" href="@(Model.PagedPayments.IsLastPage ? "#" : Url.Action("History", new { page = Model.PagedPayments.PageCount, startDate = ViewBag.StartDate, endDate = ViewBag.EndDate}))">
+                                <i class="fa-solid fa-angles-right fa-xl" style="color: #488d2a;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <a asp-action="Main" asp-controller="Payment" asp-area="" class="btn btn-primary rounded-pill py-3 px-5 m-3">返回</a>
+        </div>
+    </div>
+</body>
+
+
+
+@section Scripts
+{
+    @*<script>
+        $(document).ready(function () {
+
+            $("#filterButton").click(function () {
+                //獲取選項內容
+                var selecteditemId = $("#item").val();
+                var startDate = $("#startDate").val();
+                var endDate = $("#endDate").val();
+
+                // 創建表單對象
+                var form = $("<form>")
+                    .attr("method", "POST")
+                    .attr("action", "/Payment/History"); // (替換成POST的Controller及Action)
+
+                // 添加樓棟ID、開始/結束日期(區間)、推送狀態作為表單字段
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "itemID")
+                    .attr("value", selecteditemId)
+                    .appendTo(form);
+
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "startDate")
+                    .attr("value", startDate)
+                    .appendTo(form);
+
+                $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "endDate")
+                    .attr("value", endDate)
+                    .appendTo(form);
+
+                // 添加防跨站請求偽造令牌(CSRF令牌)作為表單字串
+                var csrfToken = $('input[name="__RequestVerificationToken"]').val();
+                if (csrfToken) {
+                    $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "__RequestVerificationToken")
+                        .attr("value", csrfToken)
+                        .appendTo(form);
+                }
+
+                // 將表單附加到頁面並提交
+                form.appendTo("body").submit();
+
+
+                
+            });
+    
+        }
+    </script>*@
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 獲取ViewBag值
+            var itemID = "@ViewBag.itemID";
+            var startDate = "@ViewBag.StartDate"
+            var endDate = "@ViewBag.EndDate"
+
+            //賦值給選項
+            $("#items").val(itemID);
+            $('#startDate').datepicker({
+                defaultDate: startDate
+            });
+
+            $('#endDate').datepicker({
+                defaultDate: endDate
+            });
+
+        });
+    </script>
+
+
+}

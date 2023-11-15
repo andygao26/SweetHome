@@ -1,0 +1,107 @@
+﻿@model IEnumerable<FifthGroup_front.ViewModels.ActiveFromResident>
+
+@{
+    ViewData["Title"] = "DetailActive";
+}
+
+<!-- Header -->
+<div class="container-fluid page-header py-5 fadeIn">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">活動申請紀錄</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="ActiveList">活動報名</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="PersonalActive">報名紀錄查詢</a></li>
+                <li class="breadcrumb-item  text-dark" aria-current="page">活動申請紀錄</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header -->
+<!-- body -->
+
+<div class="container-fluid product">
+    <div class="container">
+        <div class="col-lg-12 py-5">
+            <div class="py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="display-6 mb-0">報名情況</h4>
+                    <a asp-action="CheckActive" class="btn btn-danger">返回</a>
+                </div>
+                <div style="font-size: 20px;font-weight: bold;color:rgb(100,100,190);margin-bottom: 10px;">
+                    活動名稱: @ViewBag.ActiveName
+                </div>
+                <div class="card custom-wide-card">
+                    <div class="table-responsive text-nowrap align-content-center">
+                        <table class="table table-striped">
+                            <thead style="text-align: center; vertical-align: middle;" class="table-dark">
+                                <tr>
+                                    <th>
+                                        參加住戶戶號
+                                    </th>
+                                    <th>
+                                        聯絡人姓名
+                                    </th>
+                                    <th>
+                                        聯絡電話
+                                    </th>
+                                    <th>
+                                        聯絡信箱
+                                    </th>
+                                    <th>
+                                        報名人數
+                                    </th>
+                                    <th>
+                                        繳費情況
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center; vertical-align: middle;">
+                                @if (Model == null || !Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="6" style="font-size: 18px; text-align: center; color:darkblue">尚未有活動申請資料</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Resident.HouseholdCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Resident.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Resident.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Resident.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Registration.NumberOfApplicants)
+                                            </td>
+                                            <td>
+                                                @if (item.isPaid)
+                                                {
+                                                    <a>已繳錢</a>
+                                                }
+                                                else
+                                                {
+                                                    <a>未繳費</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- body -->

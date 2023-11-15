@@ -1,0 +1,71 @@
+﻿@model FifthGroup_Backstage.ViewModel.CReservations_four
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>預約一覽表</h1>
+<!-- 搜尋表單 -->
+<h1>預約一覽表</h1>
+
+<!-- 搜尋表單 -->
+<form method="get" action="@Url.Action("Search", "Reservations")">
+    <div class="form-group">
+        <label for="keyword">關鍵字：</label>
+        <input type="text" id="keyword" name="keyword" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">搜尋</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                姓名
+            </th>
+            <th>
+                場地
+            </th>
+            <th>
+                日期
+            </th>
+            <th>
+                時段
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ReservationPlace)
+        {
+            var placeCode = item.PlaceCode;
+            var placeName = Model.PublicSpaceDetail.FirstOrDefault(p => p.PlaceCode == placeCode)?.PlaceName;
+            var ReserveCode = item.ReserveCode;
+            var hName = Model.Reservations.FirstOrDefault(p => p.ReserveCode == ReserveCode)?.HName;
+            var PeriodoftimeCode = item.PeriodoftimeCode;
+            var Periodoftime = Model.Periodoftime.FirstOrDefault(p => p.PeriodoftimeCode == PeriodoftimeCode)?.Periodoftime1;
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => hName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => placeName)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.FDate).ToString("yyyy/MM/dd")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Periodoftime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

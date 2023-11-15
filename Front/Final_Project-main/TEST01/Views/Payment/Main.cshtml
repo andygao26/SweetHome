@@ -1,0 +1,470 @@
+﻿@using System.Globalization;
+@model FifthGroup_front.ViewModels.PaymentViewModel
+
+
+@{
+    ViewData["Title"] = "Main";
+}
+<meta charset="utf-8">
+<title>Tea House - Tea Shop Website Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Favicon -->
+<link href="~/img/298bf8c5-e749-4eed-997f-3389864582f0.jpg" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+      rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!-- Libraries Stylesheet -->
+<link href="~/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
+
+<style>
+    #Detail {
+        font-family: Microsoft JhengHei;
+    }
+/* 
+    .font-style-JhengHei {
+        font-family: Microsoft JhengHei;
+    }
+
+
+
+    .bg-payment {
+        background-color: rgb(129, 226, 194);
+    }
+
+    .bg-payment-darker {
+        background-color: rgb(125, 222, 190);
+    }
+
+    .bg-gray {
+        background-color: rgb(235, 235, 235)
+    } */
+    .Detaila {
+        max-width : 100%;
+        width: 90%; /* 设置子元素的最大宽度，以防止超出父元素 */
+        margin: 0 auto; /* 居中子元素 */
+    }
+</style>
+
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">線上繳費</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-dark" aria-current="page">線上繳費</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium fst-italic text-primary">繳費分類</p>
+            <h1 class="display-6">選擇繳費項目</h1>
+            <div class="d-flex justify-content-between ">
+            </div>
+
+        </div>
+        <div class="row g-4">
+            @*<div id="HouseDiv" data-action-url="@Url.Action("HousePayment", "Payment")" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">*@
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid " src="~/img/Payment_H.jfif" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-sharp fa-solid fa-house fs-1 "></i>
+
+                        </div>
+                        <h4 class="mb-3">繳交房租</h4>
+                        <p></p>
+
+                    </div>
+                    <div id="housepayment" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid" src="~/img/housepayment.jpeg" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-sharp fa-solid fa-building-user fs-1"></i>
+
+                        </div>
+                        <h4 class="mb-3">繳交管理費</h4>
+                        <p></p>
+
+                    </div>
+                    <div id="managementFee" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid" src="~/img/expayment.jpg" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-solid fa-ellipsis fs-1"></i>
+
+                        </div>
+                        <h4 class="mb-3">其他費用</h4>
+                        <p></p>
+
+                    </div>
+                    <div id="other" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                <a asp-action="History" asp-controller="Payment" asp-area="" class="btn btn-primary rounded-pill py-3 px-5">查詢過往繳費</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="house_P" class="container-fluid visually-hidden " style="margin-top: 6rem; margin-bottom: 6rem; "
+     aria-hidden="true">
+    <div class="container bg-light">
+        <div class="row g-0">
+            <div class="col-lg-6 py-5 wow fadeIn " data-wow-delay="0.1s">
+                <h1 class="display-6 mb-4">租金一覽</h1>
+                @if (Model.House_P != null)
+                {
+                    @foreach (var item in Model.House_P)
+                    {
+               @*          var Amount = item.Amount.ToString("C0", new CultureInfo("zh-TW"));
+                        var ExpiredDay = item..ToString("yyyy-MM-dd"); *@
+
+
+                        <div class="py-5  w-100 bg-light shadow p-3 mb-5 border">
+                            <h1 class="font-style-JhengHei">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Remark</h1>
+                            <div id="Detail" class=" row d-flex flex-column g-4 mb-5 mt-3 p-0  ">
+
+                                <div class=" d-flex col-sm-6  mt-0 w-100  Detaila fs-4 p-0 ">
+                                    <div class="p-1 w-25 fw-bold bg-payment-darker rounded-start  ">繳費代號</div>
+                                    <div id="Paycode" class="p-1 w-75 fw-bold bg-gray rounded-end">@item.PaymentItemCode</div>
+                                </div>
+                               @*  <div class=" d-flex col-sm-6  mt-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment rounded-start">戶號</div>
+                                    <div id="Account" class="p-2 w-75 fw-bold bg-light rounded-end">@item.HouseholdCode</div>
+                                </div> *@
+                              @*   <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">電話號碼</div>
+                                    <div id="Phone" class="p-2 w-75 fw-bold bg-gray rounded-end">0999888777</div>
+                                </div>
+                                <div class="d-flex col-sm-6 mt-2 w-100  fs-4 p-0">
+                                    <div class="p-2 w-25 fw-bold bg-payment  rounded-start">繳交月份</div>
+                                    <div id="Date" class="p-2 w-75 fw-bold bg-light rounded-end">112年8月份租金</div>
+                                </div> *@
+                                <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">繳交總金額</div>
+                                    <div id="money" class="p-2 w-75 fw-bold bg-gray rounded-end">@item.Amount.ToString("C0", new CultureInfo("zh-TW")) 元</div>
+                                </div>
+                                <div class=" d-flex col-sm-6 mt-2 mb-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment rounded-start">繳費期限</div>
+                                    <div id="PayDate" class="p-2 w-75 fw-bold bg-light rounded-end">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Date.ToString("yyyy-MM-dd")</div>
+                                </div>
+
+                                <div class=" d-flex col-sm-6 mt-0 w-100  fs-1  ">
+                                </div>
+                            </div>
+                            <a asp-action="ECPAY" asp-controller="Payment" asp-area="" asp-route-id="@item.PaymentCode" class="btn bg-payment rounded-pill py-3 px-5">前往繳費</a>
+                        </div>
+                       
+                    }
+                    
+
+                }
+
+
+                
+            </div>
+         @*    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 300px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Un7Btj9sQJQ"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    <!-- <button type="button" class="btn-play" data-bs-toggle="modal"
+                        data-src="https://youtu.be/ikYXG8Ict1A" data-bs-target="#videoModal"> -->
+                    <span></span>
+                    
+                </div>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+<div id="Manage_P" class="container-fluid visually-hidden " style="margin-top: 6rem; margin-bottom: 6rem; "
+     aria-hidden="true">
+    <div class="container bg-light">
+        <div class="row g-0">
+            <div class="col-lg-6 py-5 wow fadeIn " data-wow-delay="0.1s">
+                <h1 class="display-6 mb-4">管理費一覽</h1>
+                @if (Model.Manage_P != null)
+                {
+                    @foreach (var item in Model.Manage_P)
+                    {
+                        <div class="py-5  w-100 bg-light shadow p-3 mb-5 border">
+                            <h1 class="font-style-JhengHei">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Remark</h1>
+                            <div id="Detail" class=" row d-flex flex-column g-4 mb-5 mt-3 p-0  ">
+
+                                <div class=" d-flex col-sm-6  mt-0 w-100  Detaila fs-4 p-0 ">
+                                    <div class="p-1 w-25 fw-bold bg-payment-darker rounded-start  ">繳費代號</div>
+                                    <div id="Paycode" class="p-1 w-75 fw-bold bg-gray rounded-end">@item.PaymentItemCode</div>
+                                </div>
+                                @*  <div class=" d-flex col-sm-6  mt-2 w-100  fs-4 p-0 ">
+                        <div class="p-2 w-25 fw-bold bg-payment rounded-start">戶號</div>
+                        <div id="Account" class="p-2 w-75 fw-bold bg-light rounded-end">@item.HouseholdCode</div>
+                        </div> *@
+                                @*   <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                        <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">電話號碼</div>
+                        <div id="Phone" class="p-2 w-75 fw-bold bg-gray rounded-end">0999888777</div>
+                        </div>
+                        <div class="d-flex col-sm-6 mt-2 w-100  fs-4 p-0">
+                        <div class="p-2 w-25 fw-bold bg-payment  rounded-start">繳交月份</div>
+                        <div id="Date" class="p-2 w-75 fw-bold bg-light rounded-end">112年8月份租金</div>
+                        </div> *@
+                                <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">繳交總金額</div>
+                                    <div id="money" class="p-2 w-75 fw-bold bg-gray rounded-end">@item.Amount.ToString("C0", new CultureInfo("zh-TW")) 元</div>
+                                </div>
+                                <div class=" d-flex col-sm-6 mt-2 mb-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment rounded-start">繳費期限</div>
+                                    <div id="PayDate" class="p-2 w-75 fw-bold bg-light rounded-end">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Date.ToString("yyyy-MM-dd")</div>
+                                </div>
+
+                                <div class=" d-flex col-sm-6 mt-0 w-100  fs-1  ">
+                                </div>
+                            </div>
+                            <a asp-action="ECPAY" asp-controller="Payment" asp-area="" asp-route-id="@item.PaymentCode" class="btn bg-payment rounded-pill py-3 px-5">前往繳費</a>
+                        </div>
+
+
+                    }
+
+
+                }
+
+
+
+            </div>
+            @*    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 300px;">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Un7Btj9sQJQ"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+            <!-- <button type="button" class="btn-play" data-bs-toggle="modal"
+            data-src="https://youtu.be/ikYXG8Ict1A" data-bs-target="#videoModal"> -->
+            <span></span>
+
+            </div>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+<div id="Else_P" class="container-fluid visually-hidden " style="margin-top: 6rem; margin-bottom: 6rem; "
+     aria-hidden="true">
+    <div class="container bg-light">
+        <div class="row g-0">
+            <div class="col-lg-6 py-5 wow fadeIn " data-wow-delay="0.1s">
+                <h1 class="display-6 mb-4">其他繳費一覽</h1>
+                @if (Model.Else_P != null)
+                {
+                    @foreach (var item in Model.Else_P)
+                    {
+                        <div class="py-5  w-100 bg-light shadow p-3 mb-5 border">
+                            <h1 class="font-style-JhengHei">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Remark</h1>
+                            <div id="Detail" class=" row d-flex flex-column g-4 mb-5 mt-3 p-0  ">
+
+                                <div class=" d-flex col-sm-6  mt-0 w-100  Detaila fs-4 p-0 ">
+                                    <div class="p-1 w-25 fw-bold bg-payment-darker rounded-start  ">繳費代號</div>
+                                    <div id="Paycode" class="p-1 w-75 fw-bold bg-gray rounded-end">@item.PaymentItemCode</div>
+                                </div>
+                                @*  <div class=" d-flex col-sm-6  mt-2 w-100  fs-4 p-0 ">
+                        <div class="p-2 w-25 fw-bold bg-payment rounded-start">戶號</div>
+                        <div id="Account" class="p-2 w-75 fw-bold bg-light rounded-end">@item.HouseholdCode</div>
+                        </div> *@
+                                @*   <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                        <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">電話號碼</div>
+                        <div id="Phone" class="p-2 w-75 fw-bold bg-gray rounded-end">0999888777</div>
+                        </div>
+                        <div class="d-flex col-sm-6 mt-2 w-100  fs-4 p-0">
+                        <div class="p-2 w-25 fw-bold bg-payment  rounded-start">繳交月份</div>
+                        <div id="Date" class="p-2 w-75 fw-bold bg-light rounded-end">112年8月份租金</div>
+                        </div> *@
+                                <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">繳交總金額</div>
+                                    <div id="money" class="p-2 w-75 fw-bold bg-gray rounded-end">@item.Amount.ToString("C0", new CultureInfo("zh-TW")) 元</div>
+                                </div>
+                                <div class=" d-flex col-sm-6 mt-2 mb-2 w-100  fs-4 p-0 ">
+                                    <div class="p-2 w-25 fw-bold bg-payment rounded-start">繳費期限</div>
+                                    <div id="PayDate" class="p-2 w-75 fw-bold bg-light rounded-end">@Model.PaymentItems.FirstOrDefault(s => s.PaymentItemCode == item.PaymentItemCode)?.Date.ToString("yyyy-MM-dd")</div>
+                                </div>
+
+                                <div class=" d-flex col-sm-6 mt-0 w-100  fs-1  ">
+                                </div>
+                            </div>
+                            <a asp-action="ECPAY" asp-controller="Payment" asp-area="" asp-route-id="@item.PaymentCode" class="btn bg-payment rounded-pill py-3 px-5">前往繳費</a>
+                        </div>
+
+                    }
+
+
+                }
+
+
+
+            </div>
+            @*    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 300px;">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Un7Btj9sQJQ"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+            <!-- <button type="button" class="btn-play" data-bs-toggle="modal"
+            data-src="https://youtu.be/ikYXG8Ict1A" data-bs-target="#videoModal"> -->
+            <span></span>
+
+            </div>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+
+@* <div id="Clear" class="container-fluid visually-hidden " style="margin-top: 6rem; margin-bottom: 6rem; "
+     aria-hidden="true">
+    <div class="col-lg-6 py-5 wow fadeIn d-flex justify-content-center" data-wow-delay="0.1s">
+        <h1 class="display-6 mb-4 d-block">目前無任何欠繳，無聲臨睦謝謝您。</h1>
+    </div>
+</div> *@
+<div id="Clear" class="container-fluid visually-hidden" style="margin-top: 6rem; margin-bottom: 6rem;">
+    <div class="col-lg-6 py-5 wow fadeIn d-flex justify-content-center align-items-center w-100" data-wow-delay="0.1s">
+        <h1 class="display-6 mb-4 d-block text-center">目前無任何欠繳，無聲臨睦謝謝您。</h1>
+    </div>
+</div>
+<!-- Video End -->
+
+<!-- Video Modal End -->
+
+<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/wow/wow.min.js"></script>
+<script src="~/lib/easing/easing.min.js"></script>
+<script src="~/lib/waypoints/waypoints.min.js"></script>
+<script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<script>
+    // 获取按钮和房屋内容的元素
+    // var housePaymentButton = document.getElementById("payment");
+    // var houseElement = document.getElementById("payway");
+    // var navbarHeight = document.querySelector('.navbar').offsetHeight;
+    // // 添加点击事件监听器
+    // housePaymentButton.addEventListener("click", function () {
+    //     // 移除visually-hidden类
+    //     houseElement.classList.remove("visually-hidden");
+    //     houseElement.scrollIntoView({ behavior: 'smooth' });
+
+    // });
+
+    // function handleButtonClick(buttonId, targetId) {
+    //     var button = document.getElementById(buttonId);
+    //     var targetElement = document.getElementById(targetId);
+    //     var previousElement = null;
+
+    //     button.addEventListener("click", function () {
+    //         if (previousElement !== null) {
+    //             previousElement.classList.add("visually-hidden");
+    //         }
+    //         targetElement.classList.remove("visually-hidden");
+    //         targetElement.scrollIntoView({ behavior: 'smooth' });
+    //         previousElement = targetElement;
+    //     });
+
+    // }
+    // handleButtonClick("housepayment", "house_P");
+    // handleButtonClick("managementFee", "Manage_P");
+    // handleButtonClick("other", "Else_P");
+    var previousElement = null;
+    var HP = @Model.House_P.Count();
+    var MP = @Model.Manage_P.Count();
+    var EP = @Model.Else_P.Count();
+
+
+    function handleButtonClick(buttonId, targetId,Data) {
+        var button = document.getElementById(buttonId);
+        var targetElement = document.getElementById(targetId);
+        var HasData = Data;
+        var clearElement = document.getElementById("Clear");
+        button.addEventListener("click", function () {
+            if (previousElement != null) {
+                previousElement.classList.add("visually-hidden");
+            }
+            if (HasData != 0) {
+                
+                targetElement.classList.remove("visually-hidden");
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                previousElement = targetElement;
+            } else {
+                    
+                    clearElement.classList.remove("visually-hidden");
+                    clearElement.scrollIntoView({ behavior: 'smooth' });
+                    previousElement = targetElement;
+            }
+           
+        });
+    }
+    handleButtonClick("housepayment", "house_P",HP);
+    handleButtonClick("managementFee", "Manage_P",MP);
+    handleButtonClick("other", "Else_P",EP);
+
+
+    //document.getElementById("HouseDiv").addEventListener("click", function () {
+    //    var actionUrl = this.getAttribute("data-action-url");
+    //    if (actionUrl) {
+    //        window.location.href = actionUrl;
+    //    }
+    //});
+</script>
+<!-- Template Javascript -->
+@*<script src="~/js/main.js"></script>*@

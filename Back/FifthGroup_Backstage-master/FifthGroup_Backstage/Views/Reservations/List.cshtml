@@ -1,0 +1,172 @@
+﻿@model FifthGroup_Backstage.ViewModel.CReservations_four
+@using X.PagedList
+@using X.PagedList.Mvc;
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common;
+
+
+
+
+@{
+    ViewData["Title"] = "List";
+}
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">預約一覽表</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                    預約一覽表
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Reservations" asp-action="Listreview_personal">尚未審核</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Reservations" asp-action="Listbefore">歷史紀錄</a>
+                </li>
+
+
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+    <div class="container-fluid product py-2">
+      <div class="container mb-5">
+        <!-- Bootstrap Table with Header - Dark -->
+       <div class="card custom-wide-card">
+          <div class="table-responsive text-nowrap align-content-center">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>姓名</th>
+                            <th>場地</th>
+                            <th>日期</th>
+                            <th>時段</th>
+                            <th>審核狀態</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReservationPlace)
+                        {
+                            var ReserveCode = item.ReserveCode;
+                            var hName = Model.Reservations.FirstOrDefault(p => p.ReserveCode == ReserveCode)?.HName;
+
+                            var placeCode = item.PlaceCode;
+                            var placeName = Model.PublicSpaceDetail.FirstOrDefault(p => p.PlaceCode == placeCode)?.PlaceName;
+
+                            var PeriodoftimeCode = item.PeriodoftimeCode;
+                            var Periodoftime = Model.Periodoftime.FirstOrDefault(p => p.PeriodoftimeCode == PeriodoftimeCode)?.Periodoftime1;
+
+                            var r = item.ReserveCode;
+                            var hstate = Model.Reservations.FirstOrDefault(p => p.ReserveCode == r)?.HState;
+
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => hName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => placeName)
+                                </td>
+                                <td>
+                                    @{
+                                        if (item.FDate != null)
+                                        {
+                                            @Convert.ToDateTime(item.FDate).ToString("yyyy/MM/dd")
+                                        }
+                                        else if(item.FDateStart != null)
+                                        {
+                                            @Convert.ToDateTime(item.FDateStart).ToString("yyyy/MM/dd~");
+                                            @Convert.ToDateTime(item.FDateEnd).ToString("yyyy/MM/dd");
+
+                                        }
+
+                                    }
+                                    
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Periodoftime)
+                                </td>
+                                <td>
+                                    <div hidden>
+                                        @Html.DisplayFor(modelItem => item.FState)
+                                    </div>
+                                    @{
+                                        string stateText = "";
+                                        switch (item.FState)
+                                        {
+                                            case 0:
+                                                stateText = "未審核";
+                                                break;
+                                            case 1:
+                                                stateText = "審核中";
+                                                break;
+                                            case 2:
+                                                stateText = "已通過";
+                                                break;
+                                            case 3:
+                                                stateText = "未通過";
+                                                break;
+                                        }
+                                    }
+                                    @stateText
+                                </td>
+                                <td>
+                                    @Html.ActionLink("詳細資料", "Listbefore_Details", new { id=item.ReserveCode }) @* | *@
+                                    @* @Html.ActionLink("詳細資料", "Details", new { /* id=item.PrimaryKey */ }) *@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <style>
+                    .custom-pager {
+                        font-size: 18px; /* 设置字体大小 */
+                        /* 添加边框 */
+                        padding: 10px; /* 添加内边距 */
+                        min-width: 200px; /* 设置最小宽度 */
+                        min-height: 50px; /* 设置最小高度 */
+                    }
+
+                        .custom-pager ul.pagination {
+                            display: inline-block; /* 让分页链接水平排列 */
+                            list-style: none; /* 移除列表样式 */
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                            .custom-pager ul.pagination li {
+                                display: inline;
+                                margin-right: 5px; /* 为分页链接之间添加一些间距 */
+                            }
+
+                                .custom-pager ul.pagination li a {
+                                    text-decoration: none;
+                                    padding: 5px 10px; /* 添加内边距 */
+                                    border: 1px solid #ccc; /* 添加边框 */
+                                    background-color: #f0f0f0; /* 设置背景颜色 */
+                                    color: #333; /* 设置文字颜色 */
+                                }
+
+                                .custom-pager ul.pagination li.active a {
+                                    background-color: #007bff; /* 设置当前页链接的背景颜色 */
+                                    color: #fff; /* 设置当前页链接的文字颜色 */
+                                }
+
+                </style>
+                <div class="text-center custom-pager">
+                    @if (Model.ReservationPlace is IPagedList<ReservationPlace> pagedList)
+                    {
+                        @Html.PagedListPager(pagedList, page => Url.Action("List", new { page }), new PagedListRenderOptions() { DisplayLinkToFirstPage = PagedListDisplayMode.Never, DisplayLinkToLastPage = PagedListDisplayMode.Never })
+                    }
+                </div>
+          </div>
+        </div>
+        <!--/ Bootstrap Table with Header Dark -->
+      </div>
+    </div>
+

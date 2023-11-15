@@ -1,0 +1,168 @@
+﻿@model FifthGroup_Backstage.ViewModel.AddBlogPostRequest
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">公告管理/</span> 新增公告</h4>
+
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">公告內容</h5>
+                        <small class="text-muted float-end">Announcemet</small>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="mb-3">
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">文章標題</label>
+                                    <input type="text" class="form-control" id="heading" asp-for="Heading" />
+                                </div>
+                                
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">頁面標題</label>
+                                <input type="text" class="form-control" id="PageTitle" asp-for="PageTitle" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">文章內容</label>
+                                <textarea class="form-control" id="content" asp-for="Content"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">簡要敘述</label>
+                                <input type="text" class="form-control" id="shortDescription" asp-for="ShortDescription" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">上傳圖片</label>
+                                <input type="file" class="form-control" id="feacturedImageUpload" />
+                                <img src="" id="feacturedImageDisplay" style="display:none;width:300px" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">圖片網址(上傳圖片後，將自動生成)</label>
+                                <input type="text" class="form-control" id="feacturedImageUrl" asp-for="FeacturedImageUrl" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">網址</label>
+                                <input type="text" class="form-control" id="urlHandle" asp-for="UrlHandle" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">發布日期</label>
+                                <input type="date" class="form-control" id="publishedDate" asp-for="PublishedDate" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">作者</label>
+                                <input type="text" class="form-control" id="author" asp-for="Author" />
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="true" id="visible" asp-for="Visible">
+                                <label class="form-check-label">
+                                    Is Viseable ?
+                                </label>
+                            </div>
+                            <div class="mb-4">
+                           
+                                <label class="form-label">標籤</label>
+                                <select multiple
+                                        class="form-select"  style="width:auto;height:auto"asp-items="@Model.Tags" asp-for="SelectedTags"></select>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-dark">送出</button>
+                                <button type="button" class="btn btn-dark" id="fillDefaultContentButton">Demo</button>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+  
+        </div>
+    </div>
+    <!-- / Content -->
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        var editor = new FroalaEditor('#content');//initialized the editor
+
+        const featuredUploadElement = document.getElementById('feacturedImageUpload');
+        const featuredImageUrlElement = document.getElementById('feacturedImageUrl');
+        const feacturedImageDisplayElement = document.getElementById('feacturedImageDisplay')
+
+        async function uploadFeacturedImage(e) {
+            console.log(e.target.files[0])
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+            //upload this data to controller
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    featuredImageUrlElement.value = result.link;
+                    feacturedImageDisplayElement.src = result.link;
+                    feacturedImageDisplayElement.style.display = 'block';
+                })
+        }
+        featuredUploadElement.addEventListener('change', uploadFeacturedImage)
+    </script>
+
+    <script>
+        // JavaScript函数，用于填充预设内容
+        function fillDefaultContent() {
+            var editor = new FroalaEditor('#content');
+
+            var defaultHeading = "敬祝中秋佳節愉快！";
+            var defaultPageTitle = "中秋節快樂";
+            var defaultContent = "<strong>親愛的社區成員</strong>，<hr>隨著秋季的到來，我們即將迎來一個重要的節日——中秋節。在這個月圓之夜，我們將與家人團聚，共享美食，賞月，並表達對親人的思念和祝福。<hr>無論你是與家人一起慶祝，還是選擇獨自度過，我們都希望你能感受到這個節日的溫暖和喜悅。<hr>讓我們一起慶祝這個美好的節日，並向所有的社區成員送上最誠摯的祝福。祝大家中秋佳節愉快，萬事如意！";
+            var defaultShortDescription = "無聲臨睦向所有的社區成員送上最誠摯的祝福。祝大家中秋佳節愉快，萬事如意！";
+            var defaultUrlHandle = "Moon-Festival ";
+            var defaultPublishedDate = "2023-09-28"; 
+            var defaultAuthor = "管委會";
+            var defaultVisible = true;
+
+
+            // 填充表单字段
+            document.getElementById("heading").value = defaultHeading;
+            document.getElementById("PageTitle").value = defaultPageTitle;
+            document.getElementById("content").value = defaultContent;
+            document.getElementById("shortDescription").value = defaultShortDescription;
+            document.getElementById("urlHandle").value = defaultUrlHandle;
+            document.getElementById("publishedDate").value = defaultPublishedDate;
+            document.getElementById("author").value = defaultAuthor;
+            document.getElementById("visible").checked = defaultVisible;
+
+            editor.html.set(defaultContent);
+
+
+       
+        }
+
+        // 将按钮点击事件与函数关联
+        var fillDefaultContentButton = document.getElementById("fillDefaultContentButton");
+        fillDefaultContentButton.addEventListener("click", fillDefaultContent);
+    </script>
+
+}
+

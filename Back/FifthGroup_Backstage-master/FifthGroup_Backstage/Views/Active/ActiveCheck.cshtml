@@ -1,0 +1,270 @@
+﻿@model IEnumerable<FifthGroup_Backstage.ViewModel.CActive>
+
+@{
+    ViewData["Title"] = "ActiveCheck";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    .btn-small {
+        padding: 5px 10px; 
+        font-size: 15px;
+    }
+
+    .btn-container {
+        text-align: left;
+    }
+</style>
+
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <div class="container-fluid page-header fadeIn">
+            <div class="container text-center py-2">
+                <h1 class="display-3 text-dark animated slideInDown">審核用戶活動</h1>
+                <nav aria-label="breadcrumb animated slideInDown">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="ActiveList" asp-route-isNow="True">活動查看</a></li>
+                        <li class="breadcrumb-item  text-dark" aria-current=" page">活動審核</li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="ActiveList" asp-route-isNow="False">歷史活動</a></li>
+
+                    </ol>
+                </nav>
+                <div class="text-center">
+                    <div class="text-left btn-container">
+                        <button id="waitButton" class="btn btn-info btn-small" data-state="1">審核中</button>
+                        <button id="approveButton" class="btn btn-success btn-small" data-state="2">已通過</button>
+                        <button id="defeatButton" class="btn btn-danger btn-small" data-state="3">未通過</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid product py-2">
+            <div class="container mb-5">
+                <div class="card m-3 ">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table" style="text-align: center; vertical-align: middle;">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAll" />
+                                    </th>
+
+                                    <th>
+                                        活動名稱
+                                    </th>
+                                    <th>
+                                        活動類型
+                                    </th>
+                                    <th>
+                                        活動地點
+                                    </th>
+                                    <th>
+                                        活動日期
+                                    </th>
+                                    <th>
+                                        活動時間
+                                    </th>
+                                    <th>
+                                        人數上限
+                                    </th>
+                                    <th>
+                                        審核狀態
+                                    </th>
+                                    <th>
+                                        操作
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model == null || !Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="9" style="font-size: 18px; text-align: center; color:darkblue">目前尚未有待審核活動</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr data-item-id="@item.Applications.ApplyCode">
+                                            <td>
+                                                <input type="checkbox" class="checkbox" />
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Applications.ActivityName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Applications.Activities)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PlaceName)
+                                            </td>
+                                            <td>
+                                                @item.Applications.DateStart.ToString("yyyy/MM/dd") ~ @item.Applications.DateEnd.ToString("yyyy/MM/dd")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Periodoftime1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Applications.MaxApplicants) 人
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @{
+                                                    string stateText = "";
+                                                    switch (item.Applications.State)
+                                                    {
+                                                        case 0:
+                                                            stateText = "未審核";
+                                                            break;
+                                                        case 1:
+                                                            stateText = "審核中";
+                                                            break;
+                                                        case 2:
+                                                            stateText = "已通過";
+                                                            break;
+                                                        case 3:
+                                                            stateText = "未通過";
+                                                            break;
+                                                    }
+                                                }
+                                                <span class="badge bg-label-primary me-1" style="font-size:16px">
+                                                    @stateText
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @if (item.Applications.DateStart > DateTime.Now)
+                                                {
+                                                    <a asp-action="ActiveDetails" asp-route-id="@item.Applications.ApplyCode" asp-route-returnUrl="ActiveCheck">詳細資料</a>
+                                                }
+                                                else
+                                                {
+                                                    <a>詳細資料</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+     </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        // 獲得所有的 checkbox
+        var checkboxes = $(".checkbox");
+
+        // 全選
+        $("#selectAll").click(function () {
+            checkboxes.prop("checked", $(this).prop("checked"));
+        });
+
+        // 單個 checkbox 點擊事件
+        checkboxes.click(function () {
+            if (!$(this).prop("checked")) {
+                // 如果 checkbox 取消選取，取消全選
+                $("#selectAll").prop("checked", false);
+            } else {
+                // 檢查是否所有的 checkbox 都被選到，如果是則設置全部選中
+                if (checkboxes.filter(":checked").length === checkboxes.length) {
+                    $("#selectAll").prop("checked", true);
+                }
+            }
+        });
+
+        // 按鈕點擊事件
+        $("#approveButton, #waitButton, #defeatButton").click(function () {
+            // 獲取按鈕上的 data-state 屬性值
+            var newState = $(this).data("state");
+
+            //獲取選中複數框的值
+            var selectedCheckboxes = checkboxes.filter(":checked");
+            var selectedIds = selectedCheckboxes.map(function () {
+                return $(this).closest("tr").data("item-id"); // 數據行有一個叫 data-item-id 屬性用於儲存項目
+            }).get();
+
+            // 發送AJAX請求
+            $.ajax({
+                url: "/Active/ActiveCheck", // 
+                method: "POST",
+                data: {
+                    ids: selectedIds,
+                    state: newState
+                },
+                success: function (response) {
+                    // 成功後更新頁面
+                    console.log("狀態已更新");
+                    location.reload();
+                },
+                error: function (error) {
+                    // 錯誤
+                    console.error("發生錯誤: " + error);
+                }
+            });
+        });
+
+        // 按鈕事件
+        $("#waitButton").click(function () {
+            // 選取複數項目
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            // 檢查有無選中項目
+            if (selectedCheckboxes.length > 0) {
+                // 選中項目更改狀態
+                selectedCheckboxes.each(function () {
+                    // 選取單元格
+                    var stateCell = $(this).closest("tr").find("td:7");
+                    stateCell.text("審核中");
+                });
+            }
+        });
+        $("#approveButton").click(function () {
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            if (selectedCheckboxes.length > 0) {
+                selectedCheckboxes.each(function () {
+                    var stateCell = $(this).closest("tr").find("td:7");
+                    stateCell.text("已通過");
+                });
+            }
+        });
+
+        $("#defeatButton").click(function () {
+            var selectedCheckboxes = checkboxes.filter(":checked");
+
+            // 
+            if (selectedCheckboxes.length > 0) {
+                selectedCheckboxes.each(function () {
+                    var stateCell = $(this).closest("tr").find("td:7");
+                    stateCell.text("未通過");
+                });
+            }
+        });
+    });
+</script>
+
+

@@ -1,0 +1,189 @@
+﻿
+@model FifthGroup_front.Models.ResidentRegister
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+
+
+        html,
+        body {
+            height: 100%;
+            font-family: "Mulish", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background: #999b96;
+        }
+
+            label {
+                font-size: 20px                
+            }
+            a {
+                color: #007bff;
+                text-decoration: none;
+                background-color: transparent;
+            }
+
+            a:hover,
+            a:focus {
+                text-decoration: none;
+                outline: none;
+                color: #ffffff;
+            }
+
+            .row {
+                display:-ms-flexbox;
+                display: flex;
+                
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+
+           .col-lg-6 {
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+
+          .register__form {
+                    position: relative;
+                    padding-left: 650px;
+                    padding-top: 100px;
+           }
+
+            .register__form h2 {
+                color: #1F2328;
+                font-weight: 700;
+                font-family: "Oswald", sans-serif;
+                margin-bottom: 60px;
+                align-content:center
+            }
+
+        .register__form form .input__item {
+                position: relative;
+                width: 500px;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+           .register__form form .input__item:before {
+                position: absolute;
+                left: 50px;
+                top: 10px;
+                height: 50px;
+                width: 1px;
+                background: #ffffff;
+          }
+
+         .register__form form .input__item input {
+               height: 50px;
+               width: 65%;
+               font-size: 22px;
+                color: #000000;
+               background: #ffffff;
+               border: none;             
+                position: absolute;
+                right: 20px;
+            }
+
+        .button,
+        .input,
+        .optgroup,
+        .select,
+        .textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+    .primary-btn {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #ffffff;
+        letter-spacing: 2px;
+    }
+   
+</style>
+
+<div class="container-fluid page-header py-5 wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="row"> 
+        <div class="col-lg-6">
+            @* <div class="register__form">
+            <h2>會員註冊</h2></br></br>
+                <form asp-action="Register">
+                <div class="input__item">
+                        <label for="PersonId">身份證字號</label>
+                        <input asp-for="PersonId" pattern="[A-Z]{1}[0-9]{9}" title="請輸入大寫英文字母加上九個數字" required />
+                    </div>
+                    </br>
+                <div class="input__item">
+                        <label for="Name">姓名</label>
+                    <input asp-for=" Name" title="必填"  required />
+
+                    </div>
+                </br>
+                <div class="input__item">
+                        <label for="Phone">連絡電話</label>
+                    <input asp-for="Phone" pattern="09[0-9]{8}" title="請輸入正確的電話號碼，10個數字(09開頭)" required />
+                    </div>
+                </br>
+                <div class="input__item">
+                        <label for="password">設定密碼</label>
+                    <input asp-for="Password" title="請輸入大於6個字的密碼" required />
+                    </div>
+                </br>
+                <div class="input__item">                   
+                        <label for="Emil">電子信箱</label>
+                    <input asp-for="Email" title="必填" required />
+                </div>
+                </br>
+                <div class="input__item">
+                        <label for="communityCode">*社區驗證碼</label>
+                    <input asp-for="VerifyCode" title="必填" required  />
+                    </div>
+                </br>
+                <button type="submit" class="btn btn-primary" asp-controller="Home" asp-action="Index">送出</button>
+                <label for="Explain">註冊完成後需等系統審核才可登入</label>
+                </form>
+            
+         </div>         *@
+       </div>
+     </div>
+   </div>
+@* <script>
+    const personIdInput = document.getElementById('personIdInput');
+    const personIdError = document.getElementById('personIdError');
+    const nameInput = document.getElementById('nameInput');
+    const phoneInput = document.getElementById('phoneInput');
+
+    personIdInput.addEventListener('blur', validatePersonId);
+    nameInput.addEventListener('blur', validateName);
+    phoneInput.addEventListener('blur', validatePhone);
+
+    
+     function validatePersonId() {
+        const pattern = /^[A-Z]{1}[0-9]{9}$/;
+        const inputValue = personIdInput.value;
+        
+        if (!pattern.test(inputValue)) {
+            personIdError.textContent = "請輸入正確的身份證字號，格式為一個大寫英文字母後接九個數字";
+        } else {
+            personIdError.textContent = "";
+        }
+    }
+    
+
+    function validateName() {
+       
+    }
+
+    function validatePhone() {
+      
+    }
+</script>
+ *@

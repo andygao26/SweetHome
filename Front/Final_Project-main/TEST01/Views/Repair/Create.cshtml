@@ -1,0 +1,315 @@
+﻿@model FifthGroup_front.ViewModels.CEmails
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data" id="myForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @* <div class="form-group">
+                <label asp-for="RepairCode" class="control-label"></label>
+                <input asp-for="RepairCode" class="form-control" />
+                <span asp-validation-for="RepairCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseholdCode" class="control-label">戶號</label>
+                <input asp-for="HouseholdCode" class="form-control" />
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+        <label asp-for="Type" class="control-label">報修項目</label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProcessingStatus" class="control-label"></label>
+                <input asp-for="ProcessingStatus" class="form-control" />
+                <span asp-validation-for="ProcessingStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturerCode" class="control-label"></label>
+                <input asp-for="ManufacturerCode" class="form-control" />
+                <span asp-validation-for="ManufacturerCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Detail" class="control-label"></label>
+                <input asp-for="Detail" class="form-control" />
+                <span asp-validation-for="Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pic" class="control-label"></label>
+                <input asp-for="Pic" class="form-control" />
+                <span asp-validation-for="Pic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="送出並新增" class="btn btn-primary" />
+            </div>*@
+
+
+
+            <!-- Page Header Start -->
+            <div class="container-fluid page-header py-5 wow fadeIn"
+                 data-wow-delay="0.1s">
+                <div class="container text-center py-5">
+                    <h1 class="display-2 text-dark mb-4 animated slideInDown">維修服務</h1>
+                    <nav aria-label="breadcrumb animated slideInDown">
+                        <ol class="breadcrumb justify-content-center mb-0">
+                            <li class="breadcrumb-item text-dark" aria-current="page">
+                                個人維修申請
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a asp-area="" asp-controller="Repair" asp-action="RepairInquire">維修資料管理</a>
+                            </li>
+                            <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <!-- Page Header End -->
+            <!-- Products Start -->
+            <div class="container-fluid product py-5">
+                <div class="container py-5">
+                    <div class="section-title text-center mx-auto wow fadeInUp"
+                         data-wow-delay="0.1s"
+                         style="max-width: 500px">
+                        <h1 class="display-6">個人維修申請</h1>
+                    </div>
+                    <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                        <div class="mb-3">
+                    <label asp-for="Repair.HouseholdCode" class="control-label">戶號</label>
+                    <input asp-for="Repair.HouseholdCode" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHouseholdCode")" id="HouseholdCode" />
+                    <span asp-validation-for="Repair.HouseholdCode" class="text-danger" id="HouseholdCodeError"></span>
+                        </div>
+                <div class="mb-3">
+                    <label asp-for="Repair.Name" class="control-label">報修人姓名</label>
+                    <input asp-for="Repair.Name" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" id="HouseholdCode" id="Name" />
+                    <span asp-validation-for="Repair.Name" class="text-danger" id="NameError"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Repair.Phone" class="control-label">連絡電話</label>
+                    <input asp-for="Repair.Phone" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserPhone")" id="Phone" />
+                    <span asp-validation-for="Repair.Phone" class="text-danger" id="PhoneError"></span>
+                </div>
+                @* 以下內容為另一個資料表來的資料 *@
+                <div class="form-group">
+                    <label asp-for="FromEmail" class="control-label">社區信箱</label>
+                    <input asp-for="FromEmail" class="form-control" value="qdbzdt2846@gmail.com" id="FromEmail" readonly />
+                    <span asp-validation-for="FromEmail" class="text-danger" id="FromEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ResidentEmail" class="control-label">住戶信箱</label>
+                    <input asp-for="ResidentEmail" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("UserEmail")" id="ResidentEmail" />
+                    <span asp-validation-for="ResidentEmail" class="text-danger" id="ResidentEmailError"></span>
+                </div>
+                @* \\以上內容為另一個資料表來的資料 *@
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                @* 用blur及時驗證 *@
+                <script>
+                    $(document).ready(function () {
+                        $('#HouseholdCode, #Name, #Phone, #ResidentEmail, #Time, #Type, #ProcessingStatus').blur(function () {
+                            var inputId = $(this).attr('id');
+                            var inputValue = $(this).val();
+
+                            $.get('/Repair/ValidateInput', { inputId: inputId, inputValue: inputValue }, function (data) {
+                                // 请注意这里的选择器：$('#' + inputId + 'Error')
+                                if (data.isValid) {
+                                    // 如果輸入是有效的，則清除錯誤訊息
+                                    $('#' + inputId + 'Error').text('');
+                                } else {
+                                    // 如果輸入是無效的，則顯示錯誤訊息
+                                    $('#' + inputId + 'Error').text(data.errorMessage);
+                                }
+                            });
+                        });
+
+                        // 针对ResidentEmail字段的额外验证
+                        $('#ResidentEmail').blur(function () {
+                            var inputId = $(this).attr('id');
+                            var inputValue = $(this).val();
+
+                            $.get('/Repair/ValidateInput', { inputId: inputId, inputValue: inputValue }, function (data) {
+                                // 请注意这里的选择器：$('#' + inputId + 'Error')
+                                if (data.isValid) {
+                                    // 如果輸入是有效的，則清除錯誤訊息
+                                    $('#' + inputId + 'Error').text('');
+                                } else {
+                                    // 如果輸入是無效的，則顯示錯誤訊息
+                                    $('#' + inputId + 'Error').text(data.errorMessage);
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <div class="mb-3">
+                    <label asp-for="Repair.Time" class="control-label">報修日期(發現或預計開始日期)</label>
+                    <input asp-for="Repair.Time" class="form-control" id="Time" />
+                    <span asp-validation-for="Repair.Time" class="text-danger" id="TimeError"></span>
+                </div>
+                        
+                        <div class="mb-3">
+                    <label asp-for="Repair.Type" class="control-label">報修項目</label>
+                    <select asp-for="Repair.Type" class="form-select short-select" id="Type">
+                        <option value="" disabled selected>請選擇</option>
+                    <option value="電梯">電梯</option>
+                    <option value="衛浴">衛浴</option>
+                    <option value="水電">水電</option>
+                    <option value="裝修">裝修</option>
+                    <option value="其它">其它</option>
+                </select>
+                <span asp-validation-for="Repair.Type" class="text-danger" id="TypeError"></span>
+                        </div>
+                        <div class="mb-3">
+                    <label asp-for="Repair.Detail" class="control-label">問題描述</label>
+                    <textarea asp-for="Repair.Detail" class="form-control" id="inpuTextarea"
+                              style="height: 150px"></textarea>
+                    <span asp-validation-for="Repair.Detail" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="row g-0">
+                                <div class="col-auto">
+                            <label asp-for="Repair.Pic" class="btn custom-color text-white rounded-end-0"
+                                           for="myFile">按我選擇檔案</label>
+                                </div>
+                                <div class="col">
+                            <input asp-for="Repair.Pic" class="form-control border-primary rounded-start-0 custom-input"
+                                           id="myFileInfo"
+                                           type="text"
+                                           placeholder="選了後會出現檔案名稱" />
+                                    <div id="fileThumbnail" class="mt-2"></div>
+                                </div>
+                            </div>
+                            <input class="d-none" id="myFile" type="file" name="Repair.photo"/>
+                        </div>
+
+                <div class="mb-3">
+                    <label asp-for="Repair.ProcessingStatus" class="control-label">處理狀態</label>
+                    <select asp-for="Repair.ProcessingStatus" class="form-control custom-create-color" style="background-color: white" id="ProcessingStatus">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="未處理">未處理</option>
+                        <option value="處理中">處理中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                    <span asp-validation-for="Repair.ProcessingStatus" class="text-danger" id="ProcessingStatusError"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Repair.ManufacturerCode" class="control-label">維修廠商</label>
+                    <input asp-for="Repair.ManufacturerCode" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Repair.ProcessingStatusDetail" class="control-label">處理狀態描述</label>
+                    <textarea asp-for="Repair.ProcessingStatusDetail" class="form-control" id="CheckTextarea"
+                              style="height: 150px" placeholder="目前尚未處理"></textarea>
+                </div>
+
+                <div class="col-auto">
+                    <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                        <input type="button" id="submitButton" value="送出並新增" class="btn btn-primary me-md-5" />
+                        @* DEMO按鈕示範*@
+                        <button type="submit" class="btn btn-primary" id="demoButton">DEMO</button>
+                    </div>
+                </div>
+            </div>
+
+            @*DEMO自動填入值*@
+            <script>
+
+
+                document.getElementById('demoButton').addEventListener('click', function () {
+                    //document.getElementById('HouseholdCode').value = 'B101';
+                    //document.getElementById('Name').value = '王曉華';
+                    //document.getElementById('Phone').value = '0989875180';
+                    //document.getElementById('ResidentEmail').value = 'awd21@gmail.com';
+                    document.getElementById('Time').value = '2023-09-28T00:00';
+                    document.getElementById('Type').value = '裝修'; // 選擇下拉選單的值
+                    document.getElementById('inpuTextarea').value = '家裡準備安裝廚房系統櫃~';
+                    document.getElementById('ProcessingStatus').value = '未處理'; // 選擇下拉選單的值
+
+                    // 阻止表單的提交事件
+                    event.preventDefault();
+                });
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const submitButton = document.getElementById("submitButton");
+                    submitButton.addEventListener("click", function () {
+                        // 获取ResidentEmail字段的值
+                        const residentEmail = document.getElementById("ResidentEmail").value;
+
+                        // 进行ResidentEmail字段的验证
+                        $.get('/Repair/ValidateInput', { inputId: 'ResidentEmail', inputValue: residentEmail }, function (data) {
+                            if (data.isValid) {
+                                // 如果验证通过，继续提交表单
+                                document.getElementById("myForm").submit();
+                            } else {
+                                // 如果验证失败，显示错误消息
+                                $('#ResidentEmailError').text(data.errorMessage);
+                            }
+                        });
+                    });
+                });
+            </script>
+
+                    <script src="./js/bootstrap.bundle.min.js"></script>
+                    <script>
+                        const myFileInfo = document.querySelector("#myFileInfo");
+                        const myFile = document.querySelector("#myFile");
+                        myFile.addEventListener("change", function () {
+                            let file = this.files[0].name;
+                            myFileInfo.value = file;
+                        });
+                    </script>
+                </div>
+            </div>
+            <!-- Products End -->
+            <!-- 照片預覽 -->
+            <script>
+                const fileInput = document.getElementById("myFile");
+                const fileInfoInput = document.getElementById("myFileInfo");
+                const fileThumbnail = document.getElementById("fileThumbnail");
+
+                fileInput.addEventListener("change", (event) => {
+                    const selectedFile = event.target.files[0];
+                    if (selectedFile) {
+                        fileInfoInput.value = selectedFile.name;
+
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            fileThumbnail.innerHTML = `<img src="${e.target.result}" alt="Selected Image" style="max-width: 300px; max-height: 200px">`;
+                        };
+                        reader.readAsDataURL(selectedFile);
+                    }
+                });
+            </script>
+            <!-- \照片預覽 -->
+
+   
+</form>
+
+
+@*<div>
+    <a asp-action="RepairInquire">取消</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

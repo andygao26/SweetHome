@@ -1,0 +1,155 @@
+﻿@model List<FifthGroup_front.ViewModels.CActive>
+
+@{
+    ViewData["Title"] = "ActiveList";
+}
+<!-- Header -->
+<div class="container-fluid page-header py-5 fadeIn">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">活動報名</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                    活動報名
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Active" asp-action="PersonalActive">報名紀錄查詢</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Active" asp-action="CheckActive">活動申請紀錄</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header -->
+@*搜索*@
+<div class="product">
+    <form method="get" asp-action="ActiveList" class="container-fluid py-2 col-4 mx-auto">
+        <div class="input-group mb-4">
+            <div style="margin:2px">
+                <select class="form-select" name="searchType" id="searchType">
+                    @if (ViewBag.searchType != "")
+                    {
+                        
+                        var SearchType = new List<string> { "", "運動", "休閒", "文藝", "社交", "教育", "義工", "健康", "節慶", "戶外" };
+                        <option value="@SearchType[0]">全部活動種類</option>
+                        for (int i = 1 ;i < SearchType.Count(); i++)
+                        {
+                            if (SearchType[i] == ViewBag.searchType)
+                            {
+                                <option value="@SearchType[i]" selected>@SearchType[i]</option>
+
+                            }
+                            else
+                            {
+                                <option value="@SearchType[@i]" >@SearchType[i]</option>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value="" selected>選擇活動種類</option>
+                        <option value="運動">運動</option>
+                        <option value="休閒">休閒</option>
+                        <option value="文藝">文藝</option>
+                        <option value="社交">社交</option>
+                        <option value="教育">教育</option>
+                        <option value="義工">義工</option>
+                        <option value="健康">健康</option>
+                        <option value="節慶">節慶</option>
+                        <option value="戶外">戶外</option>
+
+                    }
+
+                </select>
+            </div>
+            <div style="margin:2px">
+                @Html.TextBox("startDate", null, new { @class = "form-control form-date-control", type = "date", id = "startDate" })
+            </div>
+            <div style="margin:2px">
+                @Html.TextBox("endDate", null, new { @class = "form-control form-date-control", type = "date", id = "endDate" })
+            </div>
+            <div>
+                <button id="searchButton" class="btn btn-success" type="submit">搜索</button>
+            </div>
+        </div>
+    </form>
+    @*搜索*@
+<!-- body-->
+<div class="container-md pt-3">
+    <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        @foreach (var activity in Model)
+        {
+            <div class="col">
+                <div class="card overflow-hidden" style="min-height:250px">
+                    <a asp-area="" asp-controller="Active" asp-action="ActiveApply" asp-route-id="@activity.Applications.ApplyCode">
+                        <img class="card-img-top h-150px object-fit-cover rounded-2" src="~/img/@activity.Applications.Image" alt="" />
+                    </a>
+                    <div class="card-body" style="min-height:75px">
+                        <a style="font-size:18px;color:green">@activity.Applications.ActivityName</a>
+                        <span class="badge text-bg-secondary" style="font-size:13px">@activity.Applications.Activities</span>
+                        <br />
+                            @if (activity.Amount <= 0)
+                            {
+                                <a>免費參加</a>
+                            }
+                            else
+                            {
+                                <a>報名費用:@activity.Amount 元/人</a>
+                            }
+                    </div>
+                    <div class="card-footer bg-white border-top-0 d-flex align-items-center p-2" >
+                        <span class="me-auto">@activity.Applications.DateStart.ToString("yyyy/MM/dd") ~ @activity.Applications.DateEnd.ToString("yyyy/MM/dd")</span>
+                        <span class="me-auto">
+                            <a asp-area="" asp-controller="Active" asp-action="ActiveApply" asp-route-id="@activity.Applications.ApplyCode">更多資訊</a>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <!-- 分頁 -->
+    <div class="text-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+                {
+                    <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("ActiveList", new { page = i })">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+</div>
+<!-- body -->
+<script>
+    $(document).ready(function () {
+        // 獲取ViewBag值
+        var startDate = "@ViewBag.searchDateStart"
+        var endDate = "@ViewBag.searchDateEnd"
+        var Type = "@ViewBag.searchType"
+
+        //賦值給選項
+        var selectElement = document.getElementById("searchType");
+
+        $('#startDate').datepicker({
+            defaultDate: startDate
+        });
+
+        $('#endDate').datepicker({
+            defaultDate: endDate
+        });
+        if (Type.HasValue) {
+            selectElement.value = Type;
+        }
+
+
+    });
+
+
+</script>

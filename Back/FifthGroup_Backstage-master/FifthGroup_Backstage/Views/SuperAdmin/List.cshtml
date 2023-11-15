@@ -1,0 +1,81 @@
+﻿@model IEnumerable<FifthGroup_Backstage.Models.Admin>
+
+<body>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn"
+         data-wow-delay="0.1s">
+        <div class="container text-center py-2">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">管理人員列表</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
+                    </li>
+                    <li class="breadcrumb-item text-dark" aria-current="page">
+                        管理人員列表
+                    </li>
+                    <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <table class="table align-middle mb-0 bg-white">
+
+        <thead class="bg-light">
+            <tr>
+                <th>姓名</th>
+                <th>職稱</th>
+                <th>通訊地址</th>
+                <th>會員狀態</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="@(string.IsNullOrEmpty(item.UserPhoto) ? "https://res.cloudinary.com/dwdov2ta3/image/upload/v1694486698/Admin_Photo_pazizs.jpg" : item.UserPhoto)"
+                                 alt=""
+                                 style="width: 45px; height: 45px"
+                                 class="rounded-circle" />
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">@item.UserName</p>
+                                <p class="text-muted mb-0">@item.UserEmail</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="fw-normal mb-1">Software engineer</p>
+                        <p class="text-muted mb-0">IT department</p>
+                    </td>
+                    <td>
+                        <p class="text-muted mb-0">@item.UserAddress</p>
+                    </td>
+                    <td>
+                        <span class="badge badge-success rounded-pill d-inline">Active</span>
+                    </td>
+                    <td>Senior</td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm btn-rounded">
+                           編輯
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        }
+
+
+
+
+    </table>
+
+
+
+</body>
+

@@ -1,0 +1,82 @@
+﻿@model FifthGroup_Backstage.Models.Resident
+
+@{
+    ViewData["Title"] = "CreateResident";
+}
+
+<head>
+    <style>
+        .hidden-field{
+            display:none;
+        }
+    </style>
+</head>
+
+<h4 class="text-center">新增住戶</h4>
+<hr />
+<div class="card m-3 pagination ">
+    <div class="form-group pt-2 m-3 mb-5">
+        <form asp-action="CreateResident">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">               
+                <label asp-for="HouseholdCode" class="control-label">住戶代碼</label>
+                <input asp-for="HouseholdCode" class="form-control" />
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">        
+                <label asp-for="CommunityBuildingId" class="control-label">分棟代碼</label>
+                <input asp-for="CommunityBuildingId" class="form-control" />
+                <span asp-validation-for="CommunityBuildingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">              
+                <label asp-for="FloorNumber" class="control-label">樓層代碼</label>
+                <input asp-for="FloorNumber" class="form-control" />
+                <span asp-validation-for="FloorNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">               
+                <label asp-for="UnitNumber" class="control-label">門牌代碼</label>
+                <input asp-for="UnitNumber" class="form-control" />
+                <span asp-validation-for="UnitNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">               
+                <label asp-for="Name" class="control-label">姓名</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group hidden-field">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" type="hidden" value="0912345678" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group hidden-field">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" type="hidden" value="qqq123@gmail.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group hidden-field">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="hidden" value="value" />
+                <span asp-validation-for="Password" class="text-danger" type="hidden"></span>
+            </div>
+            <div class="form-group hidden-field">
+                <label asp-for="Headshot" class="control-label"></label>
+                <input asp-for="Headshot" class="form-control" type="hidden" value="value" />
+                <span asp-validation-for="Headshot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="新增住戶" class="btn btn-primary" />
+                <a asp-action="List">返回列表</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+   
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

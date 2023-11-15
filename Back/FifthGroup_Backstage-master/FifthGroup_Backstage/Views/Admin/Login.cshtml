@@ -1,0 +1,228 @@
+﻿@{
+    Layout = null;
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+    <style>
+
+    </style>
+
+    <title>管委會系統後台首頁</title>
+
+    <meta name="description" content="" />
+
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="~/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="~/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="~/assets/js/config.js"></script>
+
+
+
+    <!-- froala -->
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body style="background-color: #f0f0f0;">
+
+    <div id="VuePage">
+        <!--使用 Bootstrap 設計登入表單-->
+        <section class="vh-100">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col col-xl-10">
+                        <div class="card" style="border-radius: 1rem;">
+                            <div class="row g-0">
+                                <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <img src="https://res.cloudinary.com/dwdov2ta3/image/upload/v1694006424/logo_dnusep.png"
+                                         alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                                </div>
+                                <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div class="card-body p-4 p-lg-5 text-black">
+
+                                        <form>
+
+                                            <div class="d-flex align-items-center mb-3 pb-1">
+
+                                                <span class="h1 fw-bold mb-0">管理人員登入</span>
+                                            </div>
+
+                                            <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label fs-5" >帳號 Account</label>
+                                                <input type="text"  class="form-control form-control-lg" v-model="form.UserID" id="UserID" />
+                                            </div>
+
+                                            <div class="form-outline mb-4">
+                                                <label class="form-label fs-5" >密碼 Password</label>
+                                                <input type="password"  class="form-control form-control-lg" v-model="form.UserPwd" id="UserPwd" />
+
+                                            </div>
+
+                                            <div class="pt-1 mb-4">
+                                                <button class="btn btn-dark btn-lg btn-block" type="button" v-on:click="DoLogin()">登入</button>
+                                                <button type="button" class="btn btn-dark btn-lg" id="fillFormButton">Demo</button>
+                                                <button type="button" class="btn btn-dark btn-lg" id="fillFormButton2">Demo2</button>
+                                            </div>
+
+                                            <div>
+
+                                            </div>
+                                            <a asp-controller="Admin" asp-action="ForgotPassword" style="display: inline-block;">
+                                                <p class="pb-lg-2" style="color: #393f81;">忘記密碼?</p>
+                                            </a>
+                                            <a asp-controller="Admin" asp-action="Register" style="display: inline-block;">
+                                                <p class="pb-lg-2" style="color: #393f81;">註冊帳號</p>
+                                            </a>
+
+                                        </form>
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--使用 Bootstrap Modal 樣式，當執行有錯誤時，顯示錯誤訊息-->
+        <div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">錯誤訊息</h4>
+                    </div>
+                    <div class="modal-body" id="ErrorMsg" style="overflow-x:auto;width:100%;">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        </div>
+ 
+
+<script>
+    // Vue实例
+    var VuePage = new Vue({
+        el: '#VuePage',
+        data: {
+            form: {
+                UserID: '',
+                UserPwd: ''
+            }
+        },
+        methods: {
+            // 執行登入按鈕
+            DoLogin: function () {
+                var self = this;
+
+                // 組合表單資料
+                var postData = {};
+                postData['UserID'] = self.form.UserID;
+                postData['UserPwd'] = self.form.UserPwd;
+
+                // 使用 jQuery Ajax 傳送至後端
+                $.ajax({
+                    url: '@Url.Content("~/Admin/DoLogin")',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { inModel: postData },
+                    success: function (datas) {
+                        console.log(datas); // 輸出console.log測試
+                        if (datas.errMsg) {
+                            alert(datas.errMsg); // 顯示錯誤訊息
+                            return;
+                        }
+                        // 成功
+                        alert(datas.resultMsg);
+
+                        // 登入成功後重定向到主頁面
+                        window.location.href = '/Home/Index';
+                    },
+                    error: function (err) {
+                        console.log(datas); /// 輸出console.log測試
+                        $('#ErrorMsg').html(err.responseText);
+                        $('#ErrorAlert').modal('toggle');
+                    },
+                });
+            }
+        }
+    });
+
+    // Demo按钮点击事件处理程序
+    const fillFormButton = document.getElementById("fillFormButton");
+    fillFormButton.addEventListener("click", function () {
+        // 手动更新Vue数据
+        VuePage.form.UserID = "Fuen2905";
+        VuePage.form.UserPwd = "Fuen2905";
+    });
+
+        // Demo按钮点击事件处理程序
+        const fillFormButton2 = document.getElementById("fillFormButton2");
+        fillFormButton2.addEventListener("click", function () {
+            // 手动更新Vue数据
+            VuePage.form.UserID = "Min89036";
+            VuePage.form.UserPwd = "Mm890306";
+        });
+
+</script>
+
+
+
+  
+
+
+
+        
+</body>

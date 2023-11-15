@@ -1,0 +1,108 @@
+﻿@model FifthGroup_front.ViewModels.CReservations_four
+
+@{
+    ViewData["Title"] = "ListBefore";
+}
+
+<div class="col-auto">
+    <div class="">
+    </div>
+</div>
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">場地預約歷史紀錄</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb mb-0">
+                <li>
+                    <a asp-controller="CReservations" asp-action="ReservationsInfor"><input type="submit" value="新增預約" class="btn btn-primary" /></a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container-fluid product py-2">
+    <div class="container mb-5">
+        <!-- Bootstrap Table with Header - Dark -->
+        <div class="card custom-wide-card">
+            <div class="table-responsive text-nowrap align-content-center">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>姓名</th>
+                            <th>場地</th>
+                            <th>日期</th>
+                            <th>時段</th>
+                            <th>審核狀態</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReservationPlace)
+                        {
+                            var ReserveCode = item.ReserveCode;
+                            var hName = Model.Reservations.FirstOrDefault(p => p.ReserveCode == ReserveCode)?.HName;
+
+                            var placeCode = item.PlaceCode;
+                            var placeName = Model.PublicSpaceDetail.FirstOrDefault(p => p.PlaceCode == placeCode)?.PlaceName;
+
+                            var PeriodoftimeCode = item.PeriodoftimeCode;
+                            var Periodoftime = Model.Periodoftime.FirstOrDefault(p => p.PeriodoftimeCode == PeriodoftimeCode)?.Periodoftime1;
+
+                            var r = item.ReserveCode;
+                            var hstate = Model.Reservations.FirstOrDefault(p => p.ReserveCode == r)?.HState;
+
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => hName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => placeName)
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(item.FDate).ToString("yyyy/MM/dd")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Periodoftime)
+                                </td>
+                                <td>
+                                    <div hidden>
+                                        @Html.DisplayFor(modelItem => item.FState)
+                                    </div>
+                                    @{
+                                        string stateText = "";
+                                        switch (item.FState)
+                                        {
+                                            case 0:
+                                                stateText = "未審核";
+                                                break;
+                                            case 1:
+                                                stateText = "申請中";
+                                                break;
+                                            case 2:
+                                                stateText = "已通過";
+                                                break;
+                                        }
+                                    }
+                                    @stateText
+                                </td>
+
+                                
+
+                                
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <!--/ Bootstrap Table with Header Dark -->
+    </div>
+</div>
+

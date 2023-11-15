@@ -1,0 +1,124 @@
+﻿@model FifthGroup_Backstage.ViewModel.CommunityBuildingInfo
+
+
+
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">社區基本資料設定 /</span> 分棟資訊</h4>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card mb-4">
+                        <h5 class="card-header">社區資訊</h5>
+                        <form id="communityForm"  method="post" action="@Url.Action("Add", "Building")">
+                            <div class="card-body">
+                                <!-- 下拉式選單 -->
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <img src="https://res.cloudinary.com/dwdov2ta3/image/upload/v1694835565/Home_detLOGO_rhffge.png"
+                                         alt="user-avatar"
+                                         class="d-block rounded"
+                                         height="100"
+                                         width="100"
+                                         id="uploadedAvatar" />
+
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlSelect1" class="form-label">選擇社區</label>
+
+                                        <select class="form-select" id="CommunityId" name="CommunityId">
+                                        @foreach (var item in (SelectList)ViewBag.CommunityId)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-0" />
+                            <!-- 詳細資料設定 -->
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="firstName" class="form-label" name="buildingName">分棟名稱</label>
+                                        <input type="text" id="BuildingName" name="BuildingName" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="email" class="form-label" name="floorNumber">分棟樓層數</label>
+                                        <input type="number" id="FloorNumber" name="FloorNumber" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="email" class="form-label" name="unitNumber">每層戶數</label>
+                                        <input type="number" id="UnitNumber" name="UnitNumber" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-dark me-2" name="Save">儲存</button>
+                                    <button type="reset" class="btn btn-outline-secondary">取消</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+
+
+ @section Scripts {
+
+            
+            <script>
+                $(document).ready(function () {
+                    $("#communityForm").submit(function (e) {
+                        e.preventDefault(); // 防止表單默認提交
+             
+
+                        // 獲得資料
+                        var communityId = $("#CommunityId").val();
+                        var buildingName = $("#BuildingName").val();
+                        var floorNumber = $("#FloorNumber").val();
+                        var unitNumber = $("#UnitNumber").val();
+
+                        if (communityId === "" || buildingName === "" || floorNumber === "" || unitNumber === "") {
+                            alert("請填寫所有內容。");
+                            return;
+                        }
+
+                        // 使用AJAX
+                        $.ajax({
+                            url: "/Building/Add",
+                            type: "POST",
+                            data: $("#communityForm").serialize(), // 序列化表單數據
+                            success: function (response) {
+                                alert("提交成功！")
+                            },
+                            error: function (xhr, status, error) {
+                                alert("提交失败：" + error);
+                            }
+                        });
+                    });
+                });
+            </script>
+ 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

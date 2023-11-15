@@ -1,0 +1,94 @@
+﻿@model IEnumerable<FifthGroup_Backstage.Models.Resident>
+
+@{
+    ViewData["Title"] = "List";
+}
+</br>
+<h1 class="text-center">住戶列表</h1>
+
+<p>
+    
+</p>
+<div class="card m-3 pagination ">
+    <div class="form-group pt-2 m-3 mb-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <label>住戶代碼</label>
+                    @* @Html.DisplayNameFor(model => model.HouseholdCode) *@
+                </th>
+                <th>
+                    <label>分棟代碼</label>
+                    @* @Html.DisplayNameFor(model => model.CommunityBuildingId) *@
+                </th>
+                <th>
+                    <label>樓層</label>
+                    @* @Html.DisplayNameFor(model => model.FloorNumber) *@
+                </th>
+                <th>
+                    <label>門牌號碼</label>
+                    @* @Html.DisplayNameFor(model => model.UnitNumber) *@
+                </th>
+                <th>
+                    <label>姓名</label>
+                    @* @Html.DisplayNameFor(model => model.Name) *@
+                </th>
+                <th>
+                    <label>手機號碼</label>
+                    @* @Html.DisplayNameFor(model => model.Phone) *@
+                </th>
+                <th>
+                    <label>電子信箱</label>
+                   @*  @Html.DisplayNameFor(model => model.Email) *@
+                </th>
+               @*  <th>
+                    @Html.DisplayNameFor(model => model.Password)
+                </th> *@
+                @* <th>
+                    @Html.DisplayNameFor(model => model.Headshot)
+                </th> *@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HouseholdCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommunityBuildingId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FloorNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @* <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Headshot)
+                </td> *@
+                <td>
+                        @Html.ActionLink("修改", "EditResident", new {  id=item.HouseholdCode  })  |
+                        @Html.ActionLink("刪除", "DeleteResident", new {  id=item.HouseholdCode },
+                    new {onclick="return confirm('確定刪除嗎?')"})
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>
+</div>

@@ -1,0 +1,71 @@
+﻿@model FifthGroup_Backstage.Models.PublicSpaceDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <div class="container-fluid product py-2">
+            <div class="container mb-3">
+                <div class="container-fluid page-header wow fadeIn"
+                     data-wow-delay="0.1s">
+                </div>
+                <div class="container text-center py-2">
+                    <h1 class="display-2 text-dark mb-4 animated slideInDown">新增場地</h1>
+
+                </div>
+
+                <form asp-action="Create" class="center">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="container-sm mt-3 align-content-center col-7 offset-md-4">
+
+                        <div class="form-group">
+                            <label hidden asp-for="PlaceCode" class="control-label"></label>
+                            <input hidden placeholder="系統自動編號" asp-for="PlaceCode" class="form-control" />
+                            <span asp-validation-for="PlaceCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Pid" class="control-label">場地代號</label>
+                            <input placeholder="D棟+樓層" asp-for="Pid" class="form-control" />
+                            <span asp-validation-for="Pid" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="AreaCode" class="control-label">區域代碼</label>
+                            <input placeholder="" asp-for="AreaCode" class="form-control" />
+                            <span asp-validation-for="AreaCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="PlaceName" class="control-label">場地名稱</label>
+                            <input asp-for="PlaceName" class="form-control" />
+                            <span asp-validation-for="PlaceName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <br />
+                            <input type="submit" value="新增場地" class="btn btn-primary" />
+                        </div>
+                        <br />
+                        <div>
+                            <a asp-action="List">返回上一頁</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

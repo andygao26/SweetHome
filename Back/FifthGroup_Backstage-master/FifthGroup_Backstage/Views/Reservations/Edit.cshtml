@@ -1,0 +1,70 @@
+﻿@model FifthGroup_Backstage.Models.ReservationPlace
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<div class="container-fluid product py-2">
+    <div class="container mb-3">
+        <form asp-action="Edit">
+            <div class="section-title text-center mx-auto wow fadeInUp"
+                 data-wow-delay="0.1s"
+                 style="max-width: 500px">
+                <h1 class="-6">審核</h1>
+            </div>
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Code" class="control-label">亂碼</label>
+                <input readonly asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReserveCode" class="control-label">預約序號</label>
+                <input readonly asp-for="ReserveCode" class="form-control" />
+                <span asp-validation-for="ReserveCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceCode" class="control-label">場地代號</label>
+                <input readonly asp-for="PlaceCode" class="form-control" />
+                <span asp-validation-for="PlaceCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FDate" class="control-label">預約日期</label>
+                    <input readonly asp-for="FDate" class="form-control" />
+                <span asp-validation-for="FDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodoftimeCode" class="control-label">預約時段代號</label>
+                <input readonly asp-for="PeriodoftimeCode" class="form-control" />
+                <span asp-validation-for="PeriodoftimeCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FState" class="control-label">審核狀態</label>
+                    <select readonly asp-for="FState" class="form-control">
+                        <option value="0">未審核</option>
+                        <option value="1">審核中</option>
+                        <option value="2">已通過</option>
+                        <option value="3">未通過</option>
+                </select>
+@*                     <input readonly asp-for="FState" class="form-control" />
+ *@                <span asp-validation-for="FState" class="text-danger"></span>
+            </div>
+@*             <div class="form-group">
+                <br />
+                    <input type="submit" value="審核" class="btn btn-primary" />
+            </div> *@
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-sm mt-9 align-content-center col-9 offset-md-10">
+    <a href="javascript:history.back()" class="btn btn-primary">回到上一頁</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

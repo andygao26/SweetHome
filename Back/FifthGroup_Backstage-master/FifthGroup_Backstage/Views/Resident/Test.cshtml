@@ -1,0 +1,201 @@
+﻿@model FifthGroup_Backstage.ViewModel.ResidentViewModel
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">住戶管理/</span> 新增住戶</h4>
+
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row">
+            <!-- Basic Layout -->
+            <div class="col-xxl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">新增住戶</h5>
+                        <small class="text-muted float-end">Add Residents</small>
+                    </div>
+                    <div class="card-body">
+                        <form id="ResidentForm" method="post" action="@Url.Action("Test", "Resident")">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"><h6>住戶代碼</h6></label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="HouseholdCode" name="HouseholdCode" readonly />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"><h6>分棟代碼</h6></label>
+                                <div class="col-sm-10">
+                                    <select id="CommunityBuildingId" name="CommunityBuildingId" class="form-control">
+                                        <option value="">-- Select Community Building --</option>
+                                        @foreach (var item in (SelectList)ViewBag.CommunityBuildingList)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"><h6>樓層代碼</h6></label>
+                                <div class="col-sm-10">
+                                    <select id="FloorNumber" name="FloorNumber" class="form-control" value=""></select>
+                                
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"><h6>門牌代碼</h6></label>
+                                <div class="col-sm-10">
+                                    <select id="UnitNumber" name="UnitNumber" class="form-control" value=""></select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"><h6>戶長姓名</h6></label>
+                                <div class="col-sm-10">
+                                    <input id="Name" name="Name" class="form-control" />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <input id="Password" name="Password" type="hidden" value="default_password" /> @* 默認密碼 *@
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <input id="Email" name="Email" type="hidden" value="example@gmail.com" /> @* 默認Emial *@
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <input id="HeadshotFile" name="HeadshotFile" type="hidden" value="default_headshot" /> @* 默認頭像 *@
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <input id="Phone" name="Phone" type="hidden" value="0900000000" /> @* 默認手機 *@
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">送出</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    @* 下拉式選單,處理接收到的json,將值賦予選項 *@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CommunityBuildingId").change(function () {
+                $("#FloorNumber").empty();
+                $("#UnitNumber").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetBuildingDetails")',
+                    dataType: 'json',
+                    data: { CommunityBuildingId: $("#CommunityBuildingId").val() },
+                    success: function (data) {
+                        for (var i = 1; i <= data.floorNumber; i++) {
+                            $("#FloorNumber").append('<option value="' + i + '">' + i + '</option>');
+                        }
+                        for (var i = 1; i <= data.unitNumber; i++) {
+                            $("#UnitNumber").append('<option value="' + i + '">' + i + '</option>');
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve building details.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+
+    @* 表單送出 *@
+            <script>
+        $(document).ready(function () {
+            $("#ResidentForm").submit(function (e) {
+                e.preventDefault(); // 防止表单默认提交
+
+                // 获取数据
+                var HouseholdCode = $("#HouseholdCode").val();//戶號
+                var CommunityBuilding = $("#CommunityBuildingId").val(); // 分棟代碼
+                var FloorNumber = $("#FloorNumber").val(); // 樓層
+                var UnitNumber = $("#UnitNumber").val(); // 門牌
+                var Name = $("#Name").val(); // 姓名
+                var Email = $("#Email").val(); // 電子信箱
+                var Password = $("#Password").val(); // 密碼
+                var Phone = $("#Phone").val(); // 電話
+                var HeadshotFile = $("#HeadshotFile").val(); // 大頭貼
+
+                if (CommunityBuilding === "" || FloorNumber === "" || UnitNumber === "") {
+                    alert("請選擇。");
+                    return;
+                }
+
+                // 使用AJAX
+                $.ajax({
+                    url: "/Resident/Test",
+                    type: "POST",
+                    data: $("#ResidentForm").serialize(), // 序列化表单数据
+                    success: function (response) {
+                        // 打印返回的JSON响应信息到控制台
+                        console.log(response);
+
+                        if (response.success) {
+                            alert("提交成功！");
+                        } else {
+                            alert("提交失败：" + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("提交失败：" + error);
+                    }
+                });
+            });
+        });
+            </script>
+
+        @* 住戶代碼 *@
+        <script>
+        $(document).ready(function () {
+            // 分棟代碼、樓層代碼和門牌代碼變化
+            $("#CommunityBuildingId, #FloorNumber, #UnitNumber").change(function () {
+                var communityBuilding = $("#CommunityBuildingId").val();
+                var floorNumber = $("#FloorNumber").val();
+                var unitNumber = $("#UnitNumber").val();
+
+                // 確保所有值不為空
+                if (communityBuilding && floorNumber && unitNumber) {
+                    var prefix = ""; // 默認為空字串
+
+                    // 根據 CommunityBuildingId 的值設置前綴(這邊要對照資料庫的Id!!!!!)
+                    if (communityBuilding === "1") {
+                        prefix = "A";
+                    } else if (communityBuilding === "4") {
+                        prefix = "B";
+                    } else if (communityBuilding === "5") {
+                        prefix = "C";
+                    }
+
+                    // 使用 String.padStart() 来確保 unitNumber 始終為兩位數
+                    var paddedUnitNumber = String(unitNumber).padStart(2, "0");
+
+                    // 生成住戶代碼
+                    var householdCode = prefix + floorNumber + paddedUnitNumber;
+
+                    // 將生成的住戶代碼填入框內
+                    $("#HouseholdCode").val(householdCode);
+                }
+            });
+        });
+
+    </script>
+}

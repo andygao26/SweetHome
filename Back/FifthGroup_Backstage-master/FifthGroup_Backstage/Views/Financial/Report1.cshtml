@@ -1,0 +1,25 @@
+﻿@model List<FifthGroup_Backstage.ViewModel.FinancialReportModel>
+
+<h1>租金收入</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>年份</th>
+            <th>月份</th>
+            <th>分棟</th>
+            <th>總收入</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Year</td>
+                <td>@item.Month</td>
+                <td>@item.BuildingName</td>
+                <td>@item.TotalIncome</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,7 @@
+﻿namespace FifthGroup_Backstage.Repositories
+{
+    public interface IImageRepository
+    {
+        Task<string> UploadAsync(IFormFile file);
+    }
+}

@@ -1,0 +1,101 @@
+﻿@model FifthGroup_front.ViewModels.CReservations_four
+@* ReservationPlace
+ *@@{
+    ViewData["Title"] = "Edit";
+}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">預約細節修改</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb mb-0">
+                <li>
+                    <h5></h5>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Products Start -->
+<div class="container-fluid product py-5">
+    <div class="container py-5">
+        <div class="section-title text-center mx-auto wow fadeInUp"
+             data-wow-delay="0.1s">
+            <h1 class="display-6">修改後會重新審核哦！</h1>
+        </div>
+        <form asp-action="Edit">
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div class="mb-3">
+                    <label hidden asp-for="Code" class="control-label"></label>
+                    <input hidden placeholder="系統編碼" asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label hidden asp-for="ReserveCode" class="control-label"></label>
+                    <input hidden asp-for="ReserveCode" class="form-control" />
+                    <span asp-validation-for="ReserveCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PlaceCode" class="control-label">場地變更⬇️</label>
+                    <select asp-for="PlaceCode" class="form-control" id="PlaceCode" name="PlaceCode">
+                        @foreach (var item in Model.PublicSpaceDetail.OrderBy(p=>p.PlaceName))
+                        {
+                            <option value="@item.PlaceCode">@item.PlaceName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="PlaceCode" class="text-danger"></span>
+
+                 </div>
+                <div class="mb-3">
+                    <label asp-for="FDate" class="control-label">日期變更⬇️</label>
+                    <input asp-for="FDate" type="date" class="form-control" name="FDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="FDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PeriodoftimeCode" class="control-label">時段變更⬇️</label>
+                    <select asp-for="PeriodoftimeCode" class="form-control" id="PeriodoftimeCode" name="PeriodoftimeCode">
+                        @{
+                            var periodoftimeList = Model.Periodoftime.ToList();
+                            for (var i = 0; i < 6 && i < periodoftimeList.Count; i++)
+                            {
+                                var item = periodoftimeList[i];
+                                <option value="@item.PeriodoftimeCode">@item.Periodoftime1</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="PeriodoftimeCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label hidden asp-for="FState" class="control-label">狀態變更⬇️</label>
+                    <input hidden asp-for="FState" type="text" class="form-control" id="FState" name="FState" value="0"/>
+                    <span asp-validation-for="FState" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" value="送出並修改" class="btn btn-primary" />
+                    <a href="javascript:history.back()" class="btn btn-primary">取消修改</a>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+<!-- Products End -->
+<div class="row">
+    <div class="col-md-4">
+    </div>
+</div>
+
+@* <div>
+    <a asp-action="ListR">返回上一頁</a>
+</div> *@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

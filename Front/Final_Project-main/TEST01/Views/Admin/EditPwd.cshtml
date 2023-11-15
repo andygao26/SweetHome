@@ -1,0 +1,66 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model FifthGroup_front.Models.Resident
+
+@{
+    ViewData["Title"] = "EditPwd";
+}
+<style>
+    html,
+    body {
+        height: 100%;
+        font-family: "Mulish", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        /* background: #999b96; */
+    }
+    .h-600 {
+        height: 600px;
+    }
+</style>
+    
+
+<div class="container-fluid product py-5 h-600">
+    <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+        <h2 class="text-center text-success">更改密碼</h2>
+        <form asp-action="EditPwd">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
+            <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">             
+                <input asp-for="HouseholdCode" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHouseholdCode")" hidden />
+
+                <label asp-for="Password" class="control-label">將密碼變更為:</label>
+                <input type="Password" id="Password" name="Password" class="form-control" required/>
+            </div>
+            <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2">
+                <label asp-for="Password" class="control-label">再次輸入密碼:</label>
+                <input type="Password" id="Password2" name="Password" class="form-control" required />
+            </div>
+                <span asp-validation-for="Password" class="text-danger"></span>           
+            <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                <input type="submit" value="確定更改密碼" id="sendButton" class="btn btn-primary me-md-5" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sendButton = document.getElementById("sendButton");
+        var password = document.getElementById("Password");
+        sendButton.addEventListener("click", function (e) {          
+             alert('確定變更密碼');                  
+        });
+      
+    function password() {
+        let x = document.getElementById('Email').value;
+        let y = document.getElementById('Password').value;
+        let z = document.getElementById('Password2').value;
+        let text;
+        if (x = 0) {
+            text = '請輸入信箱';
+        }
+       
+     }
+    });
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,164 @@
+﻿@model FifthGroup_Backstage.ViewModel.CEmails
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">信箱服務</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Email" asp-action="EmailList">收件匣</a>
+                </li>
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                    <a asp-area="" asp-controller="Email" asp-action="Create" class="menu-link">撰寫信件</a>
+                </li>
+                <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Products Start -->
+<div class="section-title text-center mx-auto py-2">
+    <h1 class="display-6">撰寫信件</h1>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-5 mx-auto" style="max-width: 100%;">
+        <form asp-controller="Email" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ResidentName" class="control-label">住戶姓名</label>
+                <input asp-for="ResidentName" class="form-control" id="ResidentName" />
+                <span asp-validation-for="ResidentName" class="text-danger" id="ResidentNameError"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseholdCode" class="control-label">戶號</label>
+                <input asp-for="HouseholdCode" class="form-control" id="HouseholdCode" />
+                <span asp-validation-for="HouseholdCode" class="text-danger" id="HouseholdCodeError"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label">主題&lt; Ex:公告、繳費、維修、活動、場地、提醒等等... &gt</label>
+                <input asp-for="Subject" class="form-control" value="歡迎來到無聲鄰陸社區~" id="Subject" />
+                <span asp-validation-for="Subject" class="text-danger" id="SubjectError"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromEmail" class="control-label">社區信箱</label>
+                <input asp-for="FromEmail" class="form-control" value="qdbzdt2846@gmail.com" id="FromEmail" readonly />
+                <span asp-validation-for="FromEmail" class="text-danger" id="FromEmailError"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToEmail" class="control-label">住戶信箱</label>
+                <input asp-for="ToEmail" class="form-control" id="ToEmail" />
+                <span asp-validation-for="ToEmail" class="text-danger" id="ToEmailError"></span>
+            </div>
+                 @* 填充#HouseholdCode和#ToEmail的值*@
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#ResidentName').change(function () {
+                            var residentName = $(this).val();
+                            $.get('/Email/GetResidentDetails', { residentName: residentName }, function (data) {
+                                $('#HouseholdCode').val(data.householdCode);
+                                $('#ToEmail').val(data.email);
+                            });
+                        });
+                    });
+                </script>
+                @* 填充#HouseholdCode和#ToEmail的值後，加上了.blur()來手動觸發blur事件 *@
+                <script>
+                    $(document).ready(function () {
+                        $('#ResidentName').change(function () {
+                            var residentName = $(this).val();
+                            $.get('/Email/GetResidentDetails', { residentName: residentName }, function (data) {
+                                $('#HouseholdCode').val(data.householdCode).blur();
+                                $('#ToEmail').val(data.email).blur();
+                            });
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $('#ResidentName').change(function () {
+                            var inputId = $(this).attr('id');
+                            var inputValue = $(this).val();
+
+                            $.get('/Email/ValidateInput', { inputId: inputId, inputValue: inputValue }, function (data) {
+                                if (data.isValid) {
+                                    // 如果輸入是有效的，則清除錯誤訊息
+                                    $('#' + inputId + 'Error').text('');
+                                } else {
+                                    // 如果輸入是無效的，則顯示錯誤訊息
+                                    $('#' + inputId + 'Error').text(data.errorMessage);
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                
+            <div class="form-group">
+                <label asp-for="Body" class="control-label">內文</label>
+                <textarea asp-for="Body" class="form-control" style="width: 100%; height: 150px;">
+您已報名&lt;桌球&gt;活動~
+您報名的時間為&lt;2023 /9/15 晚上7:00~晚上8:00&gt;
+敬請踴躍參加
+</textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-primary">發送郵件</button>
+               @* DEMO按鈕示範*@
+                <button type="submit" class="btn btn-primary" id="demoButton">DEMO</button>
+            </div>           
+        </form>
+    </div>
+</div>
+
+@*DEMO自動填入值*@
+<script>
+    document.getElementById('demoButton').addEventListener('click', function () {
+        document.getElementById('ResidentName').value = '江富裕';
+        //document.getElementById('HouseholdCode').value = '戶號';
+        document.getElementById('Subject').value = '歡迎來到無聲鄰陸社區~';
+        //document.getElementById('FromEmail').value = 'qdbzdt2846@gmail.com';
+        //document.getElementById('ToEmail').value = '住戶信箱';
+        document.getElementById('Body').value = '江富裕您好!\n請您有空來警衛室領取您的包裹~';
+    });
+</script>
+
+
+@* 用blur及時驗證 *@
+<script>
+    $(document).ready(function () {
+        $('#ResidentName, #HouseholdCode, #Subject, #FromEmail, #ToEmail').blur(function () {
+            var inputId = $(this).attr('id');
+            var inputValue = $(this).val();
+
+            $.get('/Email/ValidateInput', { inputId: inputId, inputValue: inputValue }, function (data) {
+                if (data.isValid) {
+                    // 如果輸入是有效的，則清除錯誤訊息
+                    $('#' + inputId + 'Error').text('');
+                } else {
+                    // 如果輸入是無效的，則顯示錯誤訊息
+                    $('#' + inputId + 'Error').text(data.errorMessage);
+                }
+            });
+        });
+    });
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

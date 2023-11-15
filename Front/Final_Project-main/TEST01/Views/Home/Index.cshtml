@@ -1,0 +1,233 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<FifthGroup_front.Models.BlogPost>
+
+    <head>
+    <style>
+        .myBlog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin-block: 2rem;
+            gap: 2rem;
+        }
+
+        .myBlog-card {
+            display: flex;
+            flex-direction: column;
+            width: clamp(20rem, calc(20rem + 2vw), 22rem);
+            overflow: hidden;
+            box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+            border-radius: 1em;
+            background: #ECE9E6;
+            background: linear-gradient(to right, #FFFFFF, #ECE9E6);
+        }
+
+
+        .myBlog-card__header {
+            width: 100%;
+            height: 180px; /* 固定高度 */
+            overflow: hidden; /* 超過的部分自動裁切 */
+        }
+
+            .myBlog-card__header img {
+                width: 100%; /* 圖片寬度滿版 */
+                height: 100%; /* 圖片高度滿版 */
+                object-fit: cover; /* 圖片自動調整大小以填滿其容器 */
+            }
+
+
+        .myBlog-card__body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+
+        }
+
+        .myBlog-tag {
+            align-self: flex-start;
+            padding: .25em .75em;
+            border-radius: 1em;
+            font-size: .75rem;
+        }
+
+        .myBlog-tag-blue {
+            background: #56CCF2;
+            background: linear-gradient(to bottom, #2F80ED, #56CCF2);
+            color: #fafafa;
+        }
+
+        .myBlog-card__title {
+            font-size: 1.5rem;
+            text-transform: capitalize;
+        }
+
+        .myBlog-card__footer {
+            display: flex;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+
+     
+
+    </style>
+    </head>
+
+
+
+
+<!-- Carousel Start -->
+<div class="container-fluid px-0 mb-5">
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100"
+                     src="https://images.pexels.com/photos/2603464/pexels-photo-2603464.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                     alt="Image" />
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">
+                                    Welcome to
+                                    <strong class="text-primary">Silent House</strong>
+                                </p>
+                                <h1 class="display-1 text-white mb-4 animated zoomIn">
+                                </h1>
+                                <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img class="w-100"
+                     src="https://images.pexels.com/photos/2603464/pexels-photo-2603464.jpeg?auto=compress&cs=tinysrgb&w=1600"                         
+                     alt="Image" />
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">
+                                    Welcome to <strong class="text-primary">Silent House</strong>
+                                </p>
+                                <h1 class="display-1 text-dark mb-4 animated zoomIn">
+                                </h1>
+                                <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+            <div class="carousel-item">
+                <img class="w-100"
+                     src="https://images.pexels.com/photos/3330118/pexels-photo-3330118.jpeg?auto=compress&cs=tinysrgb&w=600"
+                     alt="Image" />
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">
+                                    Welcome to <strong class="text-primary">Silent House</strong>
+                                </p>
+                                <h1 class="display-1 text-dark mb-4 animated zoomIn">
+                                </h1>
+                                <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+            <div class="carousel-item">
+                <img class="w-100"
+                     src="https://images.pexels.com/photos/453201/pexels-photo-453201.jpeg?auto=compress&cs=tinysrgb&w=600"
+                     alt="Image" />
+                <div class="carousel-caption">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 text-center">
+                                <p class="fs-4 text-white animated zoomIn">
+                                    Welcome to <strong class="text-primary">Silent House</strong>
+                                </p>
+                                <h1 class="display-1 text-dark mb-4 animated zoomIn">
+                                </h1>
+                                <a href="" class="btn btn-light rounded-pill py-3 px-5 animated zoomIn">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- Carousel End -->
+
+
+
+
+
+<!-- Blog -->
+<div class="container-fluid product py-5">
+    <div class="container py-5">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium fst-italic text-primary">Community Announcements</p>
+            <h1 class="display-6">無聲鄰睦，共享和諧之聲。</h1>
+        </div>
+        <div class="owl-carousel product-carousel wow fadeInUp" data-wow-delay="0.5s">
+           
+                <div class="myBlog-container " >
+                    @foreach (var post in Model)
+                    {
+                        <div class="myBlog-card">
+                            <div class="myBlog-card__header">
+                                <img src="@post.FeacturedImageUrl" alt="card__image" class="myBlog-card__img" width="600">
+                            </div>
+                            @foreach (var tag in post.Tags)
+                            {
+                                <span class="myBlog-tag myBlog-tag-blue mt-3">@tag.DisplayName</span>
+                            }
+                        <h4 class="myBlog-card__title">@post.Heading</h4>
+                        <p class="myBlog-card__author mb-0">發布人：@post.Author</p>
+                        <p class="myBlog-card__date mb-2">發布日期：@post.PublishedDate.ToLongDateString()</p>
+
+                        <div class="myBlog-card__body">
+            
+                                <p class="myBlog-card__description">@post.ShortDescription</p>
+                            </div> 
+                            <div class="myBlog-card__footer">
+
+                                <a class="btn btn-dark"
+                                   asp-area=""
+                                   asp-controller="Blogs"
+                                   asp-action="Index"
+                                   asp-route-urlHandle="@post.UrlHandle">
+                                    閱讀更多
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+      
+ 
+        </div>
+    </div>
+</div>
+
+
+

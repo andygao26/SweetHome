@@ -1,0 +1,130 @@
+﻿@model FifthGroup_Backstage.Models.Reservation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">詳細資料</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+@*                 <li class="breadcrumb-item text-dark" aria-current="page">
+                    <a asp-area="" asp-controller="Repair" asp-action="Create">維修申請</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="" asp-controller="Repair" asp-action="RepairInquire">維修紀錄查詢</a>
+                </li> *@
+                <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<hr />
+@* <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ReserveCode" class="control-label"></label>
+                <input readonly asp-for="ReserveCode" class="form-control" />
+                <span asp-validation-for="ReserveCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseholdCode" class="control-label"></label>
+                <input readonly asp-for="HouseholdCode" class="form-control" />
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HName" class="control-label"></label>
+                <input readonly asp-for="HName" class="form-control" />
+                <span asp-validation-for="HName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HPhone" class="control-label"></label>
+                <input readonly asp-for="HPhone" class="form-control" />
+                <span asp-validation-for="HPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HEmail" class="control-label"></label>
+                <input readonly asp-for="HEmail" class="form-control" />
+                <span asp-validation-for="HEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HState" class="control-label"></label>
+                <input asp-for="HState" class="form-control" />
+                <span asp-validation-for="HState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HOrdertime" class="control-label"></label>
+                <input readonly asp-for="HOrdertime" class="form-control" />
+                <span asp-validation-for="HOrdertime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div> *@
+
+<div class="container-fluid product py-2">
+    <div class="container mb-3">
+         <form asp-action="Edit">
+        <div class="section-title text-center mx-auto wow fadeInUp"
+             data-wow-delay="0.1s"
+             style="max-width: 500px">
+            <h1 class="display-6">審核</h1>
+        </div>
+        <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+            <div class="mb-3">
+                <label asp-for="ReserveCode" class="control-label"></label>
+                <input readonly asp-for="ReserveCode" class="form-control" />
+                <span asp-validation-for="ReserveCode" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HouseholdCode" class="control-label"></label>
+                <input readonly asp-for="HouseholdCode" class="form-control" />
+                <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HName" class="control-label"></label>
+                <input readonly asp-for="HName" class="form-control" />
+                <span asp-validation-for="HName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HPhone" class="control-label"></label>
+                <input readonly asp-for="HPhone" class="form-control" />
+                <span asp-validation-for="HPhone" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HEmail" class="control-label"></label>
+                <input readonly asp-for="HEmail" class="form-control" />
+                <span asp-validation-for="HEmail" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HOrdertime" class="control-label"></label>
+                <input readonly asp-for="HOrdertime" class="form-control" />
+                <span asp-validation-for="HOrdertime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="HState" class="control-label"></label>
+                <input asp-for="HState" class="form-control" />
+                <span asp-validation-for="HState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="審核完成" class="btn btn-primary" />
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-sm mt-9 align-content-center col-9 offset-md-10">
+    <a asp-action="List">回到上一頁</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

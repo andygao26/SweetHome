@@ -1,0 +1,390 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model FifthGroup_Backstage.ViewModel.EditProfile
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+</head>
+
+
+
+@{
+    var userID = @HttpContextAccessor.HttpContext.Session.GetString("UserID");
+}
+
+ <body>
+    <section>
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="#">管理人員</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">個人檔案</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <form method="post" action="@Url.Action("UpdateUserPhoto", "Admin")" enctype="multipart/form-data">
+                                <!-- 大頭照 -->
+                                <img id="selectedImage" src="@(string.IsNullOrEmpty(Model.UserPhoto) ? "https://res.cloudinary.com/dwdov2ta3/image/upload/v1694486698/Admin_Photo_pazizs.jpg" : Model.UserPhoto)" alt="avatar" class="rounded-circle img-fluid mx-auto d-block" style="max-width: 200px; max-height: 200px;">
+                                <h5 class="my-3">@Model.UserName</h5>
+                                <p class="text-muted mb-1">Full Stack Developer</p>
+                                <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+
+                                <div class="d-flex justify-content-center mb-2">
+                                    <input type="file" class="form-control mb-0" name="UserPhotoFile" id="userPhotoFile" accept="image/*">
+                                    <hr>
+                                </div>
+
+                                <!-- 提交按鈕 -->
+                                <button type="button" class="btn btn-dark" id="confirmUploadButton">確認修改大頭照</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="post" action="@Url.Action("UpdateUserProfile", "Admin")">
+                                <h5>個人資料</h5>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">帳號</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0 form-control-static">@userID</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">姓名</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0 form-control-static">@Model.UserName</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">電子信箱</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control  mb-0" name="UserEmail" id="userEmail" value="@Model.UserEmail">
+                                        <span id="emailValidationMessage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">手機</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control mb-0" name="UserPhone" id="userPhone" value="@Model.UserPhone">
+                                        <span id="phoneValidationMessage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">通訊地址</p>
+                                    </div>
+                                    <div class="col-sm-9">
+
+                                        <div id="twzipcode"></div>
+                                        <input type="text" class="form-control mb-0" id="Address" name="UserAddress" value="@Model.UserAddress">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <button type="button" class="btn btn-dark justify-content-md-between" id="updateProfileBtn">修改個人資料</button>
+                                </div>
+
+                             </form>
+                            
+                        </div>
+                    </div>
+                    <form method="post" action="@Url.Action("ChangePassword", "Admin")">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5>修改密碼</h5>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">新密碼</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                        <div id="passwordStrength" class="form-label" style="color: #EA0000"></div>
+                                        <div id="passwordError" class="text-danger"></div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">再次輸入新密碼</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" name="ConfirmPassword" id="confirmPassword">
+                                       
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <button type="submit" class="btn btn-dark" id="changePasswordBtn">修改密碼</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+    </section>
+
+
+
+
+    <script>
+        $("#twzipcode").twzipcode({
+            zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+            css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱
+            countyName: "city", // 自訂城市 select 標籤的 name 值
+            districtName: "town" // 自訂區別 select 標籤的 name 值
+        });
+    </script>
+
+
+    @section Scripts {
+     @*    手機號碼、電子郵件 *@
+        <script>
+            // Email、Phone、Address、錯誤訊息
+            const userEmailInput = document.getElementById('userEmail');//獲取電子信箱
+            const userPhoneInput = document.getElementById('userPhone');//獲取手機號碼
+            const addressInput = document.getElementById('Address');//獲取使用者輸入地址
+            const emailValidationMessage = document.getElementById('emailValidationMessage');//電子信箱驗證字樣
+            const phoneValidationMessage = document.getElementById('phoneValidationMessage');//電話驗證字樣
+            const updateProfileBtn = document.getElementById('updateProfileBtn');
+
+            // 添加點擊處理程序到"修改個人資料"按鈕
+            updateProfileBtn.addEventListener('click', function () {
+                const userEmail = userEmailInput.value;
+                const userPhone = userPhoneInput.value;
+                const selectedCity = $(".city").val(); // 獲取選中縣市 using jquery-twzipcode
+                const selectedTown = $(".town").val(); // 獲取選中行政區 using jquery-twzipcode
+                const userAddress = selectedCity + selectedTown + addressInput.value; // 合併縣市、行政區、使用者輸入地址
+
+                // 正規表達式(Email)
+                const emailRegex = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                // 正規表達式(Phone)以 09 開頭，包含 10 位数字
+                const phoneRegex = /^09\d{8}$/;
+
+                if (!emailRegex.test(userEmail)) {
+                    // 如果電子信箱不合法，顯示錯誤訊息
+                    emailValidationMessage.textContent = '請輸入有效的電子信箱地址';
+                } else {
+                    // 消除錯誤訊息
+                    emailValidationMessage.textContent = '';
+
+                    if (!phoneRegex.test(userPhone)) {
+                        // 如果手機號碼不合法，顯示錯誤訊息
+                        phoneValidationMessage.textContent = '請輸入有效的手機號碼（以 09 開頭，共 10 位數字）。';
+                    } else {
+                        // 消除錯誤訊息
+                        phoneValidationMessage.textContent = '';
+
+                        // 構建發送到後端的數據(Email、Phone、Address)
+                        const data = {
+                            UserEmail: userEmail,
+                            UserPhone: userPhone,
+                            UserAddress: userAddress  
+                        };
+
+                        // 發送AJAX請求道後端Action
+                        fetch('@Url.Action("UpdateUserProfile", "Admin")', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // 處理響應，顯示成功或錯誤訊息
+                                if (data.success) {
+                                    alert('個人資料已更新成功！');
+                                    // 在成功後可以刷新頁面或執行其他操作
+                                } else {
+                                    alert('個人資料更新失敗：' + data.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('發生錯誤：', error);
+                            });
+                    }
+                }
+            });
+        </script>
+
+@* 驗證密碼強度 *@
+        <script>
+            // Function to validate password strength
+            function validatePasswordStrength(password) {
+                // Regular expressions for password strength
+                const lowStrength = /^[a-zA-Z0-9_]{6,18}$/; // At least 6 characters, max 18, no special characters
+                const highStrength = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}$/; // At least 8 characters, max 18, includes at least one digit, one lowercase letter, and one uppercase letter
+
+                if (lowStrength.test(password)) {
+                    return "中低強度密碼";
+                } else if (highStrength.test(password)) {
+                    return "高強度密碼";
+                } else {
+                    return "密碼格式不正確";
+                }
+            }
+
+            // Get the elements
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const passwordStrengthElement = document.getElementById('passwordStrength');
+            const passwordErrorElement = document.getElementById('passwordError');
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+
+            // Add input event listeners to both password fields
+            newPasswordInput.addEventListener('input', function () {
+                const newPassword = newPasswordInput.value;
+                const passwordStrength = validatePasswordStrength(newPassword);
+                passwordStrengthElement.textContent = passwordStrength;
+            });
+
+            confirmPasswordInput.addEventListener('input', function () {
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                if (newPassword === confirmPassword) {
+                    passwordErrorElement.textContent = '';
+                } else {
+                    passwordErrorElement.textContent = '密碼不一致';
+                }
+            });
+
+            // Add a click event handler to the "修改密碼" button
+            changePasswordBtn.addEventListener('click', function () {
+                // Add your password change logic here
+                // ...
+            });
+        </script>
+ 
+      
+
+        @* 上傳圖片時顯示預覽 *@
+        <script>
+            document.getElementById('userPhotoFile').addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+                    document.getElementById('selectedImage').src = reader.result;
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    document.getElementById('selectedImage').src = "";
+                }
+            });
+        </script>
+
+   @*      上傳圖片 *@
+        <script>
+            document.getElementById('confirmUploadButton').addEventListener('click', function (e) {
+                e.preventDefault();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '@Url.Action("UpdateUserPhoto", "Admin")', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        alert('上傳圖片成功');
+                    }
+                };
+
+                var data = 'UserPhoto=' + encodeURIComponent(document.getElementById('selectedImage').src);
+                xhr.send(data);
+            });
+
+        </script>
+
+
+
+
+
+        <script>
+            // 點擊changePasswordBtn
+            var changePasswordBtn = document.getElementById('changePasswordBtn');
+
+            // 使用 Razor 語法獲取 Model 數據
+            var userId = '@Model.UserId';
+
+            // 添加点击事件处理程序
+            changePasswordBtn.addEventListener('click', function () {
+                // 获取新密码和确认密码
+                var newPassword = document.getElementById('newPassword').value;
+                var confirmPassword = document.getElementById('confirmPassword').value;
+
+                // 检查密码是否匹配
+                if (newPassword !== confirmPassword) {
+                    alert('確認密碼與第一次輸入不相同');
+
+                }
+                else { 
+                // 使用 SHA256 哈希算法加密新密码
+                var salt = userId.substring(0, 1).toLowerCase(); // 在 JavaScript 中获取 userId
+                var combinedPassword = salt + newPassword;
+                var sha256 = new jsSHA('SHA-256', 'TEXT');
+                sha256.update(combinedPassword);
+                var hashedPassword = sha256.getHash('HEX');
+
+                // 構建發送數據
+                var data = {
+                    NewPassword: hashedPassword
+                };
+
+                // 发送 AJAX 请求到后端 Action
+                fetch('@Url.Action("ChangePassword", "Admin")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // 处理响应，可以显示成功或错误消息
+                        if (data.success) {
+                            alert('密码已成功更改！');
+                            // 清空输入框或执行其他操作
+                        } else {
+                            alert('密碼更新失敗：' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('發生錯誤：', error);
+                    });
+            });
+                
+                }    
+        </script>
+
+    }
+   
+</body>
+
+

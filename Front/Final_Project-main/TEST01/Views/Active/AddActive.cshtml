@@ -1,0 +1,220 @@
+﻿@model FifthGroup_front.ViewModels.CActive
+
+@{
+    ViewData["Title"] = "AddActive";
+}
+
+<!-- Header -->
+<div class="container-fluid page-header py-5 fadeIn">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">活動申請</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="ActiveList">活動報名</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="PersonalActive">報名紀錄查詢</a></li>
+                <li class="breadcrumb-item text-dark" aria-current="page">活動申請紀錄</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header -->
+<!-- Body -->
+<div class="container-fluid product">
+    <div class="container">
+        <div class="section-title text-center mx-auto wow fadeInUp"
+             style="max-width: 500px">
+            <h1 class="display-6">活動申請資料</h1>
+        </div>
+        <form asp-action="AddActive">
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.ActivityName" class="control-label">活動名稱</label>
+                    <input asp-for="Applications.ActivityName" class="form-control" />
+                    <span asp-validation-for="Applications.ActivityName" class="text-danger"></span>
+            </div>
+
+                <input asp-for="Applications.HouseholdCode" class="form-control" type="hidden" />
+
+                <input asp-for="Applications.Name" class="form-control" type="hidden" />
+
+                <input asp-for="Applications.Phone" class="form-control" type="hidden" />
+
+                <input asp-for="Applications.Email" class="form-control" type="hidden" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Activities" class="control-label">活動類型</label>
+                    <select asp-for="Applications.Activities" class="form-control" style="background-color:white">
+                        <option value="運動">運動</option>
+                        <option value="休閒">休閒</option>
+                        <option value="文藝">文藝</option>
+                        <option value="社交">社交</option>
+                        <option value="教育">教育</option>
+                        <option value="義工">義工</option>
+                        <option value="健康">健康</option>
+                        <option value="節慶">節慶</option>
+                        <option value="戶外">戶外</option>
+                        <option value="節慶">節慶</option>
+
+                    </select>
+                    <span asp-validation-for="Applications.Activities" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="PublicSpaceDetail[0].PlaceCode" class="control-label">場地名稱</label>
+                    <select asp-for="PublicSpaceDetail[0].PlaceCode" asp-items="@(new SelectList(Model.PublicSpaceDetail.OrderBy(p=>p.PlaceName), "PlaceCode", "PlaceName"))" class="form-control" style="background-color:white"></select>
+                    <span asp-validation-for="PublicSpaceDetail[0].PlaceCode" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Periodoftime[0].PeriodoftimeCode" class="control-label">時間</label>
+                    <select asp-for="Periodoftime[0].PeriodoftimeCode" asp-items="@(new SelectList(Model.Periodoftime, "PeriodoftimeCode", "Periodoftime1"))" class="form-control" style="background-color:white"></select>
+                    <span asp-validation-for="Periodoftime[0].PeriodoftimeCode" class="text-danger"></span>
+                </div>
+
+            <div class="form-group mb-3">
+                    <label asp-for="Applications.DateStart" class="control-label">開始日期</label>
+                    <input asp-for="Applications.DateStart" class="form-control" type="date" id="StartDate" value="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" style="background-color:white" />
+                    <span asp-validation-for="Applications.DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                    <label asp-for="Applications.DateEnd" class="control-label">結束日期</label>
+                    <input asp-for="Applications.DateEnd" class="form-control" type="date" id="EndDate" value="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" style="background-color:white" />
+                    <span asp-validation-for="Applications.DateEnd" class="text-danger"></span>
+            </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.MaxApplicants" class="control-label">報名人數上限</label>
+                    <input asp-for="Applications.MaxApplicants" class="form-control" />
+                    <span asp-validation-for="Applications.MaxApplicants" class="text-danger"></span>
+                </div>
+            @*隱藏資料*@
+            <input type="hidden" name="State" value="0" />
+            <input type="hidden" name="Applicants" value="0" />
+
+            <div class="form-group mb-3">
+                    <label asp-for="Applications.Introduce" class="control-label">活動描述</label>
+                    <textarea asp-for="Applications.Introduce" class="form-control" style="height: 150px"></textarea>
+                    <span asp-validation-for="Applications.Introduce" class="text-danger"></span>
+            </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chargeCheckbox" name="IsCharge">
+                    <label class="form-check-label" for="chargeCheckbox">
+                        請問要收費嗎？(NT$)
+                    </label>
+                </div>
+
+                <div class="form-group mb-3" id="priceField" style="display: none;">
+                            <input class="form-control" name="Amount">
+                    <span class="text-danger"></span>
+                </div>
+
+
+
+                <div class="mb-3">
+                    <div class="row g-0">
+                        <div class="col-auto">
+                            <label asp-for="Applications.Image" class="btn custom-color text-white rounded-end-0"
+                                   for="myImage">按我選擇檔案</label>
+                        </div>
+                        <div class="col">
+                            <input asp-for="Applications.Image" class="form-control border-primary rounded-start-0 custom-input"
+                                   id="myImageInfo"
+                                   type="text"
+                                   placeholder="選了後會出現檔案名稱" />
+                            <div id="ImageThumbnail" class="mt-2">
+                                @if (!string.IsNullOrEmpty(Model.Applications.Image))
+                                {
+                                    <img src="@Url.Content($"~/img/{Model.Applications.Image}")" alt="Existing Image"
+                                         style="max-width: 450px; max-height: 300px" class="img-fluid">
+                                }
+                            </div>
+                            <div id="ImageThumbnail" class="mt-2"></div>
+                        </div>
+                    </div>
+                    <input class="d-none" id="myImage" type="file" name="photo" />
+                </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <div class="form-group">
+                    <input type="submit" value="申請" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    <input type="reset" value="重設" class="btn btn-primary" />
+                </div>
+                    <div class="form-group">
+                        <a asp-action="CheckActive" class="btn btn-primary">取消</a>
+                    </div>
+            </div>
+
+            </div>
+
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script>
+                const myImageInfo = document.querySelector("#myImageInfo");
+                const myImage = document.querySelector("#myImage");
+                myImage.addEventListener("change", function () {
+                    let Imagefile = this.files[0].name;
+                    myImageInfo.value = Imagefile;
+                });
+            </script>
+
+            <!-- 照片預覽 -->
+            <script>
+                const ImageInput = document.getElementById("myImage");
+                const ImageInfoInput = document.getElementById("myImageInfo");
+                const ImageThumbnail = document.getElementById("ImageThumbnail");
+
+                ImageInput.addEventListener("change", (event) => {
+                    const selectedImage = event.target.files[0];
+                    if (selectedImage) {
+                        ImageInfoInput.value = selectedImage.name;
+
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            ImageThumbnail.innerHTML = `<img src="${e.target.result}" alt="Selected Image" style="max-width: 450px; max-height: 300px">`;
+                        };
+                        reader.readAsDataURL(selectedImage);
+                    }
+                });
+            </script>
+            <!-- \照片預覽 -->
+        </form>
+    </div>
+</div>
+<!-- Body -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var today = new Date();
+        today.setDate(today.getDate() + 1); // 增加 1 天
+        var tomorrow = today.toISOString().split('T')[0];
+
+        document.getElementById("StartDate").setAttribute("min", tomorrow);
+        document.getElementById("EndDate").setAttribute("min", tomorrow);
+    });
+
+    //document.getElementById("EndDate").defaultValue = "@DateTime.Today.ToString("yyyy-MM-dd")" + "T23:59:59";
+
+</script>
+
+<script>
+    // 監聽 checkbox 的變更事件
+    document.getElementById('chargeCheckbox').addEventListener('change', function () {
+        // 獲取 checkbox 的狀態
+        var isChecked = this.checked;
+
+        // 獲取價錢字段的元素
+        var priceField = document.getElementById('priceField');
+
+        // 如果 checkbox 被勾選，則顯示價錢字段，否則隱藏它
+        if (isChecked) {
+            priceField.style.display = 'block';
+        } else {
+            priceField.style.display = 'none';
+        }
+    });
+</script>

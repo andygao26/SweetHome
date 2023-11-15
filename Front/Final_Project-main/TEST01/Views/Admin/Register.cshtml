@@ -1,0 +1,257 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model FifthGroup_front.Models.Resident
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    html,
+    body {
+        height: 100%;
+        font-family: "Mulish", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        /*   background: #999b96; */      
+    }
+
+    label {
+        font-size: 20px
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+        a:hover,
+        a:focus {
+            text-decoration: none;
+            outline: none;
+            color: #ffffff;
+        }
+
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .col-lg-6 {
+        position: relative;
+        width: 95%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .register__form {
+        position: relative;
+        padding-left: 600px;
+        padding-top: 100px;
+    }
+
+        .register__form h2 {
+            color: #1F2328;
+            font-weight: 700;
+            font-family: "Oswald", sans-serif;
+            margin-bottom: 60px;
+            align-content: center
+        }
+
+        .register__form form .input__item {
+            position: relative;
+            width: 500px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .register__form form .input__item:before {
+                position: absolute;
+                left: 50px;
+                top: 10px;
+                height: 50px;
+                width: 1px;
+                background: #ffffff;
+            }
+
+            .register__form form .input__item input {
+                height: 50px;
+                width: 65%;
+                font-size: 22px;
+                color: #000000;
+                background: #ffffff;
+                border: none;
+            }
+
+    .button,
+    .input,
+    .optgroup,
+    .select,
+    .textarea {
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .primary-btn {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #ffffff;
+        letter-spacing: 2px;
+    }
+
+    .wrapper {
+        background: #50a3a2;
+        background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 88%);
+        background-image: url('https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&w=1600');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+        /*   display: flex; */
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+</style>
+
+<div class="container-fluid product py-5 wrapper text-light">
+    <div class="row">
+        <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div class="mb-3">
+                    <h2 class="text-center text-light">會員註冊</h2>
+                </div>
+                <form id="ResidentForm" method="post" action="/Admin/Register">
+                    <div class="mb-3">
+                        <label asp-for="CommunityBuildingId">棟別</label>@* 5 *@
+                        <select asp-for="CommunityBuildingId" name="CommunityBuildingId" class="form-select short-select" title="請選擇" required>
+                            <option value="" disabled selected>選擇棟別</option>
+                            <option value="1">A棟</option>
+                            <option value="4">B棟</option>
+                            <option value="5">C棟</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FloorNumber">樓層</label>@* 10 *@
+                        <select asp-for="FloorNumber" name="FloorNumber" class="form-select short-select" title="請選擇" required>
+                            <option value="" disabled selected>選擇樓層</option>
+                            <option value="2">2樓</option>
+                            <option value="3">3樓</option>
+                            <option value="4">4樓</option>
+                            <option value="5">5樓</option>
+                            <option value="6">6樓</option>
+                            <option value="7">7樓</option>
+                            <option value="8">8樓</option>
+                            <option value="9">9樓</option>
+                            <option value="10">10樓</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UnitNumber">門牌號碼</label>
+                        <select asp-for="UnitNumber" name="UnitNumber" class="form-select short-select" title="請選擇" required>
+                            <option value="" disabled selected>選擇門牌號碼</option>
+                            <option value="1">001號</option>
+                            <option value="2">002號</option>
+                            <option value="3">003號</option>
+                            <option value="4">004號</option>
+                            <option value="5">005號</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HouseholdCode" class="control-label">您選擇的戶號</label>
+                        <input class="form-control text-success" id="HouseholdCode" name="HouseholdCode" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name">姓名</label>
+                        <input asp-for="Name" name="Name" value="吳益誠" class="form-control" title="必填" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Phone">連絡電話</label>
+                        <input asp-for="Phone" name="Phone" value="0967642221" class="form-control" pattern="09[0-9]{8}" title="請輸入正確的電話號碼，10個數字(09開頭)" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password">設定密碼</label>
+                        <input type="Password" name="Password" class="form-control" id="password" title="請輸入大於6個字的密碼" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password">再次輸入密碼</label>
+                        <input type="Password" name="Password" class="form-control" id="password2" onkeyup="click()" title="請輸入大於6個字的密碼" required />
+                        <span id="green"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email">電子信箱</label>
+                        <input asp-for="Email" name="Email" value="kevimo1778@gmail.com" class="form-control" title="必填" required />
+                    </div>
+
+                    <div class="mb-3">
+                        @* <label asp-for="Headshot"></label>*@
+                        <input asp-for="Headshot" name="Headshot" value="新增頭像.jpg" class="form-control" title="必填" required hidden />
+                    </div>
+
+                    @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                    <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                        <button type="submit" class="btn btn-primary me-md-5">註冊</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @* @if (HttpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true")
+        {
+        <div class="register__form">
+        <h2 class="">系統已登入</h2>
+        <p>Welcome，@HttpContextAccessor.HttpContext.Session.GetString("UserName")！</p>
+        <form method="post" action="/Admin/Logout">
+        <button type="submit" class="btn btn-primary">登出</button>
+        </form>
+        </div>
+        }            *@
+    </div>
+</div>
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#CommunityBuildingId, #FloorNumber, #UnitNumber").change(function () {
+                var cb = $("#CommunityBuildingId").val();
+                var fn = $("#FloorNumber").val();
+                var un = $("#UnitNumber").val();
+                if (cb && fn && un) {
+                    var first = "";
+                    if (cb === "1") {
+                        first = "A";
+                    }
+                    else if (cb === "4") {
+                        first = "B";
+                    }
+                    else if (cb === "5") {
+                        first = "C";
+                    }
+                    var paddedUnitNumber = String(un).padStart(2, "0");
+                    var Code = first + fn + paddedUnitNumber;
+                    $("#HouseholdCode").val(Code);
+                }
+            });
+        });
+
+        function click() {
+            var first = document.getElementById('password').value;
+            var second = document.getElementById('password2').value;
+            if (first != second) {
+                alert('兩次密碼輸入不一致');
+            }
+        }
+    </script>
+}

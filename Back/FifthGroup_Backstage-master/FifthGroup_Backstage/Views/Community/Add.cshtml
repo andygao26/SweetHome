@@ -1,0 +1,149 @@
+﻿@model FifthGroup_Backstage.ViewModel.NewCommunity
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+
+
+</head>
+
+
+<body>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">社區基本資料設定 /</span> 社區設定</h4>
+
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                社區基本資料設定
+                            </div>
+                            <div class="card-body">
+                                <form id="communityForm" method="post">
+
+                                    <div class="mb-3">
+                                        <label class="form-label">社區名稱</label>
+                                        <input type="text" class="form-control" id="CommunityName" asp-for="CommunityName" />
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <label class="form-label">地址</label>
+                                        <div class="flex align-items-center">
+                                            <div id="twzipcode"></div>
+                                        </div>
+                                        <input type="text" class="form-control" id="Address" name="Address" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">總戶數</label>
+                                        <input type="number" class="form-control" id="TotalUnits" asp-for="TotalUnits" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">驗證碼</label>
+                                        <input type="text" class="form-control" id="VerificationCode" asp-for="VerificationCode" />
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">儲存</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
+        <!-- / Content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+    <script>
+
+        $("#twzipcode").twzipcode({
+            zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+            css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱
+            countyName: "city", // 自訂城市 select 標籤的 name 值
+            districtName: "town" // 自訂區別 select 標籤的 name 值
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var communityForm = document.getElementById("communityForm");
+
+            communityForm.addEventListener("submit", function (event) {
+                var inputs = communityForm.querySelectorAll("input");
+                var hasEmptyField = false;
+
+                inputs.forEach(function (input) {
+                    if (input.getAttribute("readonly") !== "readonly" && input.value.trim() === "") {
+                        if (input.id !== "CommunityId") { // 排除只读的 CommunityId 字段
+                            hasEmptyField = true;
+                            input.classList.add("is-invalid");
+                        }
+                    } else {
+                        input.classList.remove("is-invalid");
+                    }
+                });
+
+                if (hasEmptyField) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var communityForm = document.getElementById("communityForm");
+
+            communityForm.addEventListener("submit", function (event) {
+                // 獲取選擇的縣市和行政區的值
+                var selectedCity = document.getElementById("city").value;
+                var selectedTown = document.getElementById("town").value;
+
+                // 獲取使用者輸入的詳細地址
+                var detailedAddress = document.getElementById("Address").value;
+
+                // 合併縣市、行政區和詳細地址
+                var fullAddress = selectedCity + selectedTown + detailedAddress;
+
+                // 將合併後的地址設定到 Address 欄位中
+                document.getElementById("Address").value = fullAddress;
+            });
+        });
+    </script>
+
+
+</body>

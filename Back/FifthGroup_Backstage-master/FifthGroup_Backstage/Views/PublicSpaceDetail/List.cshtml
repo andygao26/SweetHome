@@ -1,0 +1,84 @@
+﻿@model IEnumerable<FifthGroup_Backstage.Models.PublicSpaceDetail>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">場地一覽表</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                @*                 <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Repair" asp-action="Create">維修申請</a>
+                </li>
+                <li class="breadcrumb-item text-dark" aria-current="page">
+                維修紀錄查詢
+                </li> *@
+
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<p>
+    <a asp-action="Create" class="btn btn-secondary offset-md-1">新增場地</a>
+</p>
+<div class="container-fluid product py-2">
+    <div class="container mb-5">
+        <!-- Bootstrap Table with Header - Dark -->
+        <div class="card custom-wide-card">
+            <div class="table-responsive text-nowrap align-content-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @*             <th>
+                            @Html.DisplayNameFor(model => model.PlaceCode)
+                            </th> *@
+                            <th>
+                                場地代號
+                            </th>
+                            <th>
+                                區域代碼
+                            </th>
+                            <th>
+                                場地名稱
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @*             <td>
+                            @Html.DisplayFor(modelItem => item.PlaceCode)
+                            </td> *@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pid)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AreaCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PlaceName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("修改", "Edit", new { id=item.PlaceCode }) |
+                                    @*                 @Html.ActionLink("細節", "Details", new { /* id=item.PrimaryKey */ }) | *@
+                                    @Html.ActionLink("刪除", "Delete","PublicSpaceDetail", new { id=item.PlaceCode },new {onclick="return confirm('確定要刪除嗎?')"})
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <!--/ Bootstrap Table with Header Dark -->
+    </div>
+</div>
+

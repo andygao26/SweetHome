@@ -1,0 +1,112 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model FifthGroup_front.Models.Resident
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    html,
+    body {
+        height: 100%;
+        font-family: "Mulish", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        /* background: #999b96; */
+    }
+    
+</style>
+<div class="container-fluid product py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-10">
+                        </div>
+                        <div class="col-md-2 h-100">
+                            <h2 class="text-center"></h2><br /><br /><br />
+                            <div class="col-md-10">
+                                <img class="w-70 h-50" alt="" src="@HttpContextAccessor.HttpContext.Session.GetString("MemberImg")" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="row">
+                        <form method="post" action="/Admin/Edit" enctype="multipart/form-data">
+                            <h2 class="text-success">編輯個人資料</h2>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-group-icon col-md-8">
+                                    <label asp-for="HouseholdCode" class="form-label">戶號</label>
+                                    <input asp-for="HouseholdCode" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserHouseholdCode")" readonly />
+
+                                    @* <label asp-for="CommunityBuildingId" class="form-label"> </label> *@
+                                   @*  <input asp-for="CommunityBuildingId" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetInt32("CommunityBuildingId")" readonly hidden /> *@
+
+                                    @* <label asp-for="FloorNumber" class="form-label"> </label> *@
+                                    @* <input asp-for="FloorNumber" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetInt32("FloorNumber")" readonly hidden /> *@
+
+                                    @* <label asp-for="UnitNumber" class="form-label"> </label> *@
+                                    @* <input asp-for="UnitNumber" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetInt32("UnitNumber")" readonly hidden /> *@
+
+                                    @*  @Html.LabelFor(model => model.Name, "姓名")
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" }) *@
+
+                                    <label asp-for="Name" class="form-label">姓名</label>
+                                    <input asp-for="Name" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserName")" />
+
+                                    @* <label class="form-label" for="inputID">身分證字號</label>
+                                    <input class="form-control" id="inputID" type="text" value="N126688888" readonly />@* 改 *@
+
+                                    @* <label asp-for="Phone" for="Phone">電話號碼</label>
+                                    <input asp-for="Phone" id="Phone" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserPhone")"/>
+
+                                    <label asp-for="Email" for="Email">電子信箱</label>
+                                    <input asp-for="Email" id="Email" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserEmail")"/> *@
+
+                                    @*  @Html.LabelFor(model => model.Phone,"電話號碼")
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" }) *@
+
+                                    <label class="form-label" for="inputNumber">電話號碼</label>
+                                    <input asp-for="Phone" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserPhone")" />
+
+                                    @* @Html.LabelFor(model => model.Email, "電子信箱")
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" }) *@
+
+                                    <label asp-for="Email" class="form-label">電子信箱</label>
+                                    <input asp-for="Email" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserEmail")" />
+
+                                    @* <label asp-for="Password" class="form-label"></label> *@
+                                    <input asp-for="Password" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("UserPassword")" readonly hidden/>
+
+                                    @*  <label class="form-label" for="inputPassword">密碼</label>
+                                    <input class="form-control" id="inputPassword" type="text" value="**********" readonly />  *@
+
+                                    @* <label asp-for="Headshot" class="form-label"> </label> *@
+                                    @* <input asp-for="Headshot" class="form-control" id="inputNumber" type="text" value="@HttpContextAccessor.HttpContext.Session.GetString("Headshot")" readonly hidden /> *@
+                                    <label asp-for="Headshot" class="form-label">編輯頭貼</label>                                   
+                                    <input asp-for="Headshot" type="file" name="MImgPath" class="form-control" id="id_card_front" accept="image/*"/>                                                                   
+                                    <div class="d-grid gap-2 d-flex justify-content-end me-md-5 p-md-2 me-sm-4 me-lg-5">
+                                        <input type="submit" value="保存" class="btn btn-primary me-md-5" onclick="edit()" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*  <div class="col-md-3">
+        <div class="btn-group btn-group-vertical h-100 " role="group">
+
+        </div>
+        </div> *@
+    </div>
+</div>
+<script>
+    function edit() {
+        alert('編輯成功');
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+

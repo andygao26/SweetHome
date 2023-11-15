@@ -1,0 +1,53 @@
+﻿@model FifthGroup_Backstage.Models.PublicSpaceDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container-fluid product py-3">
+    <div class="container mb-4">
+        <div class="container text-center py-2">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">場地修改</h1>
+
+        </div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="container-sm mt-3 align-content-center col-3 offset-md-4.5">
+            <div  class="form-group">
+                <label asp-for="PlaceCode" class="control-label">場地代碼</label>
+                <input readonly asp-for="PlaceCode" class="form-control" />
+                <span asp-validation-for="PlaceCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pid" class="control-label">場地編號</label>
+                <input asp-for="Pid" class="form-control" />
+                <span asp-validation-for="Pid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AreaCode" class="control-label">區域代碼</label>
+                <input asp-for="AreaCode" class="form-control" />
+                <span asp-validation-for="AreaCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceName" class="control-label">場地名稱</label>
+                <input asp-for="PlaceName" class="form-control" />
+                <span asp-validation-for="PlaceName" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="送出並修改" class="btn btn-primary" />
+                    <a asp-action="List" class="btn btn-primary">返回上一頁</a>
+            </div>
+
+                <div>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

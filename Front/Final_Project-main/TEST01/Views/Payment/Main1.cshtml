@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewData["Title"] = "Main";
+}
+<meta charset="utf-8">
+<title>Tea House - Tea Shop Website Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+      rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!-- Libraries Stylesheet -->
+<link href="lib/animate/animate.min.css" rel="stylesheet">
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="css/style.css" rel="stylesheet">
+
+<style>
+    .w-80per {
+        width: 1000px;
+    }
+</style>
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">線上繳費</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-dark" aria-current="page">線上繳費</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium fst-italic text-primary">繳費分類</p>
+            <h1 class="display-6">選擇繳費項目</h1>
+            <div class="d-flex justify-content-between ">
+            </div>
+
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <a asp-action="HousePayment" asp-controller="Payment" asp-area="">123</a>
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid " src="img/housepayment.jpeg" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-sharp fa-solid fa-house fs-1 "></i>
+           
+                        </div>
+                        <h4 class="mb-3">繳交房租</h4>
+                        <p>因為你買不起房所以只能每個月幫我付我下一套房的頭期款。</p>
+
+                    </div>
+                    <div id="housepayment" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid" src="img/housepayment.jpeg" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-sharp fa-solid fa-building-user fs-1"></i>
+                    
+                        </div>
+                        <h4 class="mb-3">繳交管理費</h4>
+                        <p>其實我們大樓也沒在維護，電燈壞了也不會修，草皮亂長雜草，公共空間都是煙味。</p>
+
+                    </div>
+                    <div id="managementFee" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="store-item position-relative text-center">
+                    <img class="img-fluid" src="img/expayment.jpg" alt="">
+                    <div class="p-4">
+                        <div class="text-center mb-3">
+                            <i class="fa-solid fa-ellipsis fs-1"></i>
+                          
+                        </div>
+                        <h4 class="mb-3">其他費用</h4>
+                        <p>中元普渡、社區活動、場地租借費用。</p>
+
+                    </div>
+                    <div id="other" class="store-overlay btn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                <a href="" class="btn btn-primary rounded-pill py-3 px-5">查詢繳費</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="payway" class="container-fluid video visually-hidden" style="margin-top: 6rem; margin-bottom: 6rem;"
+     aria-hidden="true">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-lg-6 py-5 wow fadeIn" data-wow-delay="0.1s">
+                <h1 class="font-style-JhengHei">112年8月份租金</h1>
+                <div class="py-5">
+                    <h1 class="display-6 mb-4"></h1>
+                    <div id="Detail" class=" row d-flex flex-column g-4 mb-5 mt-3 p-0  ">
+
+                        <div class=" d-flex col-sm-6  mt-0   w-100  fs-4 p-0 ">
+                            <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start ">繳費代號</div>
+                            <div id="Paycode" class="p-2 w-75 fw-bold bg-gray rounded-end">1919810</div>
+                        </div>
+                        <div class=" d-flex col-sm-6  mt-2 w-100  fs-4 p-0 ">
+                            <div class="p-2 w-25 fw-bold bg-payment rounded-start">帳戶名稱</div>
+                            <div id="Account" class="p-2 w-75 fw-bold bg-light rounded-end">李旻珊</div>
+                        </div>
+                        <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                            <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">電話號碼</div>
+                            <div id="Phone" class="p-2 w-75 fw-bold bg-gray rounded-end">0999888777</div>
+                        </div>
+                        <div class="d-flex col-sm-6 mt-2 w-100  fs-4 p-0">
+                            <div class="p-2 w-25 fw-bold bg-payment  rounded-start">繳交月份</div>
+                            <div id="Date" class="p-2 w-75 fw-bold bg-light rounded-end">112年8月份租金</div>
+                        </div>
+                        <div class=" d-flex col-sm-6 mt-2 w-100  fs-4 p-0 ">
+                            <div class="p-2 w-25 fw-bold bg-payment-darker rounded-start">繳交總金額</div>
+                            <div id="money" class="p-2 w-75 fw-bold bg-gray rounded-end">8000(元)</div>
+                        </div>
+                        <div class=" d-flex col-sm-6 mt-2 mb-2 w-100  fs-4 p-0 ">
+                            <div class="p-2 w-25 fw-bold bg-payment rounded-start">繳費期限</div>
+                            <div id="PayDate" class="p-2 w-75 fw-bold bg-light rounded-end">112/9/15</div>
+                        </div>
+
+                        <div class=" d-flex col-sm-6 mt-0 w-100  fs-1  ">
+                        </div>
+                    </div>
+                    
+                    <a class="btn bg-payment rounded-pill py-3 px-5" href="">前往繳費</a>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 300px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Un7Btj9sQJQ"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    <!-- <button type="button" class="btn-play" data-bs-toggle="modal"
+                        data-src="https://youtu.be/ikYXG8Ict1A" data-bs-target="#videoModal"> -->
+                    <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Video End -->
+<!-- Video Modal Start -->
+<div class="modal modal-video fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Youtube Video</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 16:9 aspect ratio -->
+                <div class="ratio ratio-16x9">
+                    <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
+                            allowscriptaccess="always" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Video Modal End -->
+
+<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<script>
+    // 获取按钮和房屋内容的元素
+    // var housePaymentButton = document.getElementById("payment");
+    // var houseElement = document.getElementById("payway");
+    // var navbarHeight = document.querySelector('.navbar').offsetHeight;
+    // // 添加点击事件监听器
+    // housePaymentButton.addEventListener("click", function () {
+    //     // 移除visually-hidden类
+    //     houseElement.classList.remove("visually-hidden");
+    //     houseElement.scrollIntoView({ behavior: 'smooth' });
+
+    // });
+
+    function handleButtonClick(buttonId, targetId) {
+        var button = document.getElementById(buttonId);
+        var targetElement = document.getElementById(targetId);
+
+        button.addEventListener("click", function () {
+            targetElement.classList.remove("visually-hidden");
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+    handleButtonClick("housepayment", "payway");
+    handleButtonClick("managementFee", "payway");
+    handleButtonClick("other", "payway");
+
+</script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>

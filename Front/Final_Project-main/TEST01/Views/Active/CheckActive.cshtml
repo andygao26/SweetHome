@@ -1,0 +1,194 @@
+﻿@model IEnumerable<FifthGroup_front.ViewModels.ActiveApplyViewModel>
+
+@{
+    ViewData["Title"] = "CheckActive";
+}
+
+<!-- Header -->
+<div class="container-fluid page-header py-5 fadeIn">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">活動申請紀錄</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="ActiveList">活動報名</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Active" asp-action="PersonalActive">報名紀錄查詢</a></li>
+                <li class="breadcrumb-item  text-dark" aria-current="page">活動申請紀錄</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header -->
+<!-- body -->
+    
+<div class="container-fluid product" >
+    <div class="container">
+            <div class="col-lg-12 py-5">
+                <div class="py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="display-6 mb-0">活動申請紀錄</h4>
+                    <a asp-action="AddActive" class="btn btn-primary"><i class="fas fa-plus">申請活動</i></a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="me-2">審核狀態</span>
+                    <div>
+                        <select id="statusFilter" onchange="filterTable()" class="form-select w-auto">
+                            <option value="">所有</option>
+                            <option value="未審核">未審核</option>
+                            <option value="申請中">申請中</option>
+                            <option value="進行中">進行中</option>
+                            <option value="已結束">已結束</option>
+                            <option value="未開始">未開始</option>
+                            <option value="未通過">未通過</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card custom-wide-card">
+                    <div class="table-responsive text-nowrap align-content-center">
+                    <table class="table table-striped">
+                            <thead style="text-align: center; vertical-align: middle;" class="table-dark">
+                            <tr>
+                                <th>
+                                    活動編號
+                                </th>
+                                <th>
+                                    活動名稱
+                                </th>
+                                <th>
+                                    活動性質
+                                </th>
+                                <th>
+                                    場地
+                                </th>
+                            <th>
+                                    活動日期
+                                </th>
+                            <th>
+                                活動時間
+                            </th>
+                            <th>
+                                    報名人數 / 最大人數
+                                </th>
+                                <th>
+                                    活動狀態
+                                </th>
+                                <th>
+                                    功能
+                                </th>
+                            </tr>
+                        </thead>
+                    <tbody style="text-align: center; vertical-align: middle;">
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="9" style="font-size: 18px; text-align: center; color:darkblue">尚未有活動申請資料</td>
+                            </tr>
+                        }
+                        else{
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Application.ApplyCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Application.ActivityName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Application.Activities)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlaceName)
+                                    </td>
+
+                                    <td>
+                                        @item.Application.DateStart.ToString("yyyy/MM/dd") ~ @item.Application.DateEnd.ToString("yyyy/MM/dd")
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Periodoftime1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Application.Applicants) 人 / @Html.DisplayFor(modelItem => item.Application.MaxApplicants) 人
+                                    </td>
+                                    <td>
+                                        @{
+                                            DateTime currentDate = DateTime.Now;
+                                            string stateText = "";
+
+                                            switch (item.Application.State)
+                                            {
+                                                case 0:
+                                                    stateText = "未審核";
+                                                    break;
+                                                case 1:
+                                                    stateText = "申請中";
+                                                    break;
+                                                case 2:
+                                                    if (currentDate >= item.Application.DateStart && currentDate <= item.Application.DateEnd)
+                                                    {
+                                                        stateText = "進行中";
+                                                    }
+                                                    else if (currentDate > item.Application.DateEnd)
+                                                    {
+                                                        stateText = "已結束";
+                                                    }
+                                                    else if (currentDate < item.Application.DateStart)
+                                                    {
+                                                        stateText = "未開始";
+                                                    }
+                                                    
+                                                    break;
+                                                case 3:
+                                                    stateText = "未通過";
+                                                    break;
+                                            }
+                                        }
+
+                                        @stateText
+                                    </td>
+                                    <td>
+                                        @if (DateTime.Now < item.Application.DateStart)
+                                        {
+                                            @Html.ActionLink("查看", "DetailActive", new { id = item.Application.ApplyCode }, new { @class = "btn btn-primary" })
+                                                    @Html.ActionLink("修改", "EditActive", new { id = item.Application.ApplyCode }, new { @class = "btn btn-primary" , style = "margin-left:3px; margin-right:3px;"})
+                                            @Html.ActionLink("刪除", "DeleteActive", new { id = item.Application.ApplyCode }, new { @class = "btn btn-danger", onclick = "return confirm('確定要刪除嗎?')" })
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("查看", "DetailActive", new { id = item.Application.ApplyCode }, new { @class = "btn btn-primary" })
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<!-- body -->
+
+<script>
+function filterTable() {
+        var statusFilter = document.getElementById("statusFilter");
+    var selectedStatus = statusFilter.value;
+    var table = document.querySelector("table");
+    var tbody = table.querySelector("tbody");
+    var rows = tbody.querySelectorAll("tr");
+
+    rows.forEach(function (row) {
+        var statusCell = row.cells[7]; // 第8列是審核狀態列
+        var rowStatus = statusCell.textContent.trim();
+        if (selectedStatus === "" || rowStatus === selectedStatus) {
+            row.style.display = ""; // 顯示行
+        } else {
+            row.style.display = "none"; // 隱藏行
+        }
+    });
+}
+</script>

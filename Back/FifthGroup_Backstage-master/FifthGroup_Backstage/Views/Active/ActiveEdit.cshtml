@@ -1,0 +1,180 @@
+﻿@model FifthGroup_Backstage.ViewModel.CActive
+
+@{
+    ViewData["Title"] = "ActiveEdit";
+
+}
+<div class="container-fluid page-header fadeIn">
+    <div class="container text-center py-2">
+        <h1 class="display-3 text-dark mb-4 animated slideInDown">編輯活動</h1>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="container-fluid" style="margin-top: 1rem">
+    <div class="container">
+        <form asp-action="ActiveEdit" enctype="multipart/form-data">
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <input type="hidden" name="Applications.ApplyCode" value="@Model.Applications.ApplyCode" />
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Name" class="control-label">主辦人</label>
+                    <input asp-for="Applications.Name" class="form-control"  readonly/>
+                    <span asp-validation-for="Applications.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Phone" class="control-label">聯絡電話</label>
+                    <input asp-for="Applications.Phone" class="form-control"  />
+                    <span asp-validation-for="Applications.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Email" class="control-label">聯絡信箱</label>
+                    <input asp-for="Applications.Email" class="form-control"  />
+                    <span asp-validation-for="Applications.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.ActivityName" class="control-label">活動名稱</label>
+                    <input asp-for="Applications.ActivityName" class="form-control"/>
+                    <span asp-validation-for="Applications.ActivityName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Activities" class="control-label">活動類型</label>
+                    <select asp-for="Applications.Activities" class="form-control" >
+                        <option value="運動">運動</option>
+                        <option value="休閒">休閒</option>
+                        <option value="文藝">文藝</option>
+                        <option value="社交">社交</option>
+                        <option value="教育">教育</option>
+                        <option value="義工">義工</option>
+                        <option value="健康">健康</option>
+                        <option value="節慶">節慶</option>
+                        <option value="戶外">戶外</option>
+                        <option value="節慶">節慶</option>
+
+                    </select>
+                    <span asp-validation-for="Applications.Activities" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ReservationPlace.PlaceCode" class="control-label">場地名稱</label>
+                    <select asp-for="ReservationPlace.PlaceCode" class="form-control">
+                        @foreach (var place in Model.PublicSpaceDetail)
+                        {
+                            <option value="@place.PlaceCode">@place.PlaceName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ReservationPlace.PlaceCode" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ReservationPlace.PeriodoftimeCode" class="control-label">時間</label>
+                    <select asp-for="ReservationPlace.PeriodoftimeCode" class="form-control">
+                        @foreach (var time in Model.Periodoftime)
+                        {
+                            <option value="@time.PeriodoftimeCode">@time.Periodoftime1</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ReservationPlace.PeriodoftimeCode" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.DateStart" class="control-label">開始日期</label>
+                    <input asp-for="Applications.DateStart" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Applications.DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.DateEnd" class="control-label">結束日期</label>
+                    <input asp-for="Applications.DateEnd" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Applications.DateEnd" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.MaxApplicants" class="control-label">報名人數上限</label>
+                    <input asp-for="Applications.MaxApplicants" class="form-control" />
+                    <span asp-validation-for="Applications.MaxApplicants" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Applications.Introduce" class="control-label">活動介紹</label>
+                    <textarea asp-for="Applications.Introduce" class="form-control" style="height: 150px"></textarea>
+                    <span asp-validation-for="Applications.Introduce" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="row g-0">
+                        <div class="col-auto">
+                            <label asp-for="Applications.Image" class="btn custom-color text-white rounded-end-0"
+                                   for="myImage">按我選擇檔案</label>
+                        </div>
+                        <div class="col">
+                            <input asp-for="Applications.Image" class="form-control border-primary rounded-start-0 custom-input"
+                                   id="myImageInfo"
+                                   type="text"
+                                   placeholder="選了後會出現檔案名稱" />
+                            <div id="ImageThumbnail" class="mt-2">
+                                @if (!string.IsNullOrEmpty(Model.Applications.Image))
+                                {
+                                    <img src="@Url.Content($"~/images/Active/{Model.Applications.Image}")" alt="Existing Image"
+                                         style="max-width: 450px; max-height: 300px" class="img-fluid">
+                                }
+                            </div>
+                        </div>
+                        <!-- 新增用於顯示錯誤訊息的 <div> -->
+                        <div class="rol g-0">
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @TempData["ErrorMessage"]
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <input class="d-none" id="myImage" type="file" name="photo" />
+                </div>
+                <br />
+                <div class="text-center">
+                    <div class="form-group mb-3">
+                        <input type="submit" value="修改完成" class="btn btn-primary" />
+                        <a asp-action="@ViewBag.ReturnUrl" class="btn btn-danger">取消並返回</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script>
+                const myImageInfo = document.querySelector("#myImageInfo");
+                const myImage = document.querySelector("#myImage");
+                myImage.addEventListener("change", function () {
+                    let Imagefile = this.files[0].name;
+                    myImageInfo.value = Imagefile;
+                });
+            </script>
+
+            <!-- 照片預覽 -->
+            <script>
+                const ImageInput = document.getElementById("myImage");
+                const ImageInfoInput = document.getElementById("myImageInfo");
+                const ImageThumbnail = document.getElementById("ImageThumbnail");
+
+                ImageInput.addEventListener("change", (event) => {
+                    const selectedImage = event.target.files[0];
+                    if (selectedImage) {
+                        ImageInfoInput.value = selectedImage.name;
+
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            ImageThumbnail.innerHTML = `<img src="${e.target.result}" alt="Selected Image" style="max-width: 450px; max-height: 300px">`;
+                        };
+                        reader.readAsDataURL(selectedImage);
+                    }
+                });
+            </script>
+            <!-- \照片預覽 -->
+
+        </form>
+    </div>
+</div>
+<!-- Body -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

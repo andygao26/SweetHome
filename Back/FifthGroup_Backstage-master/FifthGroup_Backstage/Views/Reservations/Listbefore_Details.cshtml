@@ -1,0 +1,78 @@
+﻿@model FifthGroup_Backstage.Models.Reservation
+
+@{
+    ViewData["Title"] = "Listbefore_Details";
+}
+<div class="container-fluid page-header wow fadeIn"
+     data-wow-delay="0.1s">
+    <div class="container text-center py-2">
+        <h1 class="display-2 text-dark mb-4 animated slideInDown">詳細資料</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                @*                 <li class="breadcrumb-item text-dark" aria-current="page">
+                <a asp-area="" asp-controller="Repair" asp-action="Create">維修申請</a>
+                </li>
+                <li class="breadcrumb-item">
+                <a asp-area="" asp-controller="Repair" asp-action="RepairInquire">維修紀錄查詢</a>
+                </li> *@
+                <!-- <li class="breadcrumb-item text-dark" aria-current="page">Products</li> -->
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<hr />
+
+
+<div class="container-fluid product py-2">
+    <div class="container mb-3">
+        <form asp-action="Edit">
+
+            <div class="container-sm mt-3 align-content-center col-7 offset-md-3">
+                <div class="mb-3">
+                    <label asp-for="ReserveCode" class="control-label">預約序號</label>
+                    <input readonly asp-for="ReserveCode" class="form-control" />
+                    <span asp-validation-for="ReserveCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HouseholdCode" class="control-label">住戶代碼</label>
+                    <input readonly asp-for="HouseholdCode" class="form-control" />
+                    <span asp-validation-for="HouseholdCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HName" class="control-label">預約人姓名</label>
+                    <input readonly asp-for="HName" class="form-control" />
+                    <span asp-validation-for="HName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HPhone" class="control-label">電話</label>
+                    <input readonly asp-for="HPhone" class="form-control" />
+                    <span asp-validation-for="HPhone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HEmail" class="control-label">電子信箱</label>
+                    <input readonly asp-for="HEmail" class="form-control" />
+                    <span asp-validation-for="HEmail" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HOrdertime" class="control-label">送出預約的當下時間</label>
+                    <input readonly asp-for="HOrdertime" class="form-control" />
+                    <span asp-validation-for="HOrdertime" class="text-danger"></span>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-sm mt-9 align-content-center col-9 offset-md-10">
+    <a href="javascript:history.back()" class="btn btn-primary">回到上一頁</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

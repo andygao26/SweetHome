@@ -1,0 +1,124 @@
+﻿@model FifthGroup_front.ViewModels.ActiveApplyViewModel
+
+@{
+    ViewData["Title"] = "ActiveApply";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- body -->
+<div class="product">
+<div class="container-xxl py-5">
+    <form asp-action="ActiveApply" method="post">
+        <input type="hidden" name="ApplyCode" value="@Model.Application.ApplyCode" />
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5 fadeIn">
+                <div class="row-2">
+                        <img class="img-fluid" src="@Url.Content($"~/img/{Model.Application.Image}")" alt="" />
+                </div>
+                <div class="row-2" style="margin-top:20px">
+                <p class="fs-5 fw-medium fst-italic text-primary">
+                            舉辦人: @Model.Application.Name
+                </p>
+                <p class="fs-5 fw-medium fst-italic text-primary">
+                            連絡電話: @Model.Application.Phone
+                </p>
+                <p class="fs-5 fw-medium fst-italic text-primary">
+                            聯絡信箱: @Model.Application.Email
+                </p>
+                </div>
+            </div>
+            <div class="col-lg-7 fadeIn">
+                <div class="section-title">
+                        <h1 class="display-6">@Model.Application.ActivityName</h1>
+                        <h5>活動日期: @Model.Application.DateStart.ToString("yyyy/MM/dd") ~ @Model.Application.DateEnd.ToString("yyyy/MM/dd")</h5>
+                        <h5>活動時間: @Model.Periodoftime1</h5>
+                        <h5>活動地點: @Model.PlaceName</h5>
+                        <h5>已報名人數: @Model.Application.Applicants 人</h5>
+                        <h5>人數上限: @Model.Application.MaxApplicants 人</h5>
+                            <h5>活動金額: @ViewBag.activemoney</h5>
+
+                </div>
+                <h5>活動介紹:</h5>
+                <p class="mb-4" style="font-size: 20px; line-height: 1.5;">
+                        @Html.Raw(Model.Application.Introduce.Replace("\n", "<br />"))
+                </p>
+
+                    <div class="form-group" style="margin-top: 10px; margin-bottom: 10px;">
+                        <label asp-for="NumberOfApplicants" class="control-label" typeof="text">報名人數</label>
+                            <select asp-for="NumberOfApplicants" class="active-form-select2">
+                            
+                            <option value="0">請選擇人數</option>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                    if (i == Model.Registration.NumberOfApplicants)
+                                    {
+                                        <option value="@i" selected>@i 人</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i 人</option>
+
+                                    }
+                            }
+                        </select>
+                    </div>
+                        @if (DateTime.Now < Model.Application.DateStart && (Model.isPaid != "已繳費"))
+                    {
+                        <input type="submit" value="@((Model.isEditMode)? "修改人數":"我要報名")" class="btn btn-primary rounded-pill py-2 px-5" />
+                    }
+                    else
+                    {
+                            <input type="submit" value="@((Model.isEditMode)? "修改人數":"我要報名")" class="btn btn-dark rounded-pill py-2 px-5" disabled />
+                        
+                    }
+                    @if (Model.isEditMode)
+                    {
+                        @if (Model.isPaid == "已繳費")
+                        {
+                            <div style="color:red">您已繳費完成，如需更改人數請聯絡主辦人</div>
+
+                        }
+                        else if (TempData["ErrorMessage"] == null)
+                        {
+                            <div style="color:red">您已報名過該活動</div>
+
+                        }
+                        <input type="hidden" name="isEditMode" value="true" />
+                    }
+                    <br />
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger" style="display: inline-block;">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+<!-- body -->
+
+<script>
+    var form = document.querySelector('form');
+    var numberOfApplicants = document.querySelector('#NumberOfApplicants');
+    var maxApplicants = @Model.Application.MaxApplicants;
+    var Applicants = @Model.Application.Applicants;
+    var Applicant = @Model.Registration.NumberOfApplicants;
+
+    form.addEventListener('submit', function (event) {
+        // 把NumberOfApplicants的值轉換成整數
+        var numberOfApplicantsValue = parseInt(numberOfApplicants.value, 10);
+
+        // 檢查NumberOfApplicants是否小於MaxApplicants
+        if ((numberOfApplicantsValue - Applicant) > (maxApplicants - Applicants)) {
+            // 阻止表单的提交
+            event.preventDefault();
+
+            // 訊息提示
+            alert('人數已滿');
+        }
+    });
+</script>
